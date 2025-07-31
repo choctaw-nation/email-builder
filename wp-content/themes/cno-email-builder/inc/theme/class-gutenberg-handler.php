@@ -245,7 +245,6 @@ class Gutenberg_Handler {
 				'core/heading',
 				'core/list',
 				'core/list-item',
-				'core/image',
 				'core/paragraph',
 				'core/pattern',
 				'core/code',

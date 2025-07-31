@@ -15,10 +15,13 @@ registerBlockType( metadata.name, {
 		return (
 			<div
 				{ ...useInnerBlocksProps( useBlockProps(), {
-					allowedBlocks: allowedBlocks.email.filter(
-						( blockName ) => blockName !== metadata.name
-					),
-					template: [ [ 'cno-email-blocks/section' ] ],
+					allowedBlocks: [
+						...allowedBlocks.core,
+						...allowedBlocks.email.filter(
+							( blockName ) => blockName !== metadata.name
+						),
+					],
+					defaultBlocks: [ [ 'cno-email-blocks/section' ] ],
 				} ) }
 			/>
 		);

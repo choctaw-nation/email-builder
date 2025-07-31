@@ -1,17 +1,14 @@
 import { registerBlockType } from '@wordpress/blocks';
+import { image } from '@wordpress/icons';
 
-import Edit from './edit';
-import save from './save';
 import metadata from './block.json';
+import Edit from './edit';
 
 registerBlockType( metadata.name, {
-	/**
-	 * @see ./edit.js
-	 */
+	icon: image,
 	edit: Edit,
-
-	/**
-	 * @see ./save.js
-	 */
-	save,
+	save: ( { attributes } ) => {
+		const { url, alt, title } = attributes;
+		return <img src={ url } alt={ alt } title={ title } />;
+	},
 } );

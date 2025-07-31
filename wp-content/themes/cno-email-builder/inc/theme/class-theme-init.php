@@ -110,7 +110,6 @@ class Theme_Init {
 	 * Adds scripts with the appropriate dependencies
 	 */
 	public function enqueue_frontend_assets() {
-
 		// style.css
 		wp_enqueue_style(
 			'main',
@@ -140,6 +139,17 @@ class Theme_Init {
 
 	/** Registers Theme Supports */
 	public function cno_theme_support() {
+		$image_sizes = array(
+			'two_col'       => array( 295, 172 ),
+			'header'        => array( 600, 150 ),
+			'footer_banner' => array( 600, 100 ),
+			'single_col'    => array( 600, 350 ),
+		);
+
+		foreach ( $image_sizes as $name => $size ) {
+			add_image_size( $name, $size[0] * 2, $size[1] * 2 );
+		}
+
 		register_nav_menus(
 			array(
 				'primary_menu' => __( 'Primary Menu', 'cno' ),
