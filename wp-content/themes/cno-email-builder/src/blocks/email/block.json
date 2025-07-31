@@ -8,10 +8,11 @@
 	"icon": "block-default",
 	"description": "Wrapper block for email content",
 	"example": {},
+	"keywords": [ "email" ],
 	"supports": {
 		"html": false,
 		"multiple": false,
-		"inserter": true
+		"className": false
 	},
 	"attributes": {
 		"previewText": {
@@ -20,6 +21,10 @@
 		"title": {
 			"type": "string"
 		}
+	},
+	"providesContext": {
+		"cno-email-blocks/previewText": "previewText",
+		"cno-email-blocks/title": "title"
 	},
 	"editorScript": "file:./index.tsx",
 	"editorStyle": "file:./index.css",

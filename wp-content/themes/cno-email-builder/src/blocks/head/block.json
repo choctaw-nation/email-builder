@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cno-email-blocks/head",
+	"version": "0.1.0",
+	"title": "CNO Email Head",
+	"category": "cno-email-blocks",
+	"icon": "html",
+	"description": "Head block",
+	"example": {},
+	"supports": {
+		"html": false,
+		"inserter": false,
+		"className": false
+	},
+	"attributes": {
+		"lock": {
+			"type": "object",
+			"default": {
+				"move": true,
+				"remove": true
+			}
+		}
+	},
+	"usesContext": [ "cno-email-blocks/title" ],
+	"parent": [ "cno-email-blocks/email-wrapper" ],
+	"editorScript": "file:./index.tsx",
+	"render": "file:./render.php"
+}

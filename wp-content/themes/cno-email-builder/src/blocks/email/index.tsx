@@ -1,17 +1,20 @@
 import { registerBlockType } from '@wordpress/blocks';
-import { homeButton } from '@wordpress/icons';
-import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
+import { table } from '@wordpress/icons';
+import {
+	InnerBlocks,
+	useBlockProps,
+	useInnerBlocksProps,
+} from '@wordpress/block-editor';
 import metadata from './block.json';
 import BlockControls from './BlockControls';
 import { allowedBlocks } from '../lib/allowedBlocks';
 
 registerBlockType( metadata.name, {
-	icon: homeButton,
+	icon: table,
 	edit: ( props ) => {
 		const {
 			attributes: { previewText },
 		} = props;
-
 		return (
 			<>
 				<BlockControls { ...props } />
@@ -23,9 +26,21 @@ registerBlockType( metadata.name, {
 							</div>
 						</div>
 					) }
-					<div className="email-wrapper__body">
-						<InnerBlocks allowedBlocks={ allowedBlocks } />
-					</div>
+					<div
+						{ ...useInnerBlocksProps(
+							{ className: 'email-wrapper__body' },
+							{
+								allowedBlocks: [
+									'cno-email-blocks/head',
+									'cno-email-blocks/body',
+								],
+								template: [
+									[ 'cno-email-blocks/head' ],
+									[ 'cno-email-blocks/body' ],
+								],
+							}
+						) }
+					/>
 				</div>
 			</>
 		);

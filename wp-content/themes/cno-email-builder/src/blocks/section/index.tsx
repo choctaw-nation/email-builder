@@ -6,22 +6,26 @@ import {
 	InnerBlocks,
 } from '@wordpress/block-editor';
 
-import save from './save';
 import metadata from './block.json';
 import { allowedBlocks } from '../lib/allowedBlocks';
+import Table from '../lib/Table';
 
 registerBlockType( metadata.name, {
 	icon: group,
 	edit: () => {
 		const blockProps = useBlockProps();
+		const allowed = [
+			...allowedBlocks.email.filter(
+				( blockName ) =>
+					blockName !== metadata.name &&
+					blockName !== 'cno-email-blocks/container'
+			),
+			...allowedBlocks.core,
+		];
 		return (
 			<div
 				{ ...useInnerBlocksProps( blockProps, {
-					allowedBlocks: allowedBlocks.filter(
-						( blockName ) =>
-							blockName !== metadata.name &&
-							blockName !== 'cno-email-blocks/container'
-					),
+					allowedBlocks: allowed,
 					template: [
 						[ 'core/paragraph', { placeholder: 'hey there!' } ],
 					],
@@ -29,5 +33,9 @@ registerBlockType( metadata.name, {
 			/>
 		);
 	},
-	save: () => <InnerBlocks.Content />,
+	save: () => (
+		<Table { ...useBlockProps.save() }>
+			<InnerBlocks.Content />
+		</Table>
+	),
 } );

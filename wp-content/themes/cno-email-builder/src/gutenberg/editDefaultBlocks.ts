@@ -1,41 +1,27 @@
 import { addFilter } from '@wordpress/hooks';
 
-function alterBlockClasses( settings, name: string ) {
-	const blocksToEdit = {
-		'core/columns': {
-			title: 'Row',
-			description:
-				"The Bootstrap 'row' element to hold a group of columns.",
-			attributes: {
-				...settings.attributes,
-				className: {
-					type: 'string',
-					default: 'row',
-				},
-			},
-		},
-		'core/col': {
-			attributes: {
-				...settings.attributes,
-				className: {
-					type: 'string',
-					default: 'col',
-				},
-			},
-		},
-	};
-	if ( ! blocksToEdit.hasOwnProperty( name ) ) {
+function removeDefaultBlockClasses( settings, name: string ) {
+	const emailBlocks = [
+		'core/paragraph',
+		'core/heading',
+		'core/list',
+		'core/list-item',
+	];
+	if ( ! emailBlocks.includes( name ) ) {
 		return settings;
 	}
-
 	return {
 		...settings,
-		...blocksToEdit[ name ],
+		supports: {
+			...settings.supports,
+			className: false, // Disable the className support for these blocks
+			html: false, // Disable HTML support for these blocks
+		},
 	};
 }
 
 addFilter(
 	'blocks.registerBlockType',
-	'cno-starter-theme/alter-block-classes',
-	alterBlockClasses
+	'cno-email-builder/remove-default-block-classes',
+	removeDefaultBlockClasses
 );

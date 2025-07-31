@@ -1,31 +1,27 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "cno-email-blocks/container",
+	"name": "cno-email-blocks/body",
 	"version": "0.1.0",
-	"title": "CNO Email Container",
+	"title": "CNO Email Body",
 	"category": "cno-email-blocks",
 	"icon": "block-default",
-	"description": "Container block that wraps other email blocks.",
+	"description": "Email Body adds some controls for when the email is viewed in a browser.",
 	"example": {},
 	"supports": {
 		"html": false,
-		"multiple": false,
-		"className": false,
 		"inserter": false,
-		"spacing": {
-			"padding": true,
-			"margin": false
-		},
+		"className": false,
 		"color": {
-			"background": true
+			"background": true,
+			"text": false
 		}
 	},
 	"attributes": {
 		"backgroundColor": {
 			"type": "string",
 			"attribute": "style.backgroundColor",
-			"default": "white"
+			"default": "gray"
 		},
 		"lock": {
 			"type": "object",
@@ -35,7 +31,8 @@
 			}
 		}
 	},
-	"ancestor": [ "cno-email-blocks/body" ],
+	"usesContext": [ "cno-email-blocks/previewText" ],
+	"parent": [ "cno-email-blocks/email-wrapper" ],
 	"editorScript": "file:./index.tsx",
 	"render": "file:./render.php"
 }

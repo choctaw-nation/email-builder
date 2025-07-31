@@ -9,9 +9,11 @@
 	"description": "Column block",
 	"example": {},
 	"supports": {
-		"html": false
+		"html": false,
+		"inserter": true,
+		"className": false
 	},
-	"ancestor": [ "cno-email-blocks/email" ],
+	"ancestor": [ "cno-email-blocks/body" ],
 	"parent": [ "cno-email-blocks/row" ],
 	"editorScript": "file:./index.tsx"
 }

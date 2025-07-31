@@ -9,9 +9,26 @@
 			"customGradient": false,
 			"defaultDuotone": false,
 			"defaultGradients": false,
-			"defaultPalette": true,
+			"defaultPalette": false,
 			"duotone": [],
-			"gradients": []
+			"gradients": [],
+			"palette": [
+				{
+					"color": "white",
+					"name": "White",
+					"slug": "white"
+				},
+				{
+					"color": "black",
+					"name": "Black",
+					"slug": "black"
+				},
+				{
+					"color": "#c8c8c8",
+					"name": "Gray",
+					"slug": "gray"
+				}
+			]
 		},
 		"dimensions": {},
 		"layout": {
@@ -24,11 +41,19 @@
 			"defaultPresets": false
 		},
 		"spacing": {
-			"blockGap": true,
+			"blockGap": false,
 			"customSpacingSize": false,
 			"defaultSpacingSizes": false,
 			"margin": true,
-			"padding": true
+			"padding": true,
+			"units": [ "px" ],
+			"spacingScale": {
+				"operator": "*",
+				"increment": 1.5,
+				"unit": "px",
+				"mediumStep": 10,
+				"steps": 5
+			}
 		},
 		"typography": {
 			"customFontSize": true,

@@ -1,23 +1,21 @@
 import { registerBlockType } from '@wordpress/blocks';
-import { group } from '@wordpress/icons';
+import { homeButton } from '@wordpress/icons';
 import {
 	useInnerBlocksProps,
 	useBlockProps,
 	InnerBlocks,
 } from '@wordpress/block-editor';
 
-import save from './save';
 import metadata from './block.json';
 import { allowedBlocks } from '../lib/allowedBlocks';
 
 registerBlockType( metadata.name, {
-	icon: group,
+	icon: homeButton,
 	edit: () => {
-		const blockProps = useBlockProps();
 		return (
 			<div
-				{ ...useInnerBlocksProps( blockProps, {
-					allowedBlocks: allowedBlocks.filter(
+				{ ...useInnerBlocksProps( useBlockProps(), {
+					allowedBlocks: allowedBlocks.email.filter(
 						( blockName ) => blockName !== metadata.name
 					),
 					template: [ [ 'cno-email-blocks/section' ] ],

@@ -1,17 +1,17 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "cno-email-blocks/images",
+	"name": "cno-email-blocks/font",
 	"version": "0.1.0",
-	"title": "CNO Email Images",
+	"title": "CNO Email Font",
 	"category": "cno-email-blocks",
 	"icon": "block-default",
-	"description": "Images block",
+	"description": "A way to add fonts to your email.",
 	"example": {},
 	"supports": {
 		"html": false,
-		"inserter": true
+		"className": false
 	},
-	"ancestor": [ "cno-email-blocks/email" ],
+	"ancestor": [ "cno-email-blocks/head" ],
 	"editorScript": "file:./index.tsx"
 }

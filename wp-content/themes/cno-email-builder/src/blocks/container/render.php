@@ -13,7 +13,7 @@
 	cellpadding="0"
 	cellspacing="0"
 	role="presentation"
-	style="max-width: 37.5em; background-color: white">
+	<?php echo get_block_wrapper_attributes( array( 'style' => 'max-width:37.5em;' ) ); ?>>
 	<tbody>
 		<tr style="width: 100%">
 			<td>

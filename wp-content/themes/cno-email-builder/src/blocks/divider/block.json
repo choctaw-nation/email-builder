@@ -9,7 +9,9 @@
 	"description": "Divider block",
 	"example": {},
 	"supports": {
-		"html": false
+		"html": false,
+		"className": false,
+		"inserter": true
 	},
 	"ancestor": [ "cno-email-blocks/email" ],
 	"editorScript": "file:./index.tsx"
