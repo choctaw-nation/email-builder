@@ -17,7 +17,7 @@ class Gutenberg_Handler {
 	 */
 	public function __construct() {
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_assets' ) );
-		add_action( 'after_setup_theme', array( $this, 'cno_block_theme_support' ), 50 );
+		add_action( 'after_setup_theme', array( $this, 'cno_block_theme_support' ), PHP_INT_MAX );
 		add_action( 'init', array( $this, 'register_block_assets' ) );
 		add_action( 'block_categories_all', array( $this, 'register_block_pattern_categories' ) );
 		add_filter( 'block_editor_settings_all', array( $this, 'restrict_gutenberg_ui' ), 10, 1 );
@@ -89,23 +89,29 @@ class Gutenberg_Handler {
 	 * Enqueue the block editor assets that control the layout of the Block Editor.
 	 */
 	public function enqueue_block_assets() {
-		// this method has not been implemented yet.
+		$files = array( 'editDefaultBlocks' );
+		foreach ( $files as $file ) {
+			$assets = require_once get_template_directory() . "/dist/admin/{$file}.asset.php";
+			wp_enqueue_script(
+				$file,
+				get_template_directory_uri() . "/dist/admin/{$file}.js",
+				$assets['dependencies'],
+				$assets['version'],
+				array( 'strategy' => 'defer' )
+			);
+		}
 	}
 
 	/**
 	 * Init theme supports specific to the block editor.
 	 */
 	public function cno_block_theme_support() {
-		$opt_in_features = array(
-			'responsive-embeds',
-			'editor-styles',
-			'custom-spacing',
-		);
-		foreach ( $opt_in_features as $feature ) {
-			add_theme_support( $feature );
-		}
 		$opt_out_features = array(
 			'core-block-patterns',
+			'wp-emoji-styles',
+			'wp-block-styles',
+			'wp-block-library',
+			'global-styles',
 		);
 		foreach ( $opt_out_features as $feature ) {
 			remove_theme_support( $feature );

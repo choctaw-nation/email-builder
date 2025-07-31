@@ -115,7 +115,7 @@ class Theme_Init {
 		wp_enqueue_style(
 			'main',
 			get_stylesheet_uri(),
-			array( 'global' ),
+			array(),
 			wp_get_theme()->get( 'Version' )
 		);
 
@@ -140,8 +140,6 @@ class Theme_Init {
 
 	/** Registers Theme Supports */
 	public function cno_theme_support() {
-		add_theme_support( 'title-tag' );
-
 		register_nav_menus(
 			array(
 				'primary_menu' => __( 'Primary Menu', 'cno' ),
