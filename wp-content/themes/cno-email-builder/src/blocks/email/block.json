@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cno-email-blocks/email-wrapper",
+	"version": "0.1.0",
+	"title": "CNO Email Wrapper",
+	"category": "cno-email-blocks",
+	"icon": "block-default",
+	"description": "Wrapper block for email content",
+	"example": {},
+	"supports": {
+		"html": false,
+		"multiple": false,
+		"inserter": true
+	},
+	"attributes": {
+		"previewText": {
+			"type": "string"
+		},
+		"title": {
+			"type": "string"
+		}
+	},
+	"editorScript": "file:./index.tsx",
+	"editorStyle": "file:./index.css",
+	"render": "file:./render.php"
+}

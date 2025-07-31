@@ -1,0 +1,9 @@
+.email-wrapper {
+	border: 1px solid black;
+
+	&__header {
+		background-color: #3e3e3e;
+		color: white;
+		padding-inline: 1rem;
+	}
+}

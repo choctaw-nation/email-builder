@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cno-email-blocks/row",
+	"version": "0.1.0",
+	"title": "CNO Email Row",
+	"category": "cno-email-blocks",
+	"icon": "block-default",
+	"description": "Row block for email content",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"ancestor": [ "cno-email-blocks/email" ],
+	"editorScript": "file:./index.tsx"
+}

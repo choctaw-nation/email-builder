@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cno-email-blocks/column",
+	"version": "0.1.0",
+	"title": "CNO Email Column",
+	"category": "cno-email-blocks",
+	"icon": "block-default",
+	"description": "Column block",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"ancestor": [ "cno-email-blocks/email" ],
+	"parent": [ "cno-email-blocks/row" ],
+	"editorScript": "file:./index.tsx"
+}

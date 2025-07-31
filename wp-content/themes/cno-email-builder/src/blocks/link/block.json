@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cno-email-blocks/link",
+	"version": "0.1.0",
+	"title": "CNO Email Link",
+	"category": "cno-email-blocks",
+	"icon": "block-default",
+	"description": "Link block",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"ancestor": [ "cno-email-blocks/email" ],
+	"editorScript": "file:./index.tsx"
+}

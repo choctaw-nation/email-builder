@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cno-email-blocks/container",
+	"version": "0.1.0",
+	"title": "CNO Email Container",
+	"category": "cno-email-blocks",
+	"icon": "block-default",
+	"description": "Container block that wraps other email blocks.",
+	"example": {},
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"editorScript": "file:./index.tsx",
+	"render": "file:./render.php"
+}
