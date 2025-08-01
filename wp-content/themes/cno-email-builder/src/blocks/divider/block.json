@@ -11,8 +11,28 @@
 	"supports": {
 		"html": false,
 		"className": false,
-		"inserter": true
+		"spacing": {
+			"margin": true
+		}
 	},
-	"ancestor": [ "cno-email-blocks/email" ],
+	"attributes": {
+		"border": {
+			"type": "object",
+			"default": {
+				"color": "#000000",
+				"style": "solid",
+				"width": 1
+			},
+			"attribute": "border",
+			"selector": "hr"
+		},
+		"width": {
+			"type": "string",
+			"default": "100%",
+			"attribute": "width",
+			"selector": "hr"
+		}
+	},
+	"ancestor": [ "cno-email-blocks/body" ],
 	"editorScript": "file:./index.tsx"
 }
