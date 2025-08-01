@@ -4,16 +4,20 @@ import {
 	BlockControls,
 	MediaReplaceFlow,
 } from '@wordpress/block-editor';
-import { ToolbarButton } from '@wordpress/components';
+import { ToolbarGroup } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { isBlobURL, revokeBlobURL } from '@wordpress/blob';
-import { link, linkOff } from '@wordpress/icons';
+import { image } from '@wordpress/icons';
+import LinkSettings from './LinkSettings';
 
 const ACCEPT = 'image/*';
 const ALLOWED_MEDIA_TYPES = [ 'image/png', 'image/jpeg' ];
 
-export default function Edit( { attributes, setAttributes } ) {
-	const { id, url, alt, title } = attributes;
+export default function Edit( props ) {
+	const {
+		attributes: { id, url, alt, title },
+		setAttributes,
+	} = props;
 	const [ imgPreview, setImgPreview ] = useState( url );
 
 	function handleImageSelect( img ) {
@@ -42,48 +46,33 @@ export default function Edit( { attributes, setAttributes } ) {
 	return (
 		<>
 			{ imgPreview && (
-				<BlockControls group="inline">
-					<MediaReplaceFlow
-						name="Replace Image"
-						mediaId={ id }
-						onSelect={ handleImageSelect }
-						mediaUrl={ url }
-						allowedTypes={ ALLOWED_MEDIA_TYPES }
-						accept={ ACCEPT }
-						onError={ handleError }
-					/>
-					<ToolbarButton
-						onClick={ () =>
-							setAttributes( {
-								id: 0,
-								url: '',
-								alt: '',
-								title: '',
-							} )
-						}
-					>
-						Remove Image
-					</ToolbarButton>
-					<ToolbarButton
-						onClick={ () =>
-							setAttributes( {
-								id: 0,
-								url: '',
-								alt: '',
-								title: '',
-							} )
-						}
-					>
-						{ link }
-					</ToolbarButton>
+				<BlockControls>
+					<ToolbarGroup>
+						<MediaReplaceFlow
+							name="Replace"
+							mediaId={ id }
+							onSelect={ handleImageSelect }
+							mediaUrl={ url }
+							allowedTypes={ ALLOWED_MEDIA_TYPES }
+							accept={ ACCEPT }
+							onError={ handleError }
+						/>
+					</ToolbarGroup>
+					<LinkSettings { ...props } />
 				</BlockControls>
 			) }
 			<div { ...useBlockProps() }>
 				{ imgPreview && (
-					<img src={ imgPreview } alt={ alt } title={ title } />
+					<img
+						src={ imgPreview }
+						alt={ alt }
+						title={ title }
+						style={ { width: '100%', height: 'auto' } }
+					/>
 				) }
 				<MediaPlaceholder
-					label={ 'Upload an Image' }
+					label={ 'Image' }
+					icon={ image }
 					disableMediaButtons={ imgPreview }
 					onSelect={ handleImageSelect }
 					onError={ handleError }
