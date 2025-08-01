@@ -27,7 +27,10 @@ registerBlockType( metadata.name, {
 				{ ...useInnerBlocksProps( blockProps, {
 					allowedBlocks: allowed,
 					template: [
-						[ 'core/paragraph', { placeholder: 'hey there!' } ],
+						[
+							'core/paragraph',
+							{ placeholder: 'Add some content...' },
+						],
 					],
 				} ) }
 			/>

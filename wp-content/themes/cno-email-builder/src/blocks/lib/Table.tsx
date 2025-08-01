@@ -13,6 +13,7 @@ export function RowTable( { children, ...props } ) {
 		</Table>
 	);
 }
+
 function Table( {
 	children,
 	type,
