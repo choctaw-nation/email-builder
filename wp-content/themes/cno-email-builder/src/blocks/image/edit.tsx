@@ -3,21 +3,22 @@ import {
 	useBlockProps,
 	BlockControls,
 	MediaReplaceFlow,
+	InspectorControls,
 } from '@wordpress/block-editor';
 import { ToolbarGroup } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { isBlobURL, revokeBlobURL } from '@wordpress/blob';
 import { image } from '@wordpress/icons';
 import LinkSettings from './LinkSettings';
+import ImageSettings from './ImageSettings';
+import { getImageStyle } from './utils';
 
 const ACCEPT = 'image/*';
 const ALLOWED_MEDIA_TYPES = [ 'image/png', 'image/jpeg' ];
 
 export default function Edit( props ) {
-	const {
-		attributes: { id, url, alt, title },
-		setAttributes,
-	} = props;
+	const { attributes, setAttributes } = props;
+	const { id, url, alt, title } = attributes;
 	const [ imgPreview, setImgPreview ] = useState( url );
 
 	function handleImageSelect( img ) {
@@ -42,24 +43,30 @@ export default function Edit( props ) {
 	function handleError( error ) {
 		console.error( error );
 	}
+	const imageStyle = getImageStyle( attributes );
 
 	return (
 		<>
 			{ imgPreview && (
-				<BlockControls>
-					<ToolbarGroup>
-						<MediaReplaceFlow
-							name="Replace"
-							mediaId={ id }
-							onSelect={ handleImageSelect }
-							mediaUrl={ url }
-							allowedTypes={ ALLOWED_MEDIA_TYPES }
-							accept={ ACCEPT }
-							onError={ handleError }
-						/>
-					</ToolbarGroup>
-					<LinkSettings { ...props } />
-				</BlockControls>
+				<>
+					<BlockControls>
+						<ToolbarGroup>
+							<MediaReplaceFlow
+								name="Replace"
+								mediaId={ id }
+								onSelect={ handleImageSelect }
+								mediaUrl={ url }
+								allowedTypes={ ALLOWED_MEDIA_TYPES }
+								accept={ ACCEPT }
+								onError={ handleError }
+							/>
+						</ToolbarGroup>
+						<LinkSettings { ...props } />
+					</BlockControls>
+					<InspectorControls>
+						<ImageSettings { ...props } />
+					</InspectorControls>
+				</>
 			) }
 			<div { ...useBlockProps() }>
 				{ imgPreview && (
@@ -67,7 +74,7 @@ export default function Edit( props ) {
 						src={ imgPreview }
 						alt={ alt }
 						title={ title }
-						style={ { width: '100%', height: 'auto' } }
+						style={ imageStyle }
 					/>
 				) }
 				<MediaPlaceholder

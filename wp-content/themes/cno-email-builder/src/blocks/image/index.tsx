@@ -3,6 +3,7 @@ import { image } from '@wordpress/icons';
 
 import metadata from './block.json';
 import Edit from './edit';
+import { getImageStyle } from './utils';
 
 registerBlockType( metadata.name, {
 	icon: image,
@@ -11,6 +12,7 @@ registerBlockType( metadata.name, {
 		const { url, alt, title, linkDestination, rel, linkTarget } =
 			attributes;
 		const isLink = '' !== linkDestination;
+		const imageStyle = getImageStyle( attributes );
 
 		return isLink ? (
 			<a href={ linkDestination } target={ linkTarget } rel={ rel }>
@@ -26,8 +28,3 @@ registerBlockType( metadata.name, {
 		);
 	},
 } );
-
-const imageStyle = {
-	width: '100%',
-	height: 'auto',
-};
