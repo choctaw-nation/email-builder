@@ -79,7 +79,7 @@
 			"dropCap": false,
 			"fontWeight": true,
 			"lineHeight": true,
-			"textDecoration": false,
+			"textDecoration": true,
 			"fontSizes": [
 				{
 					"slug": "x-small",
