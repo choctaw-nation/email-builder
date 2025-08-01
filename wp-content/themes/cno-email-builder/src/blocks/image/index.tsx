@@ -1,17 +1,33 @@
 import { registerBlockType } from '@wordpress/blocks';
+import { image } from '@wordpress/icons';
 
-import Edit from './edit';
-import save from './save';
 import metadata from './block.json';
+import Edit from './edit';
 
 registerBlockType( metadata.name, {
-	/**
-	 * @see ./edit.js
-	 */
+	icon: image,
 	edit: Edit,
+	save: ( { attributes } ) => {
+		const { url, alt, title, linkDestination, rel, linkTarget } =
+			attributes;
+		const isLink = '' !== linkDestination;
 
-	/**
-	 * @see ./save.js
-	 */
-	save,
+		return isLink ? (
+			<a href={ linkDestination } target={ linkTarget } rel={ rel }>
+				<img
+					src={ url }
+					alt={ alt }
+					title={ title }
+					style={ imageStyle }
+				/>
+			</a>
+		) : (
+			<img src={ url } alt={ alt } title={ title } style={ imageStyle } />
+		);
+	},
 } );
+
+const imageStyle = {
+	width: '100%',
+	height: 'auto',
+};

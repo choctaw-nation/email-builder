@@ -30,7 +30,9 @@
 				}
 			]
 		},
-		"dimensions": {},
+		"dimensions": {
+			"aspectRatio": false
+		},
 		"layout": {
 			"allowCustomContentAndWideSize": false,
 			"allowEditing": false,

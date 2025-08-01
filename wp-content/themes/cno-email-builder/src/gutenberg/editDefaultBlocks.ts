@@ -1,27 +1,17 @@
 import { addFilter } from '@wordpress/hooks';
+import domReady from '@wordpress/dom-ready';
+import removeDefaultBlockClasses from './removeDefaultBlockClasses';
 
-function removeDefaultBlockClasses( settings, name: string ) {
-	const emailBlocks = [
-		'core/paragraph',
-		'core/heading',
-		'core/list',
-		'core/list-item',
-	];
-	if ( ! emailBlocks.includes( name ) ) {
-		return settings;
-	}
-	return {
-		...settings,
-		supports: {
-			...settings.supports,
-			className: false, // Disable the className support for these blocks
-			html: false, // Disable HTML support for these blocks
-		},
+domReady( () => {
+	const namespace = 'cno-email-builder';
+	const filters = {
+		'cno-remove-default-block-classes': removeDefaultBlockClasses,
 	};
-}
-
-addFilter(
-	'blocks.registerBlockType',
-	'cno-email-builder/remove-default-block-classes',
-	removeDefaultBlockClasses
-);
+	Object.entries( filters ).forEach( ( [ filterName, filterCallback ] ) => {
+		addFilter(
+			'blocks.registerBlockType',
+			`${ namespace }/${ filterName }`,
+			filterCallback
+		);
+	} );
+} );
