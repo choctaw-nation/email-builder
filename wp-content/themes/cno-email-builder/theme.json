@@ -39,6 +39,22 @@
 			"wideSize": "600px",
 			"contentSize": "600px"
 		},
+		"border": {
+			"color": false,
+			"radius": false,
+			"style": false,
+			"width": false
+		},
+		"lightbox": {
+			"enabled": false
+		},
+		"background": {
+			"backgroundImage": false,
+			"backgroundSize": false
+		},
+		"position": {
+			"sticky": false
+		},
 		"shadow": {
 			"defaultPresets": false
 		},
@@ -59,17 +75,76 @@
 		},
 		"typography": {
 			"customFontSize": true,
-			"defaultFontSizes": true,
+			"defaultFontSizes": false,
 			"dropCap": false,
 			"fontWeight": true,
 			"lineHeight": true,
-			"textDecoration": false
+			"textDecoration": false,
+			"fontSizes": [
+				{
+					"slug": "x-small",
+					"size": "12px",
+					"name": "XS"
+				},
+				{
+					"slug": "small",
+					"size": "14px",
+					"name": "Small"
+				},
+				{
+					"slug": "base",
+					"size": "16px",
+					"name": "Base"
+				},
+				{
+					"slug": "medium",
+					"size": "18px",
+					"name": "Medium"
+				},
+				{
+					"slug": "large",
+					"size": "20px",
+					"name": "Large"
+				},
+				{
+					"slug": "x-large",
+					"size": "24px",
+					"name": "Extra Large"
+				}
+			]
 		},
 		"useRootPaddingAwareAlignments": false
 	},
 	"styles": {
+		"typography": {
+			"fontSize": "var:preset|fontSize|base"
+		},
 		"spacing": {
 			"blockGap": "var:preset|spacing|base"
+		},
+		"blocks": {
+			"core/paragraph": {
+				"typography": {
+					"fontSize": "var:preset|fontSize|base"
+				}
+			},
+			"core/list": {
+				"typography": {
+					"fontSize": "var:preset|fontSize|base"
+				}
+			},
+			"core/list-item": {
+				"typography": {
+					"fontSize": "var:preset|fontSize|base"
+				}
+			}
+		},
+		"elements": {
+			"link": {
+				"typography": {
+					"fontSize": "var:preset|fontSize|base"
+				}
+			}
 		}
 	}
 }
