@@ -13,6 +13,6 @@
 		"inserter": true,
 		"className": false
 	},
-	"ancestor": [ "cno-email-blocks/email" ],
+	"ancestor": [ "cno-email-blocks/body" ],
 	"editorScript": "file:./index.tsx"
 }
