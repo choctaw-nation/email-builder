@@ -16,4 +16,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<?php wp_head(); ?>
 	<title><?php echo esc_html( $block->context['cno-email-blocks/title'] ); ?></title>
+	<?php
+	if ( isset( $attributes['responsiveBlocks'] ) ) {
+		echo '<style>';
+		if ( in_array( 'col', $attributes['responsiveBlocks'], true ) ) {
+			echo '@media screen and (max-width:450px) {
+			.responsive-col {
+				width: 100% !important;
+				display:block!important;
+			}
+			.responsive-col.not-last {
+				margin-bottom:10px;
+			}
+			}';
+		}
+		echo '</style>';
+	}
+	?>
 </head>

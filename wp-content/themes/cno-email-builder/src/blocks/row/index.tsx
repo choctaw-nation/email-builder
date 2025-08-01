@@ -11,6 +11,7 @@ import { row } from '@wordpress/icons';
 import metadata from './block.json';
 
 import { RowTable as Table } from '../lib/Table';
+import RowControls from './RowControls';
 
 registerBlockType( metadata.name, {
 	icon: row,
@@ -30,15 +31,18 @@ registerBlockType( metadata.name, {
 			gridTemplateColumns: `repeat(${ innerBlockCount }, 1fr)`,
 		};
 		return (
-			<div
-				{ ...useInnerBlocksProps(
-					useBlockProps( { style: blockStyle } ),
-					{
-						template: [ [ 'cno-email-blocks/column' ] ],
-						defaultBlock: 'cno-email-blocks/column',
-					}
-				) }
-			/>
+			<>
+				<RowControls { ...props } />
+				<div
+					{ ...useInnerBlocksProps(
+						useBlockProps( { style: blockStyle } ),
+						{
+							template: [ [ 'cno-email-blocks/column' ] ],
+							defaultBlock: 'cno-email-blocks/column',
+						}
+					) }
+				/>
+			</>
 		);
 	},
 	save: ( props ) => (

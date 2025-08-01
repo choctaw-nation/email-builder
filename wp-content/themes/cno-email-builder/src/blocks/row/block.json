@@ -11,7 +11,30 @@
 	"supports": {
 		"html": false,
 		"inserter": true,
-		"className": false
+		"className": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		}
+	},
+	"attributes": {
+		"columnGap": {
+			"type": "number",
+			"default": 10
+		},
+		"rowGap": {
+			"type": "number",
+			"default": 10
+		},
+		"canWrap": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"providesContext": {
+		"cno-email-blocks/columnGap": "columnGap",
+		"cno-email-blocks/rowGap": "rowGap",
+		"cno-email-blocks/canWrap": "canWrap"
 	},
 	"ancestor": [ "cno-email-blocks/body" ],
 	"editorScript": "file:./index.tsx"
