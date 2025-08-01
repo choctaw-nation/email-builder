@@ -8,7 +8,7 @@ import {
 
 import metadata from './block.json';
 import { allowedBlocks } from '../lib/allowedBlocks';
-import Table from '../lib/Table';
+import { SectionTable as Table } from '../lib/Table';
 
 registerBlockType( metadata.name, {
 	icon: group,

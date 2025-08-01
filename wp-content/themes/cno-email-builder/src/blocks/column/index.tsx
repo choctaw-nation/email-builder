@@ -1,17 +1,34 @@
 import { registerBlockType } from '@wordpress/blocks';
+import {
+	useInnerBlocksProps,
+	useBlockProps,
+	InnerBlocks,
+} from '@wordpress/block-editor';
+import { column } from '@wordpress/icons';
 
-import Edit from './edit';
-import save from './save';
 import metadata from './block.json';
 
 registerBlockType( metadata.name, {
-	/**
-	 * @see ./edit.js
-	 */
-	edit: Edit,
-
-	/**
-	 * @see ./save.js
-	 */
-	save,
+	icon: column,
+	edit: () => {
+		return (
+			<div
+				{ ...useInnerBlocksProps( useBlockProps(), {
+					template: [
+						[
+							'core/paragraph',
+							{ placeholder: 'Column content...' },
+						],
+					],
+				} ) }
+			/>
+		);
+	},
+	save: () => {
+		return (
+			<td>
+				<InnerBlocks.Content />
+			</td>
+		);
+	},
 } );
