@@ -77,7 +77,9 @@
 	},
 	"ancestor": [ "cno-email-blocks/body" ],
 	"supports": {
-		"anchor": true,
+		"anchor": false,
+		"html": false,
+		"className": false,
 		"spacing": {
 			"margin": true
 		}
