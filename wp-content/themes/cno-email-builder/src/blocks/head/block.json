@@ -20,6 +20,10 @@
 				"move": true,
 				"remove": true
 			}
+		},
+		"responsiveBlocks": {
+			"type": "array",
+			"default": []
 		}
 	},
 	"usesContext": [ "cno-email-blocks/title" ],

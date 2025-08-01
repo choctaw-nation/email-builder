@@ -13,6 +13,21 @@
 		"inserter": true,
 		"className": false
 	},
+	"attributes": {
+		"isResponsive": {
+			"type": "boolean",
+			"default": true
+		},
+		"isLastBlock": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"usesContext": [
+		"cno-email-blocks/columnGap",
+		"cno-email-blocks/rowGap",
+		"cno-email-blocks/canWrap"
+	],
 	"ancestor": [ "cno-email-blocks/body" ],
 	"parent": [ "cno-email-blocks/row" ],
 	"editorScript": "file:./index.tsx"
