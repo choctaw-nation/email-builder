@@ -1,17 +1,28 @@
 import { registerBlockType } from '@wordpress/blocks';
+import {
+	useBlockProps,
+	InnerBlocks,
+	useInnerBlocksProps,
+} from '@wordpress/block-editor';
 
-import Edit from './edit';
-import save from './save';
 import metadata from './block.json';
 
-registerBlockType( metadata.name, {
-	/**
-	 * @see ./edit.js
-	 */
-	edit: Edit,
+import { RowTable as Table } from '../lib/Table';
+import { row } from '@wordpress/icons';
 
-	/**
-	 * @see ./save.js
-	 */
-	save,
+registerBlockType( metadata.name, {
+	icon: row,
+	edit: () => (
+		<div
+			{ ...useInnerBlocksProps( useBlockProps(), {
+				template: [ [ 'cno-email-blocks/column' ] ],
+				defaultBlock: 'cno-email-blocks/column',
+			} ) }
+		/>
+	),
+	save: ( props ) => (
+		<Table { ...useBlockProps.save() }>
+			<InnerBlocks.Content />
+		</Table>
+	),
 } );
