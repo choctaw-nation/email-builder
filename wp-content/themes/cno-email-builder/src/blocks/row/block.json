@@ -29,6 +29,10 @@
 		"canWrap": {
 			"type": "boolean",
 			"default": true
+		},
+		"maxWidth": {
+			"type": "number",
+			"default": 600
 		}
 	},
 	"providesContext": {

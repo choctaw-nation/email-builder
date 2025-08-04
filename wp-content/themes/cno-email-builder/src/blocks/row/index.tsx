@@ -9,14 +9,16 @@ import {
 import { row } from '@wordpress/icons';
 
 import metadata from './block.json';
+import RowControls from './RowControls';
 
 import { RowTable as Table } from '../lib/Table';
-import RowControls from './RowControls';
+import { MAX_WIDTH } from '../lib/consts';
 
 registerBlockType( metadata.name, {
 	icon: row,
 	edit: ( props ) => {
 		const { clientId } = props;
+		const { maxWidth, columnGap, rowGap } = props.attributes;
 		const innerBlockCount = useSelect(
 			( select ) => {
 				const { getBlock } = select( blockEditorStore );
@@ -25,12 +27,34 @@ registerBlockType( metadata.name, {
 			},
 			[ clientId ]
 		);
+		const parentBlock = useSelect(
+			( select ) => {
+				const { getBlock, getBlockName, getBlockRootClientId } =
+					select( blockEditorStore );
+				const parentClientId = getBlockRootClientId( clientId );
+				let parentBlock = null;
+				if ( parentClientId ) {
+					parentBlock = getBlock( parentClientId );
+				}
+				return parentBlock
+					? {
+							name: getBlockName( parentClientId ),
+							attributes: parentBlock.attributes,
+					  }
+					: null;
+			},
+			[ clientId ]
+		);
 
 		const blockStyle = {
 			display: 'grid',
-			gap: '10px',
+			columnGap,
+			rowGap,
 			gridTemplateColumns: `repeat(${ innerBlockCount }, auto)`,
-			justifyContent: 'flex-start',
+			justifyContent: getAlignmentStyles( parentBlock?.attributes.align ),
+			maxWidth: Math.min( maxWidth, MAX_WIDTH ),
+			marginLeft: maxWidth < MAX_WIDTH ? 'auto' : undefined,
+			marginRight: maxWidth < MAX_WIDTH ? 'auto' : undefined,
 		};
 		const innerBlocksProps = useInnerBlocksProps(
 			useBlockProps( { style: blockStyle } ),
@@ -46,8 +70,14 @@ registerBlockType( metadata.name, {
 			</>
 		);
 	},
-	save: () => {
-		const blockProps = useBlockProps.save();
+	save: ( { attributes: { columnGap, rowGap, maxWidth } } ) => {
+		const blockProps = useBlockProps.save( {
+			style: {
+				maxWidth: Math.min( maxWidth, MAX_WIDTH ),
+				marginLeft: maxWidth < MAX_WIDTH ? 'auto' : undefined,
+				marginRight: maxWidth < MAX_WIDTH ? 'auto' : undefined,
+			},
+		} );
 		return (
 			<Table { ...blockProps }>
 				<InnerBlocks.Content />
@@ -55,3 +85,12 @@ registerBlockType( metadata.name, {
 		);
 	},
 } );
+
+function getAlignmentStyles( alignment?: 'left' | 'center' | 'right' ): string {
+	const gridAlignments = {
+		left: 'flex-start',
+		center: 'center',
+		right: 'flex-end',
+	};
+	return gridAlignments[ alignment || 'left' ];
+}
