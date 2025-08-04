@@ -14,8 +14,7 @@
 	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 	<meta name="x-apple-disable-message-reformatting">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<?php wp_head(); ?>
-	<title><?php echo esc_html( $block->context['cno-email-blocks/title'] ); ?></title>
+	<title><?php echo ! empty( $block->context['cno-email-blocks/title'] ) ? esc_html( $block->context['cno-email-blocks/title'] ) : 'Email Preview: ' . get_the_title() . ' | ' . get_bloginfo( 'site_title' ); ?></title>
 	<?php
 	if ( isset( $attributes['responsiveBlocks'] ) ) {
 		echo '<style>';

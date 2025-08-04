@@ -1,9 +1,10 @@
 import { registerBlockType } from '@wordpress/blocks';
-
+import { useSelect } from '@wordpress/data';
 import {
 	useBlockProps,
 	InnerBlocks,
 	useInnerBlocksProps,
+	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import { row } from '@wordpress/icons';
 
@@ -11,36 +12,46 @@ import metadata from './block.json';
 
 import { RowTable as Table } from '../lib/Table';
 import RowControls from './RowControls';
-import useResponsiveChildBlocks from './useResponsiveChildBlocks';
 
 registerBlockType( metadata.name, {
 	icon: row,
 	edit: ( props ) => {
-		const { innerBlockCount } = useResponsiveChildBlocks( props );
+		const { clientId } = props;
+		const innerBlockCount = useSelect(
+			( select ) => {
+				const { getBlock } = select( blockEditorStore );
+				const block = getBlock( clientId );
+				return block?.innerBlocks?.length || 0;
+			},
+			[ clientId ]
+		);
 
 		const blockStyle = {
 			display: 'grid',
 			gap: '10px',
-			gridTemplateColumns: `repeat(${ innerBlockCount }, 1fr)`,
+			gridTemplateColumns: `repeat(${ innerBlockCount }, auto)`,
+			justifyContent: 'flex-start',
 		};
+		const innerBlocksProps = useInnerBlocksProps(
+			useBlockProps( { style: blockStyle } ),
+			{
+				template: [ [ 'cno-email-blocks/column' ] ],
+				defaultBlock: 'cno-email-blocks/column',
+			}
+		);
 		return (
 			<>
 				<RowControls { ...props } />
-				<div
-					{ ...useInnerBlocksProps(
-						useBlockProps( { style: blockStyle } ),
-						{
-							template: [ [ 'cno-email-blocks/column' ] ],
-							defaultBlock: 'cno-email-blocks/column',
-						}
-					) }
-				/>
+				<div { ...innerBlocksProps } />
 			</>
 		);
 	},
-	save: () => (
-		<Table { ...useBlockProps.save() }>
-			<InnerBlocks.Content />
-		</Table>
-	),
+	save: () => {
+		const blockProps = useBlockProps.save();
+		return (
+			<Table { ...blockProps }>
+				<InnerBlocks.Content />
+			</Table>
+		);
+	},
 } );

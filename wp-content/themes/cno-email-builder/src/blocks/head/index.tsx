@@ -18,5 +18,6 @@ registerBlockType( metadata.name, {
 			setAttributes( { responsiveBlocks } );
 		}, [ responsiveBlocks ] );
 	},
+
 	save: () => null,
 } );

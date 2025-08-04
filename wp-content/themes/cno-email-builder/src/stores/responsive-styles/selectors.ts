@@ -1,18 +1,19 @@
-import { State } from './types';
+import { ActionPayload, State } from './types';
 
 export const selectors = {
-	hasResponsiveBlocks( state: State ) {
-		return Object.values( state ).some( ( ids ) => ids.length > 0 );
-	},
 	getResponsiveBlockTypes( state: State ) {
-		const nonEmptyKeys = Object.keys( state ).filter(
-			( blockType ) => state[ blockType ].length > 0
-		);
+		const nonEmptyKeys = Object.keys( state ).filter( ( blockType ) => {
+			return Object.values( state[ blockType ] ).length > 0;
+		} );
 		return nonEmptyKeys;
 	},
-	isLastBlock( state: State, blockId: string ) {
-		return Object.values( state ).some(
-			( ids ) => ids[ ids.length - 1 ] === blockId
+	isLastBlock( state: State, payload: ActionPayload ) {
+		const { clientId, parentId, blockType } = payload;
+		if ( ! state[ blockType ][ parentId ] ) {
+			return false;
+		}
+		return state[ blockType ][ parentId ].some(
+			( ids ) => ids[ ids.length - 1 ] === clientId
 		);
 	},
 };

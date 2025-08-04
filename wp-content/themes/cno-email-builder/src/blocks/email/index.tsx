@@ -15,10 +15,24 @@ registerBlockType( metadata.name, {
 		const {
 			attributes: { previewText },
 		} = props;
+		const blockProps = useBlockProps( { className: 'email-wrapper' } );
+		const innerBlocksProps = useInnerBlocksProps(
+			{ className: 'email-wrapper__body' },
+			{
+				allowedBlocks: [
+					'cno-email-blocks/head',
+					'cno-email-blocks/body',
+				],
+				template: [
+					[ 'cno-email-blocks/head' ],
+					[ 'cno-email-blocks/body' ],
+				],
+			}
+		);
 		return (
 			<>
 				<BlockControls { ...props } />
-				<div { ...useBlockProps( { className: 'email-wrapper' } ) }>
+				<div { ...blockProps }>
 					{ previewText && (
 						<div className="email-wrapper__header">
 							<div className="email-preview">
@@ -26,21 +40,7 @@ registerBlockType( metadata.name, {
 							</div>
 						</div>
 					) }
-					<div
-						{ ...useInnerBlocksProps(
-							{ className: 'email-wrapper__body' },
-							{
-								allowedBlocks: [
-									'cno-email-blocks/head',
-									'cno-email-blocks/body',
-								],
-								template: [
-									[ 'cno-email-blocks/head' ],
-									[ 'cno-email-blocks/body' ],
-								],
-							}
-						) }
-					/>
+					<div { ...innerBlocksProps } />
 				</div>
 			</>
 		);

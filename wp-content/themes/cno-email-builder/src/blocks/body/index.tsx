@@ -9,13 +9,18 @@ import metadata from './block.json';
 import { allowedBlocks } from '../lib/allowedBlocks';
 
 registerBlockType( metadata.name, {
-	edit: () => (
-		<div
-			{ ...useInnerBlocksProps( useBlockProps(), {
-				allowedBlocks: allowedBlocks.email,
-				template: [ [ 'cno-email-blocks/container' ] ],
-			} ) }
-		/>
-	),
+	edit: () => {
+		const blockProps = useBlockProps();
+		const innerBlocksProps = useInnerBlocksProps( blockProps, {
+			allowedBlocks: allowedBlocks.email,
+			template: [
+				[
+					'cno-email-blocks/container',
+					{ attributes: { lock: { move: true, remove: true } } },
+				],
+			],
+		} );
+		return <div { ...innerBlocksProps } />;
+	},
 	save: () => <InnerBlocks.Content />,
 } );

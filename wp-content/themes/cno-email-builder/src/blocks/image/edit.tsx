@@ -44,6 +44,7 @@ export default function Edit( props ) {
 		console.error( error );
 	}
 	const imageStyle = getImageStyle( attributes );
+	const blockProps = useBlockProps();
 
 	return (
 		<>
@@ -68,7 +69,7 @@ export default function Edit( props ) {
 					</InspectorControls>
 				</>
 			) }
-			<div { ...useBlockProps() }>
+			<div { ...blockProps }>
 				{ imgPreview && (
 					<img
 						src={ imgPreview }
