@@ -4,61 +4,46 @@ import {
 	useBlockProps,
 	InnerBlocks,
 } from '@wordpress/block-editor';
-import { useEffect } from '@wordpress/element';
-import { useDispatch, useSelect } from '@wordpress/data';
+
 import { column } from '@wordpress/icons';
 
 import { responsiveClassNames } from '../lib/responsiveHelpers';
 import metadata from './block.json';
-import { STORES } from '../../stores/consts';
+import useResponsiveAttributes from './useResponsiveAttributes';
+import ColumnControls from './ColumnControls';
 
 registerBlockType( metadata.name, {
 	icon: column,
-	edit: ( { setAttributes, context, ...props } ) => {
-		const canWrap = context[ 'cno-email-blocks/canWrap' ];
-		const { addBlockType, removeBlockType } = useDispatch(
-			STORES.RESPONSIVE_STYLES
-		);
-		const isLastBlock = useSelect(
-			( select ) =>
-				select( STORES.RESPONSIVE_STYLES ).isLastBlock(
-					props.clientId
-				),
-			[ canWrap ]
-		);
-		useEffect( () => {
-			setAttributes( { isResponsive: canWrap, isLastBlock } );
-			if ( canWrap ) {
-				addBlockType( props.clientId );
+	edit: ( props ) => {
+		const { canWrap } = useResponsiveAttributes( props );
+		const { width, height, align } = props.attributes;
+
+		const innerBlocksProps = useInnerBlocksProps(
+			useBlockProps( {
+				style: {
+					width,
+					height,
+					textAlign: align,
+				},
+				className: canWrap ? responsiveClassNames.col : undefined,
+			} ),
+			{
+				template: [
+					[ 'core/paragraph', { placeholder: 'Column content...' } ],
+				],
 			}
-			return () => {
-				if ( canWrap ) {
-					removeBlockType( props.clientId );
-				}
-			};
-		}, [ canWrap ] );
+		);
 		return (
-			<div
-				{ ...useInnerBlocksProps(
-					useBlockProps( {
-						className: canWrap
-							? responsiveClassNames.col
-							: undefined,
-					} ),
-					{
-						template: [
-							[
-								'core/paragraph',
-								{ placeholder: 'Column content...' },
-							],
-						],
-					}
-				) }
-			/>
+			<>
+				<ColumnControls { ...props } />
+				<div { ...innerBlocksProps } />
+			</>
 		);
 	},
-	save: ( { attributes } ) => {
-		const { isResponsive, isLastBlock } = attributes;
+
+	save: ( {
+		attributes: { isResponsive, isLastBlock, align, width, height },
+	} ) => {
 		const classes: string[] = [];
 		if ( isResponsive ) {
 			classes.push( responsiveClassNames.col );
@@ -66,12 +51,23 @@ registerBlockType( metadata.name, {
 		if ( ! isLastBlock ) {
 			classes.push( 'not-last' );
 		}
+		const blockProps = useBlockProps.save( {
+			width: width.replace( 'px', '' ),
+			height: height.replace( 'px', '' ),
+			style: {
+				width,
+				height,
+				textAlign: align,
+				display: 'table-cell',
+			},
+			align,
+			className: classes.join( ' ' ),
+		} );
+		if ( width || height ) {
+			blockProps.style.display = 'inline-block';
+		}
 		return (
-			<td
-				{ ...useBlockProps.save( {
-					className: classes.join( ' ' ),
-				} ) }
-			>
+			<td { ...blockProps }>
 				<InnerBlocks.Content />
 			</td>
 		);

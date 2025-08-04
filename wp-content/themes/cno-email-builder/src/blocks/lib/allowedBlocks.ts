@@ -1,6 +1,7 @@
 export const allowedBlocks = {
 	email: [
 		'row',
+		'container',
 		'column',
 		'divider',
 		'section',

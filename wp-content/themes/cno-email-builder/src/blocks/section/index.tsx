@@ -14,31 +14,22 @@ registerBlockType( metadata.name, {
 	icon: group,
 	edit: () => {
 		const blockProps = useBlockProps();
-		const allowed = [
-			...allowedBlocks.email.filter(
-				( blockName ) =>
-					blockName !== metadata.name &&
-					blockName !== 'cno-email-blocks/container'
-			),
-			...allowedBlocks.core,
-		];
+		const innerBlocksProps = useInnerBlocksProps( blockProps, {
+			allowedBlocks: Object.values( allowedBlocks )
+				.flat()
+				.filter( ( blockName ) => blockName !== metadata.name ),
+			template: [
+				[ 'core/paragraph', { placeholder: 'Add some content...' } ],
+			],
+		} );
+		return <div { ...innerBlocksProps } />;
+	},
+	save: () => {
+		const blockProps = useBlockProps.save();
 		return (
-			<div
-				{ ...useInnerBlocksProps( blockProps, {
-					allowedBlocks: allowed,
-					template: [
-						[
-							'core/paragraph',
-							{ placeholder: 'Add some content...' },
-						],
-					],
-				} ) }
-			/>
+			<Table { ...blockProps }>
+				<InnerBlocks.Content />
+			</Table>
 		);
 	},
-	save: () => (
-		<Table { ...useBlockProps.save() }>
-			<InnerBlocks.Content />
-		</Table>
-	),
 } );

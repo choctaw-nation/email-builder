@@ -12,19 +12,11 @@ import { allowedBlocks } from '../lib/allowedBlocks';
 registerBlockType( metadata.name, {
 	icon: homeButton,
 	edit: () => {
-		return (
-			<div
-				{ ...useInnerBlocksProps( useBlockProps(), {
-					allowedBlocks: [
-						...allowedBlocks.core,
-						...allowedBlocks.email.filter(
-							( blockName ) => blockName !== metadata.name
-						),
-					],
-					defaultBlocks: [ [ 'cno-email-blocks/section' ] ],
-				} ) }
-			/>
-		);
+		const innerBlocksProps = useInnerBlocksProps( useBlockProps(), {
+			allowedBlocks: Object.values( allowedBlocks ).flat(),
+			defaultBlocks: [ [ 'cno-email-blocks/section' ] ],
+		} );
+		return <div { ...innerBlocksProps } />;
 	},
 	save: () => <InnerBlocks.Content />,
 } );

@@ -15,6 +15,9 @@ registerBlockType( metadata.name, {
 	 * @see ./edit.js
 	 */
 	edit: ( { attributes, setAttributes } ) => {
+		const blockProps = useBlockProps( {
+			style: getBlockStyle( attributes ),
+		} );
 		return (
 			<>
 				<InspectorControls>
@@ -54,11 +57,7 @@ registerBlockType( metadata.name, {
 						</PanelBody>
 					</Panel>
 				</InspectorControls>
-				<hr
-					{ ...useBlockProps( {
-						style: getBlockStyle( attributes ),
-					} ) }
-				/>
+				<hr { ...blockProps } />
 			</>
 		);
 	},
@@ -66,11 +65,12 @@ registerBlockType( metadata.name, {
 	/**
 	 * @see ./save.js
 	 */
-	save: ( { attributes } ) => (
-		<hr
-			{ ...useBlockProps.save( { style: getBlockStyle( attributes ) } ) }
-		/>
-	),
+	save: ( { attributes } ) => {
+		const blockProps = useBlockProps.save( {
+			style: getBlockStyle( attributes ),
+		} );
+		return <hr { ...blockProps } />;
+	},
 } );
 
 function getBlockStyle( attributes ): React.CSSProperties {

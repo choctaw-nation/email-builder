@@ -1,16 +1,16 @@
-import { responsiveClassNames } from '../../blocks/lib/responsiveHelpers';
+import { ActionPayload } from './types';
 
 export const actions = {
-	addBlockType( blockType: keyof typeof responsiveClassNames ) {
+	addBlockType( data: ActionPayload ) {
 		return {
 			type: 'ADD_BLOCK_TYPE',
-			blockType,
+			payload: { ...data },
 		};
 	},
-	removeBlockType( blockType: keyof typeof responsiveClassNames ) {
+	removeBlockType( data: ActionPayload ) {
 		return {
 			type: 'REMOVE_BLOCK_TYPE',
-			blockType,
+			payload: { ...data },
 		};
 	},
 };

@@ -11,7 +11,9 @@
 	"supports": {
 		"html": false,
 		"inserter": true,
-		"className": false
+		"className": false,
+		"align": true,
+		"alignWide": false
 	},
 	"attributes": {
 		"isResponsive": {
@@ -21,6 +23,14 @@
 		"isLastBlock": {
 			"type": "boolean",
 			"default": false
+		},
+		"width": {
+			"type": "string",
+			"default": ""
+		},
+		"height": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"usesContext": [

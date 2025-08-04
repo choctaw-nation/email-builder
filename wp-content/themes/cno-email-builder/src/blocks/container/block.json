@@ -10,9 +10,9 @@
 	"example": {},
 	"supports": {
 		"html": false,
-		"multiple": false,
+		"multiple": true,
 		"className": false,
-		"inserter": false,
+		"inserter": true,
 		"spacing": {
 			"padding": true,
 			"margin": false
@@ -27,12 +27,9 @@
 			"attribute": "style.backgroundColor",
 			"default": "white"
 		},
-		"lock": {
-			"type": "object",
-			"default": {
-				"move": true,
-				"remove": true
-			}
+		"maxWidth": {
+			"type": "string",
+			"default": "600px"
 		}
 	},
 	"ancestor": [ "cno-email-blocks/body" ],
