@@ -2,7 +2,7 @@ import { registerBlockType } from '@wordpress/blocks';
 import { useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 
-import '../../stores/responsiveStylesStore';
+import '../../stores/responsive-styles/store';
 import metadata from './block.json';
 import { STORES } from '../../stores/consts';
 
