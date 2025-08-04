@@ -33,8 +33,8 @@ function Table( {
 			{ ...props }
 		>
 			{ type === 'row' ? (
-				<tbody width="100%">
-					<tr width="100%">{ children }</tr>
+				<tbody style={ { width: '100%' } }>
+					<tr style={ { width: '100%' } }>{ children }</tr>
 				</tbody>
 			) : (
 				<tbody>

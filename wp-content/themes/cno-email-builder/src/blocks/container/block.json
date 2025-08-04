@@ -28,11 +28,10 @@
 			"default": "white"
 		},
 		"maxWidth": {
-			"type": "string",
-			"default": "600px"
+			"type": "number",
+			"default": 600
 		}
 	},
 	"ancestor": [ "cno-email-blocks/body" ],
-	"editorScript": "file:./index.tsx",
-	"render": "file:./render.php"
+	"editorScript": "file:./index.tsx"
 }

@@ -24,8 +24,13 @@ registerBlockType( metadata.name, {
 		} );
 		return <div { ...innerBlocksProps } />;
 	},
-	save: () => {
-		const blockProps = useBlockProps.save();
+	save: ( { attributes } ) => {
+		const { align } = attributes;
+		const blockProps = useBlockProps.save( {
+			style: {
+				textAlign: align,
+			},
+		} );
 		return (
 			<Table { ...blockProps }>
 				<InnerBlocks.Content />
