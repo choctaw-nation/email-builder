@@ -1,17 +1,87 @@
 import { registerBlockType } from '@wordpress/blocks';
-
-import Edit from './edit';
-import save from './save';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import { Panel, PanelBody, TextControl } from '@wordpress/components';
 import metadata from './block.json';
+import FontControl from './FontControl';
 
 registerBlockType( metadata.name, {
-	/**
-	 * @see ./edit.js
-	 */
-	edit: Edit,
+	edit: ( props ) => {
+		const { attributes, setAttributes } = props;
+		const blockProps = useBlockProps( {
+			style: {
+				display: 'grid',
+				placeContent: 'center',
+				paddingBlock: '1rem',
+				textAlign: 'center',
+				backgroundColor: '#4b4b4b',
+				color: 'white',
+			},
+		} );
+		return (
+			<>
+				<InspectorControls>
+					<Panel header="Font Settings">
+						<PanelBody title="Import Font">
+							<TextControl
+								__next40pxDefaultSize
+								__nextHasNoMarginBottom
+								label="Custom Font URL"
+								value={ attributes.fontUrl }
+								onChange={ ( fontUrl ) => {
+									setAttributes( { fontUrl } );
+								} }
+							/>
+						</PanelBody>
+						<FontControl { ...props } />
+					</Panel>
+				</InspectorControls>
+				<div { ...blockProps }>
+					<div>
+						<h2 style={ { margin: 0 } }>Font Block</h2>
+						<p style={ { margin: 0 } }>
+							Use this block's settings to add some custom fonts.
+						</p>
+					</div>
+					<style
+						type="text/css"
+						dangerouslySetInnerHTML={ {
+							__html: `
+							@import url("${ attributes.fontUrl }");
+							:where(.email-wrapper__body) {
+								${ emailStyles( attributes ) }
+							}`,
+						} }
+					/>
+				</div>
+			</>
+		);
+	},
 
-	/**
-	 * @see ./save.js
-	 */
-	save,
+	save: ( { attributes } ) => {
+		return (
+			<style
+				type="text/css"
+				dangerouslySetInnerHTML={ {
+					__html: `
+					@import url("${ attributes.fontUrl }");
+					${ emailStyles( attributes ) }`,
+				} }
+			/>
+		);
+	},
 } );
+
+function emailStyles( attributes ): string {
+	const { headingsFont, bodyFont } = attributes;
+	return `
+		body,p,a,td {
+			text-wrap:balance;
+			font-family: ${ bodyFont.fontFace }, ${ bodyFont.fallbackStack.value }
+		}
+		
+		h1,h2,h3,h4,h5,h6 {
+			text-wrap:balance;
+			font-family: ${ headingsFont.fontFace }, ${ headingsFont.fallbackStack.value };
+		}
+	`;
+}
