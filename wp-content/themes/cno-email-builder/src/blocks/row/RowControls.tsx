@@ -8,9 +8,11 @@ import {
 	ToggleControl,
 } from '@wordpress/components';
 import { MAX_WIDTH } from '../lib/consts';
+import useThemeSpacing from './useThemeSpacing';
 
 export default function RowControls( { attributes, setAttributes } ) {
-	const { columnGap, rowGap, canWrap, maxWidth } = attributes;
+	const { columnGap, canWrap, maxWidth } = attributes;
+	const { spacingScale, scaleMax } = useThemeSpacing();
 	return (
 		<InspectorControls>
 			<Panel>
@@ -41,6 +43,32 @@ export default function RowControls( { attributes, setAttributes } ) {
 								resetFallbackValue={ MAX_WIDTH }
 								max={ MAX_WIDTH }
 								label="Max Width"
+							/>
+						</FlexItem>
+						<FlexItem isBlock={ true }>
+							<RangeControl
+								__next40pxDefaultSize
+								__nextHasNoMarginBottom
+								value={ columnGap }
+								onChange={ ( gap ) => {
+									const closest = spacingScale.reduce(
+										( prev, curr ) =>
+											Math.abs( curr.value - gap ) <
+											Math.abs( prev.value - gap )
+												? curr
+												: prev
+									);
+									setAttributes( {
+										columnGap: closest.value,
+										rowGap: closest.value,
+									} );
+								} }
+								max={ scaleMax }
+								type="stepper"
+								step="any"
+								withInputField={ false }
+								label="Block Spacing"
+								marks={ spacingScale }
 							/>
 						</FlexItem>
 					</Flex>

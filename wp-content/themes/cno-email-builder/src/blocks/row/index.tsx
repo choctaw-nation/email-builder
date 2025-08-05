@@ -1,10 +1,8 @@
 import { registerBlockType } from '@wordpress/blocks';
-import { useSelect } from '@wordpress/data';
 import {
 	useBlockProps,
 	InnerBlocks,
 	useInnerBlocksProps,
-	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import { row } from '@wordpress/icons';
 
@@ -13,38 +11,14 @@ import RowControls from './RowControls';
 
 import { RowTable as Table } from '../lib/Table';
 import { MAX_WIDTH } from '../lib/consts';
+import useBlockDetails from './useBlockDetails';
 
 registerBlockType( metadata.name, {
 	icon: row,
 	edit: ( props ) => {
 		const { clientId } = props;
 		const { maxWidth, columnGap, rowGap } = props.attributes;
-		const innerBlockCount = useSelect(
-			( select ) => {
-				const { getBlock } = select( blockEditorStore );
-				const block = getBlock( clientId );
-				return block?.innerBlocks?.length || 0;
-			},
-			[ clientId ]
-		);
-		const parentBlock = useSelect(
-			( select ) => {
-				const { getBlock, getBlockName, getBlockRootClientId } =
-					select( blockEditorStore );
-				const parentClientId = getBlockRootClientId( clientId );
-				let parentBlock = null;
-				if ( parentClientId ) {
-					parentBlock = getBlock( parentClientId );
-				}
-				return parentBlock
-					? {
-							name: getBlockName( parentClientId ),
-							attributes: parentBlock.attributes,
-					  }
-					: null;
-			},
-			[ clientId ]
-		);
+		const { innerBlockCount, parentBlock } = useBlockDetails( clientId );
 
 		const blockStyle = {
 			display: 'grid',
