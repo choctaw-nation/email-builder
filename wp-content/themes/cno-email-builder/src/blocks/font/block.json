@@ -10,7 +10,9 @@
 	"example": {},
 	"supports": {
 		"html": false,
-		"className": false
+		"className": false,
+		"inserter": false,
+		"multiple": false
 	},
 	"attributes": {
 		"fontUrl": {

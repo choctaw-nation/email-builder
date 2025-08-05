@@ -1,12 +1,24 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import { Panel, PanelBody, TextControl } from '@wordpress/components';
+import {
+	Panel,
+	PanelBody,
+	TextControl,
+	__experimentalToggleGroupControl as ToggleGroupControl,
+	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
+} from '@wordpress/components';
+
 import metadata from './block.json';
 import FontControl from './FontControl';
+import { DEFAULT_FONT_URL } from './utils';
+import useFontSettings from './useFontSettings';
 
 registerBlockType( metadata.name, {
 	edit: ( props ) => {
 		const { attributes, setAttributes } = props;
+		const { fontImportUrl, setFontImportUrl, isUsingDefaultFonts } =
+			useFontSettings( props );
+
 		const blockProps = useBlockProps( {
 			style: {
 				display: 'grid',
@@ -22,15 +34,37 @@ registerBlockType( metadata.name, {
 				<InspectorControls>
 					<Panel header="Font Settings">
 						<PanelBody title="Import Font">
-							<TextControl
+							<ToggleGroupControl
 								__next40pxDefaultSize
 								__nextHasNoMarginBottom
-								label="Custom Font URL"
-								value={ attributes.fontUrl }
-								onChange={ ( fontUrl ) => {
-									setAttributes( { fontUrl } );
-								} }
-							/>
+								isBlock
+								onChange={ ( val ) =>
+									setFontImportUrl( val as string )
+								}
+								value={ fontImportUrl }
+								label="Font Import Location"
+							>
+								<ToggleGroupControlOption
+									label="Default"
+									value="default"
+								/>
+								<ToggleGroupControlOption
+									label="Custom"
+									value="custom"
+								/>
+							</ToggleGroupControl>
+							{ ! isUsingDefaultFonts && (
+								<TextControl
+									__next40pxDefaultSize
+									__nextHasNoMarginBottom
+									label="Custom Font URL"
+									placeholder={ DEFAULT_FONT_URL }
+									value={ attributes.fontUrl }
+									onChange={ ( fontUrl ) => {
+										setAttributes( { fontUrl } );
+									} }
+								/>
+							) }
 						</PanelBody>
 						<FontControl { ...props } />
 					</Panel>

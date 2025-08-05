@@ -1,5 +1,6 @@
 import { useState, useEffect } from '@wordpress/element';
 import { FontsState } from './types';
+import { DEFAULT_FONT_URL } from './utils';
 
 export default function useFontSettings( { attributes, setAttributes } ) {
 	const { headingsFont, bodyFont, accentFont } = attributes;
@@ -11,6 +12,22 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 		bodyFont,
 		accentFont,
 	} );
+	const [ fontImportUrl, setFontImportUrl ] = useState( 'default' );
+	const isUsingDefaultFonts = fontImportUrl === 'default';
+
+	useEffect( () => {
+		setFontImportUrl(
+			attributes.fontUrl === DEFAULT_FONT_URL ? 'default' : 'custom'
+		);
+	}, [ attributes.fontUrl ] );
+
+	useEffect( () => {
+		if ( 'default' === fontImportUrl ) {
+			setAttributes( { fontUrl: DEFAULT_FONT_URL } );
+		} else {
+			setAttributes( { fontUrl: '' } );
+		}
+	}, [ fontImportUrl ] );
 
 	useEffect( () => {
 		setAttributes( {
@@ -83,5 +100,8 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 		handleFontStackChange,
 		fonts,
 		handleFontFaceChange,
+		fontImportUrl,
+		setFontImportUrl,
+		isUsingDefaultFonts,
 	};
 }
