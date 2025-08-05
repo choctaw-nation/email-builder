@@ -22,6 +22,7 @@ class Gutenberg_Handler {
 		add_action( 'block_categories_all', array( $this, 'register_block_pattern_categories' ) );
 		add_filter( 'block_editor_settings_all', array( $this, 'restrict_gutenberg_ui' ), 10, 1 );
 		add_filter( 'allowed_block_types_all', array( $this, 'restrict_block_types' ), 10, 2 );
+		// add_filter( 'render_block', array( $this, 'compute_css_variables' ), 10, 2 );
 	}
 
 	/**
@@ -262,5 +263,48 @@ class Gutenberg_Handler {
 			return $allowed_block_types;
 		}
 		return $allowed_block_types;
+	}
+
+	/**
+	 * Transforms CSS variables to computed inline properties
+	 *
+	 * @param string $block_content the block markup
+	 * @param array  $block the block attributes
+	 */
+	public function compute_css_variables( $block_content, $block ) {
+		$spacing_attributes = $block['attrs']['style']['spacing'];
+		if ( empty( $spacing_attributes ) ) {
+			return $block_content;
+		}
+		if ( ! empty( $spacing_attributes['padding'] || ! empty( $spacing_attributes['margin'] ) ) ) {
+			$padding   = $block['attrs']['style']['spacing']['padding'];
+			$margin    = $block['attrs']['style']['spacing']['margin'];
+			$style_str = '';
+
+			foreach ( array( 'top', 'right', 'bottom', 'left' ) as $side ) {
+				if ( isset( $padding[ $side ] ) ) {
+					$style_str .= "padding-$side: {$padding[$side]}; ";
+				}
+				if ( isset( $margin[ $side ] ) ) {
+					$style_str .= "margin-$side: {$margin[$side]}; ";
+				}
+			}
+
+			// Insert or append to existing style attr
+			$block_content = preg_replace_callback(
+				'/<([a-z]+)([^>]*?)>/i',
+				function ( $matches ) use ( $style_str ) {
+					if ( strpos( $matches[2], 'style=' ) !== false ) {
+						return "<{$matches[1]}{$matches[2]} style=\"$style_str\">";
+					} else {
+						return "<{$matches[1]}{$matches[2]} style=\"$style_str\">";
+					}
+				},
+				$block_content,
+				1
+			);
+		}
+
+		return $block_content;
 	}
 }

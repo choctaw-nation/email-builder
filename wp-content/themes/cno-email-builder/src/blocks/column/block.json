@@ -16,9 +16,17 @@
 		"alignWide": false
 	},
 	"attributes": {
+		"padding": {
+			"type": "object",
+			"default": {}
+		},
 		"isResponsive": {
 			"type": "boolean",
 			"default": true
+		},
+		"isFirstBlock": {
+			"type": "boolean",
+			"default": false
 		},
 		"isLastBlock": {
 			"type": "boolean",

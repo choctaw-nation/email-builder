@@ -11,19 +11,48 @@ import { responsiveClassNames } from '../lib/responsiveHelpers';
 import metadata from './block.json';
 import useResponsiveAttributes from './useResponsiveAttributes';
 import ColumnControls from './ColumnControls';
+import { useEffect } from '@wordpress/element';
 
 registerBlockType( metadata.name, {
 	icon: column,
 	edit: ( props ) => {
-		const { canWrap } = useResponsiveAttributes( props );
+		const { canWrap, isFirstBlock, isLastBlock, rowGap, columnGap } =
+			useResponsiveAttributes( props );
 		const { width, height, align } = props.attributes;
+		const { setAttributes } = props;
+		const blockEditorAlignments = {
+			left: 'flex-start',
+			center: 'center',
+			right: 'flex-end',
+		};
+		useEffect( () => {
+			const padding = columnGap / 2;
+			if ( isFirstBlock ) {
+				setAttributes( {
+					padding: { paddingRight: padding },
+				} );
+			} else if ( isLastBlock ) {
+				setAttributes( {
+					padding: { paddingLeft: padding },
+				} );
+			} else {
+				setAttributes( {
+					padding: {
+						paddingLeft: padding,
+						paddingRight: padding,
+					},
+				} );
+			}
+		}, [ rowGap, columnGap ] );
 
 		const innerBlocksProps = useInnerBlocksProps(
 			useBlockProps( {
 				style: {
 					width,
 					height,
-					textAlign: align,
+					justifySelf: align
+						? blockEditorAlignments[ align ]
+						: undefined,
 				},
 				className: canWrap ? responsiveClassNames.col : undefined,
 			} ),
@@ -42,7 +71,14 @@ registerBlockType( metadata.name, {
 	},
 
 	save: ( {
-		attributes: { isResponsive, isLastBlock, align, width, height },
+		attributes: {
+			isResponsive,
+			isLastBlock,
+			padding,
+			align,
+			width,
+			height,
+		},
 	} ) => {
 		const classes: string[] = [];
 		if ( isResponsive ) {
@@ -52,13 +88,14 @@ registerBlockType( metadata.name, {
 			classes.push( 'not-last' );
 		}
 		const blockProps = useBlockProps.save( {
-			width: width.replace( 'px', '' ),
-			height: height.replace( 'px', '' ),
+			width: width ? width.replace( 'px', '' ) : undefined,
+			height: width ? height.replace( 'px', '' ) : undefined,
 			style: {
-				width,
-				height,
+				...padding,
+				width: width ? width : undefined,
+				height: height ? height : undefined,
 				textAlign: align,
-				display: 'table-cell',
+				display: undefined,
 			},
 			align,
 			className: classes.join( ' ' ),

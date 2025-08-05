@@ -9,25 +9,26 @@ export default function useResponsiveAttributes( {
 	clientId,
 } ) {
 	const canWrap = context[ 'cno-email-blocks/canWrap' ];
-	const parentId = useSelect(
-		( select ) =>
-			select( blockEditorStore ).getBlockRootClientId( clientId ),
+	const rowGap = context[ 'cno-email-blocks/rowGap' ];
+	const columnGap = context[ 'cno-email-blocks/columnGap' ];
+	const { parentId, isLastBlock, isFirstBlock } = useSelect(
+		( select ) => {
+			const parentId =
+				select( blockEditorStore ).getBlockRootClientId( clientId );
+			const blockOrder =
+				select( blockEditorStore ).getBlockOrder( parentId );
+			const isLastBlock = blockOrder.at( -1 ) === clientId;
+			const isFirstBlock = blockOrder[ 0 ] === clientId;
+			return { parentId, isLastBlock, isFirstBlock };
+		},
 		[ clientId ]
 	);
 	const { addBlockType, removeBlockType } = useDispatch(
 		STORES.RESPONSIVE_STYLES
 	);
-	const isLastBlock = useSelect(
-		( select ) =>
-			select( STORES.RESPONSIVE_STYLES ).isLastBlock( {
-				clientId,
-				parentId,
-				blockType: 'col',
-			} ),
-		[ canWrap ]
-	);
+
 	useEffect( () => {
-		setAttributes( { isResponsive: canWrap, isLastBlock } );
+		setAttributes( { isResponsive: canWrap, isLastBlock, isFirstBlock } );
 		if ( canWrap ) {
 			addBlockType( { blockType: 'col', parentId, clientId } );
 		}
@@ -38,5 +39,5 @@ export default function useResponsiveAttributes( {
 		};
 	}, [ canWrap, parentId ] );
 
-	return { canWrap };
+	return { canWrap, rowGap, columnGap, isFirstBlock, isLastBlock };
 }
