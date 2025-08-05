@@ -12,6 +12,36 @@
 		"html": false,
 		"className": false
 	},
+	"attributes": {
+		"fontUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"headingsFont": {
+			"type": "object",
+			"default": {
+				"fontWeight": "normal",
+				"fallbackStack": "sans-serif",
+				"fontFace": ""
+			}
+		},
+		"bodyFont": {
+			"type": "object",
+			"default": {
+				"fontWeight": "normal",
+				"fallbackStack": "sans-serif",
+				"fontFace": ""
+			}
+		},
+		"accentFont": {
+			"type": "object",
+			"default": {
+				"fontWeight": "normal",
+				"fallbackStack": "sans-serif",
+				"fontFace": ""
+			}
+		}
+	},
 	"ancestor": [ "cno-email-blocks/head" ],
 	"editorScript": "file:./index.tsx"
 }

@@ -31,5 +31,6 @@
 		}
 		echo '</style>';
 	}
+	echo $content;
 	?>
 </head>
