@@ -1,20 +1,20 @@
 import {
-	SelectControl,
 	ToggleControl,
 	TabPanel,
 	PanelBody,
 	Flex,
 	FlexItem,
-	RadioControl,
-	TextControl,
 } from '@wordpress/components';
 import useFontSettings from './useFontSettings';
+import CustomFontDefinitions from './CustomFontDefinitions';
+import DefaultFontPicker from './DefaultFontPicker';
 import { FontsState } from './types';
 
 export default function FontControl( props ) {
 	const {
 		fonts,
 		fontTabs,
+		isUsingDefaultFonts,
 		hasAccent,
 		setHasAccent,
 		handleFontStackChange,
@@ -36,55 +36,37 @@ export default function FontControl( props ) {
 					<TabPanel
 						tabs={ fontTabs }
 						children={ ( tab ) => {
-							return (
-								<Flex
-									direction="column"
-									gap={ 6 }
-									style={ { paddingBlockStart: '1rem' } }
-								>
-									<FlexItem isBlock>
-										<TextControl
-											__next40pxDefaultSize
-											__nextHasNoMarginBottom
-											label="CSS Font Name"
-											help="CSS-safe font name, e.g. “gill-sans-nova”"
-											value={ fonts[ tab.name ].fontFace }
-											onChange={ ( val ) =>
-												handleFontFaceChange(
-													val,
-													tab.name as keyof FontsState
-												)
-											}
-										/>
-										<RadioControl
-											label="Font Type"
-											help="Used to set fallback fonts if custom fonts don't load in an email client"
-											onChange={ ( val ) => {
+							return isUsingDefaultFonts
+								? DefaultFontPicker( {
+										handleChange: ( val ) =>
+											handleFontFaceChange(
+												val,
+												tab.name as keyof FontsState
+											),
+										value: fonts[ tab.name ].fontFace,
+								  } )
+								: CustomFontDefinitions( {
+										fontType: {
+											value:
+												fonts[ tab.name ]?.fallbackStack
+													.label || 'sans-serif',
+											handleChange: ( val: string ) =>
 												handleFontStackChange(
 													val as
 														| 'serif'
 														| 'sans-serif',
 													tab.name as keyof FontsState
-												);
-											} }
-											options={ [
-												{
-													label: 'Serif',
-													value: 'serif',
-												},
-												{
-													label: 'Sans Serif',
-													value: 'sans-serif',
-												},
-											] }
-											selected={
-												fonts[ tab.name ]?.fallbackStack
-													.label || 'sans-serif'
-											}
-										/>
-									</FlexItem>
-								</Flex>
-							);
+												),
+										},
+										fontName: {
+											value: fonts[ tab.name ].fontFace,
+											handleChange: ( val ) =>
+												handleFontFaceChange(
+													val,
+													tab.name as keyof FontsState
+												),
+										},
+								  } );
 						} }
 					/>
 				</FlexItem>
