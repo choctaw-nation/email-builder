@@ -243,13 +243,9 @@ class Gutenberg_Handler {
 
 		if ( ! $is_administrator ) {
 			$allowed_block_types = array(
-				'core/heading',
 				'core/list',
 				'core/list-item',
-				'core/paragraph',
 				'core/pattern',
-				'core/code',
-				'core/html',
 				'core/block',
 				'cno-email-blocks/email-wrapper',
 				'cno-email-blocks/container',
@@ -259,6 +255,11 @@ class Gutenberg_Handler {
 				'cno-email-blocks/column',
 				'cno-email-blocks/image',
 				'cno-email-blocks/row',
+				'cno-email-blocks/text',
+				'cno-email-blocks/font',
+				'cno-email-blocks/head',
+				'cno-email-blocks/body',
+				'cno-email-blocks/heading',
 			);
 			return $allowed_block_types;
 		}

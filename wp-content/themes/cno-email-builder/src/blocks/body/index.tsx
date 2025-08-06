@@ -6,7 +6,7 @@ import {
 } from '@wordpress/block-editor';
 
 import metadata from './block.json';
-import { allowedBlocks } from '../lib/allowedBlocks';
+import { allowedBlocks } from '../_lib/allowedBlocks';
 
 registerBlockType( metadata.name, {
 	edit: () => {

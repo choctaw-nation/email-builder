@@ -7,6 +7,8 @@ export default function LinkSettings( { attributes, setAttributes } ) {
 	const { linkDestination, rel, linkTarget } = attributes;
 	const [ isVisible, setIsVisible ] = useState( false );
 	const [ isEditing, setIsEditing ] = useState( false );
+	const [ url, setUrl ] = useState( linkDestination );
+
 	const linkIsSet = '' !== linkDestination;
 	return (
 		<ToolbarButton
@@ -42,13 +44,17 @@ export default function LinkSettings( { attributes, setAttributes } ) {
 							className={
 								'block-editor-url-popover__link-editor'
 							}
+							onSubmit={ ( ev ) => {
+								ev.preventDefault();
+								setIsEditing( false );
+								setAttributes( { linkDestination: url } );
+							} }
 						>
 							<URLInput
-								value={ linkDestination }
+								placeholder="https://..."
+								value={ url }
 								onChange={ ( newValue ) => {
-									setAttributes( {
-										linkDestination: newValue,
-									} );
+									setUrl( newValue );
 								} }
 								disableSuggestions={ true }
 								onBlur={ () => setIsEditing( false ) }
@@ -63,11 +69,9 @@ export default function LinkSettings( { attributes, setAttributes } ) {
 					) }
 					{ linkIsSet && ! isEditing && (
 						<URLPopover.LinkViewer
-							url={ linkDestination }
+							url={ url }
 							onEditLinkClick={ () => {
-								setAttributes( {
-									linkDestination: '',
-								} );
+								setUrl( '' );
 								setIsEditing( true );
 							} }
 						/>

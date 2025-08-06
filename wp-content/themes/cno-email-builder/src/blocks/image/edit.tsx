@@ -9,7 +9,7 @@ import { ToolbarGroup } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { isBlobURL, revokeBlobURL } from '@wordpress/blob';
 import { image } from '@wordpress/icons';
-import LinkSettings from './LinkSettings';
+import LinkSettings from '../_shared/LinkSettings';
 import ImageSettings from './ImageSettings';
 import { getImageStyle } from './utils';
 

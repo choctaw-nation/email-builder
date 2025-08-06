@@ -34,25 +34,6 @@
 			"attribute": "title",
 			"role": "content"
 		},
-		"href": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "a",
-			"attribute": "href",
-			"role": "content"
-		},
-		"rel": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "a",
-			"attribute": "rel"
-		},
-		"linkClass": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "a",
-			"attribute": "class"
-		},
 		"id": {
 			"type": "number"
 		},
@@ -65,6 +46,13 @@
 		"scale": {
 			"type": "string"
 		},
+		"href": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "href",
+			"role": "content"
+		},
 		"linkDestination": {
 			"type": "string"
 		},
@@ -73,6 +61,12 @@
 			"source": "attribute",
 			"selector": "a",
 			"attribute": "target"
+		},
+		"rel": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "rel"
 		}
 	},
 	"ancestor": [ "cno-email-blocks/body" ],

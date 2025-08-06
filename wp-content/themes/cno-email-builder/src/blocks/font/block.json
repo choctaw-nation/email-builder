@@ -22,24 +22,24 @@
 		"headingsFont": {
 			"type": "object",
 			"default": {
-				"fontWeight": "normal",
-				"fallbackStack": "sans-serif",
+				"fontWeight": "",
+				"fallbackStack": "",
 				"fontFace": ""
 			}
 		},
 		"bodyFont": {
 			"type": "object",
 			"default": {
-				"fontWeight": "normal",
-				"fallbackStack": "sans-serif",
+				"fontWeight": "",
+				"fallbackStack": "",
 				"fontFace": ""
 			}
 		},
 		"accentFont": {
 			"type": "object",
 			"default": {
-				"fontWeight": "normal",
-				"fallbackStack": "sans-serif",
+				"fontWeight": "",
+				"fallbackStack": "",
 				"fontFace": ""
 			}
 		}
