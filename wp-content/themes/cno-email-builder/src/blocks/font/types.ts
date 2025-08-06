@@ -5,8 +5,10 @@ export type FontBlockAttributes = {
 	fontUrl: string;
 };
 export type FontsData = {
-	fontFace: string;
-	fontWeight: 'normal' | 'bold';
+	name: string;
+	title?: string;
+	fontWeights: number[];
+	fontStyles?: string[];
 	fallbackStack: {
 		label: 'serif' | 'sans-serif';
 		value: string;

@@ -1,4 +1,4 @@
-import { responsiveClassNames } from '../../blocks/lib/responsiveHelpers';
+import { responsiveClassNames } from '../../blocks/_lib/responsiveHelpers';
 
 export type State = {
 	[ Key in keyof typeof responsiveClassNames ]: {

@@ -1,6 +1,6 @@
 import { InspectorControls, HeightControl } from '@wordpress/block-editor';
 import { Panel, PanelBody } from '@wordpress/components';
-import FlexContainer from '../lib/FlexContainer';
+import FlexContainer from '../_lib/FlexContainer';
 
 export default function ColumnControls( { attributes, setAttributes } ) {
 	return (

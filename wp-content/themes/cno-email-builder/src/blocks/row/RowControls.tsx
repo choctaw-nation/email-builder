@@ -7,7 +7,7 @@ import {
 	RangeControl,
 	ToggleControl,
 } from '@wordpress/components';
-import { MAX_WIDTH } from '../lib/consts';
+import { MAX_WIDTH } from '../_lib/consts';
 import useThemeSpacing from './useThemeSpacing';
 
 export default function RowControls( { attributes, setAttributes } ) {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from '@wordpress/element';
 import { FontsState } from './types';
-import { DEFAULT_FONT_URL } from './utils';
+import { DEFAULT_FONT_URL, DEFAULT_FONTS } from './utils';
 
 export default function useFontSettings( { attributes, setAttributes } ) {
 	const { headingsFont, bodyFont, accentFont } = attributes;
@@ -13,7 +13,7 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 		accentFont,
 	} );
 	const [ fontImportUrl, setFontImportUrl ] = useState( 'default' );
-	const isUsingDefaultFonts = fontImportUrl === 'default';
+	const isUsingDefaultFonts = 'default' === fontImportUrl;
 
 	useEffect( () => {
 		setFontImportUrl(
@@ -22,7 +22,7 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 	}, [ attributes.fontUrl ] );
 
 	useEffect( () => {
-		if ( 'default' === fontImportUrl ) {
+		if ( isUsingDefaultFonts ) {
 			setAttributes( { fontUrl: DEFAULT_FONT_URL } );
 		} else {
 			setAttributes( { fontUrl: '' } );
@@ -82,15 +82,33 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 		} );
 	}
 	function handleFontFaceChange( val: string, activeTab: keyof FontsState ) {
-		setFonts( ( prev ) => {
-			return {
-				...prev,
-				[ activeTab ]: {
-					...prev[ activeTab ],
-					fontFace: val,
-				},
-			};
-		} );
+		let fallbackStack;
+		if ( isUsingDefaultFonts ) {
+			const font = DEFAULT_FONTS.find( ( font ) => font.name === val );
+			if ( font ) {
+				fallbackStack = font.fallbackStack;
+			}
+			setFonts( ( prev ) => {
+				return {
+					...prev,
+					[ activeTab ]: {
+						...prev[ activeTab ],
+						name: val,
+						fallbackStack,
+					},
+				};
+			} );
+		} else {
+			setFonts( ( prev ) => {
+				return {
+					...prev,
+					[ activeTab ]: {
+						...prev[ activeTab ],
+						name: val,
+					},
+				};
+			} );
+		}
 	}
 
 	return {

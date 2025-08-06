@@ -7,8 +7,8 @@ import {
 } from '@wordpress/block-editor';
 
 import metadata from './block.json';
-import { allowedBlocks } from '../lib/allowedBlocks';
-import { SectionTable as Table } from '../lib/Table';
+import { allowedBlocks } from '../_lib/allowedBlocks';
+import { SectionTable as Table } from '../_lib/Table';
 
 registerBlockType( metadata.name, {
 	icon: group,

@@ -15,8 +15,8 @@ import {
 } from '@wordpress/components';
 
 import metadata from './block.json';
-import { allowedBlocks } from '../lib/allowedBlocks';
-import { MAX_WIDTH } from '../lib/consts';
+import { allowedBlocks } from '../_lib/allowedBlocks';
+import { MAX_WIDTH } from '../_lib/consts';
 
 registerBlockType( metadata.name, {
 	icon: homeButton,

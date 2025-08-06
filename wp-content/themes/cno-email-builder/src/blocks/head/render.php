@@ -17,16 +17,17 @@
 	<title><?php echo ! empty( $block->context['cno-email-blocks/title'] ) ? esc_html( $block->context['cno-email-blocks/title'] ) : 'Email Preview: ' . get_the_title() . ' | ' . get_bloginfo( 'site_title' ); ?></title>
 	<?php
 	if ( isset( $attributes['responsiveBlocks'] ) ) {
-		echo '<style>';
+		echo '<style type="text/css">';
 		if ( in_array( 'col', $attributes['responsiveBlocks'], true ) ) {
-			echo '@media screen and (max-width:450px) {
-			.responsive-col {
-				width: 100% !important;
-				display:block!important;
-			}
-			.responsive-col.not-last {
-				margin-bottom:10px;
-			}
+			echo '
+			@media screen and (max-width:450px) {
+				.responsive-col {
+					width: 100% !important;
+					display:block!important;
+				}
+				.responsive-col.not-last {
+					margin-bottom:10px;
+				}
 			}';
 		}
 		echo '</style>';

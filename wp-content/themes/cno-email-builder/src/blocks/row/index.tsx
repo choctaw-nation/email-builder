@@ -9,8 +9,8 @@ import { row } from '@wordpress/icons';
 import metadata from './block.json';
 import RowControls from './RowControls';
 
-import { RowTable as Table } from '../lib/Table';
-import { MAX_WIDTH } from '../lib/consts';
+import { RowTable as Table } from '../_lib/Table';
+import { MAX_WIDTH } from '../_lib/consts';
 import useBlockDetails from './useBlockDetails';
 
 registerBlockType( metadata.name, {

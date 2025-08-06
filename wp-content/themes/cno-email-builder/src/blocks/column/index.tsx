@@ -7,7 +7,7 @@ import {
 
 import { column } from '@wordpress/icons';
 
-import { responsiveClassNames } from '../lib/responsiveHelpers';
+import { responsiveClassNames } from '../_lib/responsiveHelpers';
 import metadata from './block.json';
 import useResponsiveAttributes from './useResponsiveAttributes';
 import ColumnControls from './ColumnControls';
