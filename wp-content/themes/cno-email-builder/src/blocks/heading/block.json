@@ -12,7 +12,11 @@
 		"html": false,
 		"className": false,
 		"inserter": true,
-		"multiple": true
+		"multiple": true,
+		"color": {
+			"background": false,
+			"text": false
+		}
 	},
 	"attributes": {
 		"level": {
@@ -49,9 +53,6 @@
 			"default": "black"
 		},
 		"margin": {
-			"type": "object"
-		},
-		"padding": {
 			"type": "object"
 		}
 	},

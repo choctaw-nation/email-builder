@@ -5,15 +5,13 @@ import {
 	HeightControl,
 } from '@wordpress/block-editor';
 import { BorderControl, Panel, PanelBody } from '@wordpress/components';
+import SpacingControl, { calcSpacingObject } from '../_shared/SpacingControl';
 
 import metadata from './block.json';
 import { separator } from '@wordpress/icons';
 
 registerBlockType( metadata.name, {
 	icon: separator,
-	/**
-	 * @see ./edit.js
-	 */
 	edit: ( { attributes, setAttributes } ) => {
 		const blockProps = useBlockProps( {
 			style: getBlockStyle( attributes ),
@@ -55,6 +53,12 @@ registerBlockType( metadata.name, {
 								/>
 							</div>
 						</PanelBody>
+						<SpacingControl
+							attributes={ attributes }
+							setAttributes={ setAttributes }
+							only="margin"
+							sides={ [ 'vertical' ] }
+						/>
 					</Panel>
 				</InspectorControls>
 				<hr { ...blockProps } />
@@ -62,9 +66,6 @@ registerBlockType( metadata.name, {
 		);
 	},
 
-	/**
-	 * @see ./save.js
-	 */
 	save: ( { attributes } ) => {
 		const blockProps = useBlockProps.save( {
 			style: getBlockStyle( attributes ),
@@ -97,5 +98,5 @@ function getBlockStyle( attributes ): React.CSSProperties {
 		blockStyle.width = width;
 	}
 
-	return blockStyle;
+	return { ...blockStyle, ...calcSpacingObject( attributes ) };
 }

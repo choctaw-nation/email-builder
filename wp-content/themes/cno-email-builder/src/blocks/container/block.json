@@ -12,14 +12,7 @@
 		"html": false,
 		"multiple": true,
 		"className": false,
-		"inserter": true,
-		"spacing": {
-			"padding": true,
-			"margin": false
-		},
-		"color": {
-			"background": true
-		}
+		"inserter": true
 	},
 	"attributes": {
 		"backgroundColor": {
@@ -30,6 +23,12 @@
 		"maxWidth": {
 			"type": "number",
 			"default": 600
+		},
+		"margin": {
+			"type": "object"
+		},
+		"padding": {
+			"type": "object"
 		}
 	},
 	"ancestor": [ "cno-email-blocks/body" ],

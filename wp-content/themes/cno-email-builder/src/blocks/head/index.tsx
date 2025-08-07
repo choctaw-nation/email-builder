@@ -12,7 +12,10 @@ import metadata from './block.json';
 import { STORES } from '../../stores/consts';
 
 registerBlockType( metadata.name, {
-	edit: ( { setAttributes } ) => {
+	edit: ( { setAttributes, context } ) => {
+		useEffect( () => {
+			setAttributes( { title: context[ 'cno-email-blocks/title' ] } );
+		}, [ context ] );
 		const blockProps = useBlockProps();
 		const innerBlocksProps = useInnerBlocksProps( blockProps, {
 			template: [
@@ -38,5 +41,37 @@ registerBlockType( metadata.name, {
 		return <div { ...innerBlocksProps } />;
 	},
 
-	save: () => <InnerBlocks.Content />,
+	save: ( { attributes } ) => (
+		<>
+			<head>
+				<meta charSet="UTF-8" />
+				<meta
+					content="text/html; charset=UTF-8"
+					http-equiv="Content-Type"
+				/>
+				<meta name="x-apple-disable-message-reformatting" />
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1"
+				/>
+				<title>{ attributes.title }</title>
+				{ attributes.responsiveBlocks.length && (
+					<style
+						dangerouslySetInnerHTML={ {
+							__html: `@media screen and (max-width:450px) {
+				.responsive-col {
+					width: 100% !important;
+					display:block!important;
+				}
+				.responsive-col.not-last {
+					margin-bottom:10px;
+				}
+			}`,
+						} }
+					/>
+				) }
+				<InnerBlocks.Content />
+			</head>
+		</>
+	),
 } );

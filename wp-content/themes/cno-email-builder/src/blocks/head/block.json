@@ -24,10 +24,12 @@
 		"responsiveBlocks": {
 			"type": "array",
 			"default": []
+		},
+		"title": {
+			"type": "string"
 		}
 	},
 	"usesContext": [ "cno-email-blocks/title" ],
 	"parent": [ "cno-email-blocks/email-wrapper" ],
-	"editorScript": "file:./index.tsx",
-	"render": "file:./render.php"
+	"editorScript": "file:./index.tsx"
 }

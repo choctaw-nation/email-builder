@@ -9,8 +9,10 @@ import {
 } from '@wordpress/components';
 import { MAX_WIDTH } from '../_lib/consts';
 import useThemeSpacing from './useThemeSpacing';
+import SpacingControls from '../_shared/SpacingControl';
 
-export default function RowControls( { attributes, setAttributes } ) {
+export default function RowControls( props ) {
+	const { attributes, setAttributes } = props;
 	const { columnGap, canWrap, maxWidth } = attributes;
 	const { spacingScale, scaleMax } = useThemeSpacing();
 	return (
@@ -73,6 +75,7 @@ export default function RowControls( { attributes, setAttributes } ) {
 						</FlexItem>
 					</Flex>
 				</PanelBody>
+				<SpacingControls { ...props } splitOnAxis={ true } />
 			</Panel>
 		</InspectorControls>
 	);

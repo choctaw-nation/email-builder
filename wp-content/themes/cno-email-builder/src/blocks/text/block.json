@@ -68,9 +68,6 @@
 		},
 		"margin": {
 			"type": "object"
-		},
-		"padding": {
-			"type": "object"
 		}
 	},
 	"ancestor": [ "cno-email-blocks/body" ],

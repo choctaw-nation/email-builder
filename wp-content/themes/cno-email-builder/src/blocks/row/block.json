@@ -11,11 +11,7 @@
 	"supports": {
 		"html": false,
 		"inserter": true,
-		"className": false,
-		"spacing": {
-			"margin": true,
-			"padding": true
-		}
+		"className": false
 	},
 	"attributes": {
 		"columnGap": {
@@ -33,6 +29,12 @@
 		"maxWidth": {
 			"type": "number",
 			"default": 600
+		},
+		"margin": {
+			"type": "object"
+		},
+		"padding": {
+			"type": "object"
 		}
 	},
 	"providesContext": {

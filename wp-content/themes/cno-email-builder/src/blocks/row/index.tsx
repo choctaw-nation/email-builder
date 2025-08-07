@@ -12,6 +12,7 @@ import RowControls from './RowControls';
 import { RowTable as Table } from '../_lib/Table';
 import { MAX_WIDTH } from '../_lib/consts';
 import useBlockDetails from './useBlockDetails';
+import { calcSpacingObject } from '../_shared/SpacingControl';
 
 registerBlockType( metadata.name, {
 	icon: row,
@@ -29,6 +30,7 @@ registerBlockType( metadata.name, {
 			maxWidth: Math.min( maxWidth, MAX_WIDTH ),
 			marginLeft: maxWidth < MAX_WIDTH ? 'auto' : undefined,
 			marginRight: maxWidth < MAX_WIDTH ? 'auto' : undefined,
+			...calcSpacingObject( props.attributes ),
 		};
 		const innerBlocksProps = useInnerBlocksProps(
 			useBlockProps( { style: blockStyle } ),
@@ -44,12 +46,14 @@ registerBlockType( metadata.name, {
 			</>
 		);
 	},
-	save: ( { attributes: { columnGap, rowGap, maxWidth } } ) => {
+	save: ( { attributes } ) => {
+		const { columnGap, rowGap, maxWidth } = attributes;
 		const blockProps = useBlockProps.save( {
 			style: {
 				maxWidth: Math.min( maxWidth, MAX_WIDTH ),
 				marginLeft: maxWidth < MAX_WIDTH ? 'auto' : undefined,
 				marginRight: maxWidth < MAX_WIDTH ? 'auto' : undefined,
+				...calcSpacingObject( attributes ),
 			},
 		} );
 		return (

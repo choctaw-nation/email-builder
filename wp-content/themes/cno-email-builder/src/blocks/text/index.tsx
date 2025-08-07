@@ -19,12 +19,14 @@ registerBlockType( metadata.name, {
 	edit: ( props ) => {
 		const { attributes, setAttributes } = props;
 		const { content, linkDestination } = attributes;
+		const isLink = !! linkDestination;
 		const blockProps = useBlockProps( {
 			style: {
 				...calcStyleObject( attributes ),
 				...calcSpacingObject( attributes ),
 				textAlign: attributes.textAlign || 'left',
-				textDecoration: '' !== linkDestination ? 'underline' : 'none',
+				textDecoration: !! linkDestination ? 'underline' : 'none',
+				display: isLink ? 'inline-block' : 'block',
 			},
 			align: attributes.textAlign || 'left',
 		} );
@@ -32,7 +34,11 @@ registerBlockType( metadata.name, {
 			<>
 				<InspectorControls>
 					<TypographyControls { ...props } />
-					<SpacingControls { ...props } />
+					<SpacingControls
+						{ ...props }
+						splitOnAxis={ true }
+						only="margin"
+					/>
 				</InspectorControls>
 				<BlockControls>
 					<AlignmentToolbar
@@ -43,31 +49,36 @@ registerBlockType( metadata.name, {
 					/>
 					<LinkSettings { ...props } />
 				</BlockControls>
-				<RichText
-					{ ...blockProps }
-					tagName="p"
-					allowedFormats={ [ 'core/bold', 'core/italic' ] }
-					placeholder="Type something nice here…"
-					value={ content }
-					onChange={ ( content ) => setAttributes( { content } ) }
-				/>
+				{ isLink ? (
+					<RichText
+						{ ...blockProps }
+						tagName="a"
+						value={ content }
+						href={ linkDestination }
+						disabled
+						aria-disabled={ true }
+					/>
+				) : (
+					<RichText
+						{ ...blockProps }
+						tagName="p"
+						allowedFormats={ [ 'core/bold', 'core/italic' ] }
+						placeholder="Type something nice here…"
+						value={ content }
+						onChange={ ( content ) => setAttributes( { content } ) }
+					/>
+				) }
 			</>
 		);
 	},
 	save: ( { attributes } ) => {
 		const { content, linkDestination, rel, linkTarget } = attributes;
-		const isLink = '' !== linkDestination;
-		const linkDisplay =
-			isLink &&
-			attributes.margin &&
-			Object.values( attributes.margin ).some( ( val ) => val )
-				? 'inline-block'
-				: 'inline';
+		const isLink = !! linkDestination;
 		const blockProps = useBlockProps.save( {
 			style: {
 				...calcStyleObject( attributes ),
 				...calcSpacingObject( attributes ),
-				display: isLink ? linkDisplay : 'inline',
+				display: isLink ? 'inline-block' : 'block',
 				textAlign: attributes.textAlign || 'left',
 			},
 			align: attributes.textAlign || 'left',
