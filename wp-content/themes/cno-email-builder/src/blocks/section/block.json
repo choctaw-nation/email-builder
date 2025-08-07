@@ -12,30 +12,15 @@
 		"html": false,
 		"inserter": true,
 		"className": false,
-		"spacing": {
-			"margin": true,
-			"padding": true
-		},
 		"align": true,
 		"alignWide": false
 	},
 	"attributes": {
-		"style": {
-			"type": "object",
-			"default": {
-				"spacing": {
-					"padding": {
-						"top": "0",
-						"right": "var:preset|spacing|50",
-						"bottom": "0",
-						"left": "var:preset|spacing|50"
-					},
-					"margin": {
-						"top": "var:preset|spacing|70",
-						"bottom": "var:preset|spacing|70"
-					}
-				}
-			}
+		"margin": {
+			"type": "object"
+		},
+		"padding": {
+			"type": "object"
 		}
 	},
 	"ancestor": [ "cno-email-blocks/body" ],

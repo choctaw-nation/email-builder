@@ -43,7 +43,7 @@ export default function FontControl( props ) {
 												val,
 												tab.name as keyof FontsState
 											),
-										value: fonts[ tab.name ].fontFace,
+										value: fonts[ tab.name ].name,
 								  } )
 								: CustomFontDefinitions( {
 										fontType: {

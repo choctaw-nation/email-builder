@@ -8,7 +8,7 @@ import {
 	BlockControls,
 	HeadingLevelDropdown,
 } from '@wordpress/block-editor';
-import { ToolbarGroup } from '@wordpress/components';
+import { ToolbarGroup, Panel, ColorPalette } from '@wordpress/components';
 import { heading } from '@wordpress/icons';
 import TypographyControls, {
 	calcStyleObject,
@@ -32,7 +32,9 @@ registerBlockType( metadata.name, {
 			<>
 				<InspectorControls>
 					<TypographyControls { ...props } />
-					<SpacingControls { ...props } only="margin" />
+					<Panel>
+						<SpacingControls { ...props } only="margin" />
+					</Panel>
 				</InspectorControls>
 				<BlockControls>
 					<ToolbarGroup>

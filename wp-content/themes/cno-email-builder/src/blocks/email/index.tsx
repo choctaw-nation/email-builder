@@ -45,5 +45,9 @@ registerBlockType( metadata.name, {
 			</>
 		);
 	},
-	save: () => <InnerBlocks.Content />,
+	save: () => (
+		<html lang="en" dir="ltr">
+			<InnerBlocks.Content />
+		</html>
+	),
 } );

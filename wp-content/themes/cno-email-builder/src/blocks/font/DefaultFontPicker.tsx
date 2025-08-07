@@ -10,7 +10,7 @@ export default function DefaultFontPicker( { handleChange, value } ) {
 				label="Default Fonts"
 				onChange={ handleChange }
 				options={ DEFAULT_FONTS.map( ( font ) => ( {
-					label: font.title,
+					label: font.title!,
 					value: font.name,
 				} ) ) }
 				value={ value }

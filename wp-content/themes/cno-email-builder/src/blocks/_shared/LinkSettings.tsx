@@ -9,12 +9,12 @@ export default function LinkSettings( { attributes, setAttributes } ) {
 	const [ isEditing, setIsEditing ] = useState( false );
 	const [ url, setUrl ] = useState( linkDestination );
 
-	const linkIsSet = '' !== linkDestination;
+	const linkIsSet = !! linkDestination;
 	return (
 		<ToolbarButton
 			__next40pxDefaultSize
 			icon={ link }
-			isPressed={ '' !== linkDestination }
+			isPressed={ linkIsSet }
 			onClick={ () => setIsVisible( true ) }
 		>
 			{ isVisible && (

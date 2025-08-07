@@ -1,16 +1,28 @@
-import React, { useState, useEffect, Fragment } from '@wordpress/element';
+import { useState, useEffect, Fragment } from '@wordpress/element';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 import { PanelBody, Flex, BoxControl, FlexBlock } from '@wordpress/components';
+
+export type AllowedSides =
+	| 'top'
+	| 'right'
+	| 'bottom'
+	| 'left'
+	| 'horizontal'
+	| 'vertical';
 
 export default function SpacingControls( {
 	attributes,
 	setAttributes,
 	only,
+	sides,
+	splitOnAxis,
 }: {
 	attributes: any;
 	setAttributes: ( {} ) => void;
 	only?: 'margin' | 'padding';
+	sides?: AllowedSides[];
+	splitOnAxis?: boolean;
 } ) {
 	const [ margin, setMargin ] = useState( attributes.margin || {} );
 	const [ padding, setPadding ] = useState( attributes.padding || {} );
@@ -66,6 +78,8 @@ export default function SpacingControls( {
 					onChange={ ( values ) =>
 						setMargin( ( prev ) => ( { ...prev, ...values } ) )
 					}
+					sides={ sides }
+					splitOnAxis={ splitOnAxis }
 				/>
 			</FlexBlock>
 		),
@@ -83,6 +97,8 @@ export default function SpacingControls( {
 							...values,
 						} ) )
 					}
+					sides={ sides }
+					splitOnAxis={ splitOnAxis }
 				/>
 			</FlexBlock>
 		),

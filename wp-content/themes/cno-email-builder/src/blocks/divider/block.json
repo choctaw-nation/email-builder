@@ -11,10 +11,7 @@
 	"example": {},
 	"supports": {
 		"html": false,
-		"className": false,
-		"spacing": {
-			"margin": true
-		}
+		"className": false
 	},
 	"attributes": {
 		"border": {
@@ -32,6 +29,9 @@
 			"default": "100%",
 			"attribute": "width",
 			"selector": "hr"
+		},
+		"margin": {
+			"type": "object"
 		}
 	},
 	"ancestor": [ "cno-email-blocks/body" ],
