@@ -13,6 +13,7 @@ import { heading } from '@wordpress/icons';
 import TypographyControls, {
 	calcStyleObject,
 } from '../_shared/TypographyControls';
+import SpacingControls, { calcSpacingObject } from '../_shared/SpacingControl';
 
 registerBlockType( metadata.name, {
 	icon: heading,
@@ -22,6 +23,7 @@ registerBlockType( metadata.name, {
 		const blockProps = useBlockProps( {
 			style: {
 				...calcStyleObject( attributes ),
+				...calcSpacingObject( attributes ),
 				textAlign: attributes.textAlign || 'left',
 			},
 			align: attributes.textAlign || 'left',
@@ -30,6 +32,7 @@ registerBlockType( metadata.name, {
 			<>
 				<InspectorControls>
 					<TypographyControls { ...props } />
+					<SpacingControls { ...props } only="margin" />
 				</InspectorControls>
 				<BlockControls>
 					<ToolbarGroup>
@@ -61,6 +64,7 @@ registerBlockType( metadata.name, {
 		const blockProps = useBlockProps.save( {
 			style: {
 				...calcStyleObject( attributes ),
+				...calcSpacingObject( attributes ),
 				textAlign: attributes.textAlign || 'left',
 			},
 			align: attributes.textAlign || 'left',

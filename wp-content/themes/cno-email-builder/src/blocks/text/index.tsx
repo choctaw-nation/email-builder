@@ -7,11 +7,12 @@ import {
 	BlockControls,
 	AlignmentToolbar,
 } from '@wordpress/block-editor';
-import { link, paragraph } from '@wordpress/icons';
+import { paragraph } from '@wordpress/icons';
 import TypographyControls, {
 	calcStyleObject,
 } from '../_shared/TypographyControls';
 import LinkSettings from '../_shared/LinkSettings';
+import SpacingControls, { calcSpacingObject } from '../_shared/SpacingControl';
 
 registerBlockType( metadata.name, {
 	icon: paragraph,
@@ -21,6 +22,7 @@ registerBlockType( metadata.name, {
 		const blockProps = useBlockProps( {
 			style: {
 				...calcStyleObject( attributes ),
+				...calcSpacingObject( attributes ),
 				textAlign: attributes.textAlign || 'left',
 				textDecoration: '' !== linkDestination ? 'underline' : 'none',
 			},
@@ -30,6 +32,7 @@ registerBlockType( metadata.name, {
 			<>
 				<InspectorControls>
 					<TypographyControls { ...props } />
+					<SpacingControls { ...props } />
 				</InspectorControls>
 				<BlockControls>
 					<AlignmentToolbar
@@ -54,9 +57,17 @@ registerBlockType( metadata.name, {
 	save: ( { attributes } ) => {
 		const { content, linkDestination, rel, linkTarget } = attributes;
 		const isLink = '' !== linkDestination;
+		const linkDisplay =
+			isLink &&
+			attributes.margin &&
+			Object.values( attributes.margin ).some( ( val ) => val )
+				? 'inline-block'
+				: 'inline';
 		const blockProps = useBlockProps.save( {
 			style: {
 				...calcStyleObject( attributes ),
+				...calcSpacingObject( attributes ),
+				display: isLink ? linkDisplay : 'inline',
 				textAlign: attributes.textAlign || 'left',
 			},
 			align: attributes.textAlign || 'left',
