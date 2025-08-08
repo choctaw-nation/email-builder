@@ -5,12 +5,6 @@
  * @package ChoctawNation
  */
 
-$bootstrap = array(
-	'version' => '5.3.7',
-	'style'   => 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css',
-	'script'  => 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js',
-);
-wp_enqueue_style( 'bootstrap', $bootstrap['style'], array(), $bootstrap['version'] );
 $email_wrapper_block = parse_blocks( get_the_content() )[0];
 get_header();
 
@@ -21,9 +15,12 @@ echo "<style type='text/css'>body {background-color:{$body_block['attrs']['backg
 	<div class="row gx-0 my-3 gap-3 min-vh-100 justify-content-between">
 	<section class="col-12 order-2 order-md-1 col-sm-8 flex-grow-1 flex-shrink-1">
 	<?php
-	$content = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' . get_the_content();
-	$content = preg_replace( '/<!--[\s\S]*?-->/', '', $content );
-	echo '<iframe srcdoc="' . esc_attr( $content ) . '" style="width:100%;height:100vh;border:none;"></iframe>';
+	$content = cno_get_email_content( 'preview' );
+	if ( ! $content ) {
+		echo '<p>No content available for preview.</p>';
+	} else {
+		echo '<iframe srcdoc="' . esc_attr( $content ) . '" style="width:100%;height:100vh;border:none;"></iframe>';
+	}
 	?>
 	</section>
 	<aside class="col-auto flex-grow-1 flex-md-grow-0 flex-shrink-1 bg-white order-1 order-md-2 p-3">
@@ -42,58 +39,5 @@ echo "<style type='text/css'>body {background-color:{$body_block['attrs']['backg
 	</aside>
 	</div>
 </main>
-<script type="module">
-	import 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js';
-	const cnoNonce = <?php echo wp_json_encode( wp_create_nonce( 'wp_rest' ) ); ?>;
-	(function() {
-		const downloadButton = document.getElementById( 'download' );
-		if (  downloadButton ) {
-			downloadButton.addEventListener( 'click', downloadHTML);
-			function downloadHTML() {
-				const htmlContent = <?php echo wp_json_encode( $content ); ?>;
-				const blob = new Blob([htmlContent], { type: 'text/html' });
-				const link = document.createElement( 'a' );
-				link.href = URL.createObjectURL( blob );
-				link.download = 'email.html';
-				document.body.appendChild( link );
-				link.click();
-				document.body.removeChild( link );
-				URL.revokeObjectURL( link.href );
-			}
-		}
-		const sendEmailForm = document.getElementById('send-email-form');
-		if (sendEmailForm) {
-			sendEmailForm.addEventListener('submit', async (e) => {
-				e.preventDefault();
-				const recipient = document.getElementById('recipient-email').value;
-				const htmlContent = <?php echo wp_json_encode( $content ); ?>;
-				const response = await fetch('/wp-json/cno/v1/post', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						'X-WP-NONCE': cnoNonce
-					},
-					body: JSON.stringify({
-						recipient_email: recipient,
-						content: htmlContent
-					})
-				});
-				let alertDiv = document.getElementById('email-alert');
-				if (!alertDiv) {
-					alertDiv = document.createElement('div');
-					alertDiv.id = 'email-alert';
-					sendEmailForm.parentNode.insertBefore(alertDiv, sendEmailForm);
-				}
-				if (response.ok) {
-					alertDiv.innerHTML = '<div class="alert alert-success alert-dismissible fade show" role="alert">Email sent successfully.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-				} else {
-					alertDiv.innerHTML = '<div class="alert alert-danger alert-dismissible fade show" role="alert">Failed to send email.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-				}
-			});
-		}
-	})();
-</script>
-
-
 <?php
-wp_footer();
+get_footer();

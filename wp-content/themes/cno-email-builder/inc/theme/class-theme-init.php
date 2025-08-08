@@ -110,11 +110,33 @@ class Theme_Init {
 	 * Adds scripts with the appropriate dependencies
 	 */
 	public function enqueue_frontend_assets() {
-		// style.css
+		$theme_assets = require_once get_template_directory() . '/dist/global.asset.php';
+		$asset_path   = get_template_directory_uri() . '/dist/global';
+		wp_enqueue_script(
+			'global',
+			"{$asset_path}.js",
+			$theme_assets['dependencies'],
+			$theme_assets['version'],
+			array( 'strategy' => 'defer' )
+		);
+		wp_localize_script(
+			'global',
+			'cnoData',
+			array(
+				'nonce'   => wp_create_nonce( 'wp_rest' ),
+				'content' => cno_get_email_content(),
+			)
+		);
+		wp_enqueue_style(
+			'global',
+			"{$asset_path}.css",
+			$theme_assets['dependencies'],
+			$theme_assets['version'],
+		);
 		wp_enqueue_style(
 			'main',
 			get_stylesheet_uri(),
-			array(),
+			array( 'global' ),
 			wp_get_theme()->get( 'Version' )
 		);
 

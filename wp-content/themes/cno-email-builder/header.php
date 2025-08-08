@@ -17,10 +17,12 @@
 	<?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class( 'd-flex flex-column' ); ?>>
 	<?php wp_body_open(); ?>
 	<header class="container-fluid navbar border-bottom border-2 border-black bg-white" style="--bs-navbar-padding-x:var(--bs-gutter-x);">
 		<a class="navbar-brand my-2 align-items-md-center" href="<?php echo esc_url( site_url() ); ?>" class="logo" aria-label="to Home Page">
 			<?php echo bloginfo( 'title' ); ?>
 		</a>
 	</header>
+<?php
+echo '<div id="site-content" class="min-vh-100">';
