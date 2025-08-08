@@ -1,6 +1,7 @@
 name: PHPCS check
 on:
     pull_request:
+        types: [opened,edited,ready_for_review,synchronize]
     # Allow manually triggering the workflow.
     workflow_dispatch:
 
