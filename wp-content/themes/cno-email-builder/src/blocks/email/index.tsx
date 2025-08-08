@@ -7,7 +7,6 @@ import {
 } from '@wordpress/block-editor';
 import metadata from './block.json';
 import BlockControls from './BlockControls';
-import { allowedBlocks } from '../_lib/allowedBlocks';
 
 registerBlockType( metadata.name, {
 	icon: table,
