@@ -1,7 +1,7 @@
 {
 	"name": "cno-email-builder-theme",
-	"version": "1.0.0",
-	"description": "Custom WP theme for CNO sites",
+	"version": "1.0.1",
+	"description": "Custom WP theme",
 	"prettier": "@wordpress/prettier-config",
 	"browserslist": [
 		"extends @wordpress/browserslist-config"
@@ -10,9 +10,7 @@
 		"build": "wp-scripts build --blocks-manifest --webpack-copy-php --source-path=wp-content/themes/cno-email-builder/src/ --output-path=wp-content/themes/cno-email-builder/dist/",
 		"check-engines": "wp-scripts check-engines",
 		"packages-update": "wp-scripts packages-update",
-		"start": "wp-scripts start --blocks-manifest --webpack-copy-php --source-path=wp-content/themes/cno-email-builder/src/ --output-path=wp-content/themes/cno-email-builder/dist/",
-		"test:dev": "echo 'Test not implemented yet' && exit 0",
-		"test:stg": "echo 'Test not implemented yet' && exit 0"
+		"start": "wp-scripts start --blocks-manifest --webpack-copy-php --source-path=wp-content/themes/cno-email-builder/src/ --output-path=wp-content/themes/cno-email-builder/dist/"
 	},
 	"author": "Choctaw Nation of Oklahoma",
 	"license": "GPL-3.0-or-later",
