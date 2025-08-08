@@ -124,7 +124,7 @@ class Theme_Init {
 			'cnoData',
 			array(
 				'nonce'   => wp_create_nonce( 'wp_rest' ),
-				'content' => cno_get_email_content( 'json' ),
+				'content' => cno_get_email_content(),
 			)
 		);
 		wp_enqueue_style(
