@@ -9,8 +9,20 @@
 	"description": "Section block for email content",
 	"example": {},
 	"supports": {
-		"html": false
+		"html": false,
+		"inserter": true,
+		"className": false,
+		"align": true,
+		"alignWide": false
 	},
-	"ancestor": [ "cno-email-blocks/email" ],
+	"attributes": {
+		"margin": {
+			"type": "object"
+		},
+		"padding": {
+			"type": "object"
+		}
+	},
+	"ancestor": [ "cno-email-blocks/body" ],
 	"editorScript": "file:./index.tsx"
 }

@@ -1,16 +1,82 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "cno-email-blocks/images",
-	"version": "0.1.0",
-	"title": "CNO Email Images",
+	"name": "cno-email-blocks/image",
+	"title": "CNO Email Image",
+	"icon": "image",
 	"category": "cno-email-blocks",
-	"icon": "block-default",
-	"description": "Images block",
-	"example": {},
-	"supports": {
-		"html": false
+	"description": "Insert an image.",
+	"keywords": [ "img", "photo", "picture" ],
+	"attributes": {
+		"blob": {
+			"type": "string",
+			"role": "local"
+		},
+		"url": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "img",
+			"attribute": "src",
+			"role": "content"
+		},
+		"alt": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "img",
+			"attribute": "alt",
+			"default": "",
+			"role": "content"
+		},
+		"title": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "img",
+			"attribute": "title",
+			"role": "content"
+		},
+		"id": {
+			"type": "number"
+		},
+		"width": {
+			"type": "string"
+		},
+		"height": {
+			"type": "string"
+		},
+		"scale": {
+			"type": "string"
+		},
+		"href": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "href",
+			"role": "content"
+		},
+		"linkDestination": {
+			"type": "string"
+		},
+		"linkTarget": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "target"
+		},
+		"rel": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "rel"
+		}
 	},
-	"ancestor": [ "cno-email-blocks/email" ],
-	"editorScript": "file:./index.tsx"
+	"ancestor": [ "cno-email-blocks/body" ],
+	"supports": {
+		"anchor": false,
+		"html": false,
+		"className": false,
+		"spacing": {
+			"margin": true
+		}
+	},
+	"editorScript": [ "file:./index.tsx" ]
 }

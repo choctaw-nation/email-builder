@@ -1,41 +1,19 @@
 import { addFilter } from '@wordpress/hooks';
+import domReady from '@wordpress/dom-ready';
+import removeDefaultBlockClasses from './removeDefaultBlockClasses';
+import { disableAdvancedPanel } from './disableAdvancedPanel';
 
-function alterBlockClasses( settings, name: string ) {
-	const blocksToEdit = {
-		'core/columns': {
-			title: 'Row',
-			description:
-				"The Bootstrap 'row' element to hold a group of columns.",
-			attributes: {
-				...settings.attributes,
-				className: {
-					type: 'string',
-					default: 'row',
-				},
-			},
-		},
-		'core/col': {
-			attributes: {
-				...settings.attributes,
-				className: {
-					type: 'string',
-					default: 'col',
-				},
-			},
-		},
+domReady( () => {
+	const namespace = 'cno-email-builder';
+	const filters = {
+		'cno-remove-default-block-classes': removeDefaultBlockClasses,
+		'cno-disable-advanced-panel': disableAdvancedPanel,
 	};
-	if ( ! blocksToEdit.hasOwnProperty( name ) ) {
-		return settings;
-	}
-
-	return {
-		...settings,
-		...blocksToEdit[ name ],
-	};
-}
-
-addFilter(
-	'blocks.registerBlockType',
-	'cno-starter-theme/alter-block-classes',
-	alterBlockClasses
-);
+	Object.entries( filters ).forEach( ( [ filterName, filterCallback ] ) => {
+		addFilter(
+			'blocks.registerBlockType',
+			`${ namespace }/${ filterName }`,
+			filterCallback
+		);
+	} );
+} );

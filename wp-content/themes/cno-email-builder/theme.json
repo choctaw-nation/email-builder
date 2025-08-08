@@ -9,40 +9,142 @@
 			"customGradient": false,
 			"defaultDuotone": false,
 			"defaultGradients": false,
-			"defaultPalette": true,
+			"defaultPalette": false,
 			"duotone": [],
-			"gradients": []
+			"gradients": [],
+			"palette": [
+				{
+					"color": "white",
+					"name": "White",
+					"slug": "white"
+				},
+				{
+					"color": "black",
+					"name": "Black",
+					"slug": "black"
+				},
+				{
+					"color": "#c8c8c8",
+					"name": "Gray",
+					"slug": "gray"
+				}
+			]
 		},
-		"dimensions": {},
+		"dimensions": {
+			"aspectRatio": false
+		},
 		"layout": {
 			"allowCustomContentAndWideSize": false,
 			"allowEditing": false,
 			"wideSize": "600px",
 			"contentSize": "600px"
 		},
+		"border": {
+			"color": false,
+			"radius": false,
+			"style": false,
+			"width": false
+		},
+		"lightbox": {
+			"enabled": false
+		},
+		"background": {
+			"backgroundImage": false,
+			"backgroundSize": false
+		},
+		"position": {
+			"sticky": false
+		},
 		"shadow": {
 			"defaultPresets": false
 		},
 		"spacing": {
-			"blockGap": true,
+			"blockGap": false,
 			"customSpacingSize": false,
 			"defaultSpacingSizes": false,
 			"margin": true,
-			"padding": true
+			"padding": true,
+			"units": [ "px" ],
+			"spacingScale": {
+				"operator": "*",
+				"increment": 1.5,
+				"unit": "px",
+				"mediumStep": 10,
+				"steps": 5
+			}
 		},
 		"typography": {
 			"customFontSize": true,
-			"defaultFontSizes": true,
+			"defaultFontSizes": false,
 			"dropCap": false,
 			"fontWeight": true,
 			"lineHeight": true,
-			"textDecoration": false
+			"textDecoration": true,
+			"fontSizes": [
+				{
+					"slug": "x-small",
+					"size": "12px",
+					"name": "XS"
+				},
+				{
+					"slug": "small",
+					"size": "14px",
+					"name": "Small"
+				},
+				{
+					"slug": "base",
+					"size": "16px",
+					"name": "Base"
+				},
+				{
+					"slug": "medium",
+					"size": "18px",
+					"name": "Medium"
+				},
+				{
+					"slug": "large",
+					"size": "20px",
+					"name": "Large"
+				},
+				{
+					"slug": "x-large",
+					"size": "24px",
+					"name": "Extra Large"
+				}
+			]
 		},
 		"useRootPaddingAwareAlignments": false
 	},
 	"styles": {
+		"typography": {
+			"fontSize": "var:preset|fontSize|base"
+		},
 		"spacing": {
 			"blockGap": "var:preset|spacing|base"
+		},
+		"blocks": {
+			"core/paragraph": {
+				"typography": {
+					"fontSize": "var:preset|fontSize|base"
+				}
+			},
+			"core/list": {
+				"typography": {
+					"fontSize": "var:preset|fontSize|base"
+				}
+			},
+			"core/list-item": {
+				"typography": {
+					"fontSize": "var:preset|fontSize|base"
+				}
+			}
+		},
+		"elements": {
+			"link": {
+				"typography": {
+					"fontSize": "var:preset|fontSize|base"
+				}
+			}
 		}
 	}
 }

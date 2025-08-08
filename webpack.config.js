@@ -3,11 +3,7 @@ const RemoveEmptyScriptsPlugin = require( 'webpack-remove-empty-scripts' );
 const THEME_NAME = 'cno-email-builder';
 const THEME_DIR = `/wp-content/themes/${ THEME_NAME }`;
 
-const blockEditor = [
-	'registerBlockVariations',
-	'unregisterBlocks',
-	'editDefaultBlocks',
-];
+const blockEditor = [ 'editDefaultBlocks' ];
 
 module.exports = {
 	...defaultConfig,

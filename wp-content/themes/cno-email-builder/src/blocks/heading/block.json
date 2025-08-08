@@ -1,0 +1,61 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cno-email-blocks/heading",
+	"version": "0.1.0",
+	"title": "CNO Email Heading",
+	"category": "cno-email-blocks",
+	"icon": "block-default",
+	"description": "Add a heading to your email.",
+	"example": {},
+	"supports": {
+		"html": false,
+		"className": false,
+		"inserter": true,
+		"multiple": true,
+		"color": {
+			"background": false,
+			"text": false
+		}
+	},
+	"attributes": {
+		"level": {
+			"type": "integer",
+			"default": 2
+		},
+		"content": {
+			"type": "string",
+			"source": "html",
+			"selector": "h1,h2,h3,h4,h5,h6"
+		},
+		"lineHeight": {
+			"type": "string",
+			"default": "1.5"
+		},
+		"textTransform": {
+			"type": "string",
+			"enum": [ "lowercase", "uppercase", "none", "capitalize" ],
+			"default": "none"
+		},
+		"fontFamily": {
+			"type": "string"
+		},
+		"fontSize": {
+			"type": "string",
+			"default": "20px"
+		},
+		"textAlign": {
+			"type": "string",
+			"enum": [ "left", "center", "right" ]
+		},
+		"color": {
+			"type": "string",
+			"default": "black"
+		},
+		"margin": {
+			"type": "object"
+		}
+	},
+	"ancestor": [ "cno-email-blocks/body" ],
+	"editorScript": "file:./index.tsx"
+}

@@ -9,9 +9,44 @@
 	"description": "Column block",
 	"example": {},
 	"supports": {
-		"html": false
+		"html": false,
+		"inserter": true,
+		"className": false,
+		"align": true,
+		"alignWide": false
 	},
-	"ancestor": [ "cno-email-blocks/email" ],
+	"attributes": {
+		"padding": {
+			"type": "object",
+			"default": {}
+		},
+		"isResponsive": {
+			"type": "boolean",
+			"default": true
+		},
+		"isFirstBlock": {
+			"type": "boolean",
+			"default": false
+		},
+		"isLastBlock": {
+			"type": "boolean",
+			"default": false
+		},
+		"width": {
+			"type": "string",
+			"default": ""
+		},
+		"height": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"usesContext": [
+		"cno-email-blocks/columnGap",
+		"cno-email-blocks/rowGap",
+		"cno-email-blocks/canWrap"
+	],
+	"ancestor": [ "cno-email-blocks/body" ],
 	"parent": [ "cno-email-blocks/row" ],
 	"editorScript": "file:./index.tsx"
 }

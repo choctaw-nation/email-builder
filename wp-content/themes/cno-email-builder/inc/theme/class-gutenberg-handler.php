@@ -17,7 +17,7 @@ class Gutenberg_Handler {
 	 */
 	public function __construct() {
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_assets' ) );
-		add_action( 'after_setup_theme', array( $this, 'cno_block_theme_support' ), 50 );
+		add_action( 'after_setup_theme', array( $this, 'cno_block_theme_support' ), PHP_INT_MAX );
 		add_action( 'init', array( $this, 'register_block_assets' ) );
 		add_action( 'block_categories_all', array( $this, 'register_block_pattern_categories' ) );
 		add_filter( 'block_editor_settings_all', array( $this, 'restrict_gutenberg_ui' ), 10, 1 );
@@ -89,23 +89,29 @@ class Gutenberg_Handler {
 	 * Enqueue the block editor assets that control the layout of the Block Editor.
 	 */
 	public function enqueue_block_assets() {
-		// this method has not been implemented yet.
+		$files = array( 'editDefaultBlocks' );
+		foreach ( $files as $file ) {
+			$assets = require_once get_template_directory() . "/dist/admin/{$file}.asset.php";
+			wp_enqueue_script(
+				$file,
+				get_template_directory_uri() . "/dist/admin/{$file}.js",
+				$assets['dependencies'],
+				$assets['version'],
+				array( 'strategy' => 'defer' )
+			);
+		}
 	}
 
 	/**
 	 * Init theme supports specific to the block editor.
 	 */
 	public function cno_block_theme_support() {
-		$opt_in_features = array(
-			'responsive-embeds',
-			'editor-styles',
-			'custom-spacing',
-		);
-		foreach ( $opt_in_features as $feature ) {
-			add_theme_support( $feature );
-		}
 		$opt_out_features = array(
 			'core-block-patterns',
+			'wp-emoji-styles',
+			'wp-block-styles',
+			'wp-block-library',
+			'global-styles',
 		);
 		foreach ( $opt_out_features as $feature ) {
 			remove_theme_support( $feature );
@@ -236,14 +242,9 @@ class Gutenberg_Handler {
 
 		if ( ! $is_administrator ) {
 			$allowed_block_types = array(
-				'core/heading',
 				'core/list',
 				'core/list-item',
-				'core/image',
-				'core/paragraph',
 				'core/pattern',
-				'core/code',
-				'core/html',
 				'core/block',
 				'cno-email-blocks/email-wrapper',
 				'cno-email-blocks/container',
@@ -253,9 +254,57 @@ class Gutenberg_Handler {
 				'cno-email-blocks/column',
 				'cno-email-blocks/image',
 				'cno-email-blocks/row',
+				'cno-email-blocks/text',
+				'cno-email-blocks/font',
+				'cno-email-blocks/head',
+				'cno-email-blocks/body',
+				'cno-email-blocks/heading',
 			);
 			return $allowed_block_types;
 		}
 		return $allowed_block_types;
+	}
+
+	/**
+	 * Transforms CSS variables to computed inline properties
+	 *
+	 * @param string $block_content the block markup
+	 * @param array  $block the block attributes
+	 */
+	public function compute_css_variables( $block_content, $block ) {
+		$spacing_attributes = $block['attrs']['style']['spacing'];
+		if ( empty( $spacing_attributes ) ) {
+			return $block_content;
+		}
+		if ( ! empty( $spacing_attributes['padding'] || ! empty( $spacing_attributes['margin'] ) ) ) {
+			$padding   = $block['attrs']['style']['spacing']['padding'];
+			$margin    = $block['attrs']['style']['spacing']['margin'];
+			$style_str = '';
+
+			foreach ( array( 'top', 'right', 'bottom', 'left' ) as $side ) {
+				if ( isset( $padding[ $side ] ) ) {
+					$style_str .= "padding-$side: {$padding[$side]}; ";
+				}
+				if ( isset( $margin[ $side ] ) ) {
+					$style_str .= "margin-$side: {$margin[$side]}; ";
+				}
+			}
+
+			// Insert or append to existing style attr
+			$block_content = preg_replace_callback(
+				'/<([a-z]+)([^>]*?)>/i',
+				function ( $matches ) use ( $style_str ) {
+					if ( strpos( $matches[2], 'style=' ) !== false ) {
+						return "<{$matches[1]}{$matches[2]} style=\"$style_str\">";
+					} else {
+						return "<{$matches[1]}{$matches[2]} style=\"$style_str\">";
+					}
+				},
+				$block_content,
+				1
+			);
+		}
+
+		return $block_content;
 	}
 }

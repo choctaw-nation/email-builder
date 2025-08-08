@@ -13,8 +13,8 @@
 		}
 	],
 	"scripts": {
-		"phpcs": "phpcs wp-content/themes/cno-starter-theme/ --extensions=php --ignore=wp-content/themes/cno-starter-theme/dist/",
-		"phpcbf": "phpcbf wp-content/themes/cno-starter-theme/ --extensions=php --ignore=wp-content/themes/cno-starter-theme/dist/"
+		"phpcs": "phpcs wp-content/themes/cno-email-builder/ --extensions=php --ignore=wp-content/themes/cno-email-builder/dist/",
+		"phpcbf": "phpcbf wp-content/themes/cno-email-builder/ --extensions=php --ignore=wp-content/themes/cno-email-builder/dist/"
 	},
 	"config": {
 		"allow-plugins": {

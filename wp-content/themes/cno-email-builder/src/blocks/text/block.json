@@ -1,0 +1,75 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cno-email-blocks/text",
+	"version": "0.1.0",
+	"title": "CNO Email Paragraph",
+	"category": "cno-email-blocks",
+	"icon": "block-default",
+	"description": "Add some text to your email.",
+	"example": {},
+	"supports": {
+		"html": false,
+		"className": false,
+		"inserter": true,
+		"multiple": true
+	},
+	"attributes": {
+		"content": {
+			"type": "string",
+			"source": "html",
+			"selector": "p,a"
+		},
+		"lineHeight": {
+			"type": "string",
+			"default": "1.5"
+		},
+		"textTransform": {
+			"type": "string",
+			"enum": [ "lowercase", "uppercase", "none", "capitalize" ],
+			"default": "none"
+		},
+		"fontFamily": {
+			"type": "string"
+		},
+		"fontSize": {
+			"type": "string",
+			"default": "16px"
+		},
+		"textAlign": {
+			"type": "string",
+			"enum": [ "left", "center", "right" ]
+		},
+		"color": {
+			"type": "string",
+			"default": "black"
+		},
+		"href": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "href",
+			"role": "content"
+		},
+		"linkDestination": {
+			"type": "string"
+		},
+		"linkTarget": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "target"
+		},
+		"rel": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "rel"
+		},
+		"margin": {
+			"type": "object"
+		}
+	},
+	"ancestor": [ "cno-email-blocks/body" ],
+	"editorScript": "file:./index.tsx"
+}

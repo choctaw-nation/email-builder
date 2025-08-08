@@ -10,8 +10,27 @@
 	"example": {},
 	"supports": {
 		"html": false,
-		"multiple": false
+		"multiple": true,
+		"className": false,
+		"inserter": true
 	},
-	"editorScript": "file:./index.tsx",
-	"render": "file:./render.php"
+	"attributes": {
+		"backgroundColor": {
+			"type": "string",
+			"attribute": "style.backgroundColor",
+			"default": "white"
+		},
+		"maxWidth": {
+			"type": "number",
+			"default": 600
+		},
+		"margin": {
+			"type": "object"
+		},
+		"padding": {
+			"type": "object"
+		}
+	},
+	"ancestor": [ "cno-email-blocks/body" ],
+	"editorScript": "file:./index.tsx"
 }

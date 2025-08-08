@@ -7,10 +7,33 @@
 	"category": "cno-email-blocks",
 	"icon": "block-default",
 	"description": "Divider block",
+	"keywords": [ "divider", "separator", "horizontal rule", "hr", "line" ],
 	"example": {},
 	"supports": {
-		"html": false
+		"html": false,
+		"className": false
 	},
-	"ancestor": [ "cno-email-blocks/email" ],
+	"attributes": {
+		"border": {
+			"type": "object",
+			"default": {
+				"color": "#000000",
+				"style": "solid",
+				"width": 1
+			},
+			"attribute": "border",
+			"selector": "hr"
+		},
+		"width": {
+			"type": "string",
+			"default": "100%",
+			"attribute": "width",
+			"selector": "hr"
+		},
+		"margin": {
+			"type": "object"
+		}
+	},
+	"ancestor": [ "cno-email-blocks/body" ],
 	"editorScript": "file:./index.tsx"
 }
