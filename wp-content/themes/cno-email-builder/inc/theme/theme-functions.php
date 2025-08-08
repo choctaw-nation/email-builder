@@ -57,8 +57,7 @@ function cno_echo_svg( string $logo_path, string|false $alt_text, string $fallba
 /**
  * Gets the content of the current post as JSON.
  *
- * @param 'json'|'preview' $type The type of content to retrieve.
- * @param bool             $strip_comments Whether to strip HTML comments from the content.
+ * @param bool $strip_comments Whether to strip HTML comments from the content. Default `true`.
  * @return string|null The JSON-encoded content or null if not available.
  */
 function cno_get_email_content( bool $strip_comments = true ): ?string {
