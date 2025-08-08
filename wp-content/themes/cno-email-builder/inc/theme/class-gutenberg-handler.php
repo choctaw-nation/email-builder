@@ -22,7 +22,6 @@ class Gutenberg_Handler {
 		add_action( 'block_categories_all', array( $this, 'register_block_pattern_categories' ) );
 		add_filter( 'block_editor_settings_all', array( $this, 'restrict_gutenberg_ui' ), 10, 1 );
 		add_filter( 'allowed_block_types_all', array( $this, 'restrict_block_types' ), 10, 2 );
-		// add_filter( 'render_block', array( $this, 'compute_css_variables' ), 10, 2 );
 	}
 
 	/**
