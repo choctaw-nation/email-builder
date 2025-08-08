@@ -7,7 +7,7 @@ jobs:
     deploy-prod:
         name: Deploy to Production
         if: github.ref == 'refs/heads/main'
-        uses: choctaw-nation/shared-github-actions/.github/workflows/deploy.yml@1.1.2
+        uses: choctaw-nation/shared-github-actions/.github/workflows/deploy.yml@main
         with:
             WPE_ENV: cnoemails
             theme_name: cno-email-builder
