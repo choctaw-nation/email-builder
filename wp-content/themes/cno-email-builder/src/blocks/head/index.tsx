@@ -7,8 +7,8 @@ import {
 import { useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 
-import '../../stores/responsive-styles/store';
 import metadata from './block.json';
+import '../../stores/responsive-styles/store';
 import { STORES } from '../../stores/consts';
 
 registerBlockType( metadata.name, {
@@ -16,6 +16,7 @@ registerBlockType( metadata.name, {
 		useEffect( () => {
 			setAttributes( { title: context[ 'cno-email-blocks/title' ] } );
 		}, [ context ] );
+
 		const blockProps = useBlockProps();
 		const innerBlocksProps = useInnerBlocksProps( blockProps, {
 			template: [
@@ -28,6 +29,7 @@ registerBlockType( metadata.name, {
 			],
 			allowedBlocks: [ 'cno-email-blocks/font' ],
 		} );
+
 		const responsiveBlocks = useSelect( ( select: any ) => {
 			const store = select( STORES.RESPONSIVE_STYLES );
 			const blockTypes = store.getResponsiveBlockTypes();

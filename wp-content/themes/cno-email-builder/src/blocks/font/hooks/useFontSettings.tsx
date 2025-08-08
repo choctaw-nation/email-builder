@@ -1,9 +1,22 @@
 import { useState, useEffect } from '@wordpress/element';
 import { FontsState } from '../lib/types';
 import { DEFAULT_FONTS } from '../lib/utils';
+import { useDispatch } from '@wordpress/data';
+import { STORES } from '../../../stores/consts';
 
 export default function useFontSettings( { attributes, setAttributes } ) {
-	const { headingsFont, bodyFont, accentFont, useDefaultFonts } = attributes;
+	const {
+		headingsFont,
+		bodyFont,
+		accentFont,
+		useDefaultFonts: isUsingDefaultFonts,
+	} = attributes;
+	const {
+		useDefaultFonts,
+		setFonts: setStoreFonts,
+		setHeadingsFont,
+	} = useDispatch( STORES.FONT_FOUNDRY );
+
 	const [ hasAccent, setHasAccent ] = useState(
 		attributes.accentFont.name || false
 	);
@@ -14,10 +27,15 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 	} );
 
 	useEffect( () => {
+		if ( isUsingDefaultFonts ) {
+			useDefaultFonts();
+		} else {
+			setStoreFonts( fonts );
+		}
 		setAttributes( {
 			...fonts,
 		} );
-	}, [ fonts ] );
+	}, [ fonts, isUsingDefaultFonts ] );
 
 	const fontTabs = [
 		{
@@ -37,42 +55,26 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 		},
 	];
 
-	// function handleFontStackChange(
-	// 	val: 'serif' | 'sans-serif',
-	// 	activeTab: keyof FontsState
-	// ) {
-	// 	const fallbackStacks = {
-	// 		serif: 'Georgia, Times New Roman, serif',
-	// 		'sans-serif': 'Arial, Helvetica, sans-serif',
-	// 	};
-
-	// 	setFonts( ( prev ) => {
-	// 		return {
-	// 			...prev,
-	// 			[ activeTab ]: {
-	// 				...prev[ activeTab ],
-	// 				fallbackStack: {
-	// 					label: val,
-	// 					value: fallbackStacks[ val ],
-	// 				},
-	// 			},
-	// 		};
-	// 	} );
-	// }
 	function handleFontFaceChange( val: string, activeTab: keyof FontsState ) {
 		let fallbackStack;
-		if ( useDefaultFonts ) {
+		if ( isUsingDefaultFonts ) {
 			const font = DEFAULT_FONTS.find( ( font ) => font.name === val );
 			if ( font ) {
 				fallbackStack = font.fallbackStack;
+			}
+			const payload = {
+				name: val,
+				fallbackStack,
+			};
+			if ( 'headingsFont' === activeTab ) {
+				setHeadingsFont( payload );
 			}
 			setFonts( ( prev ) => {
 				return {
 					...prev,
 					[ activeTab ]: {
 						...prev[ activeTab ],
-						name: val,
-						fallbackStack,
+						...payload,
 					},
 				};
 			} );

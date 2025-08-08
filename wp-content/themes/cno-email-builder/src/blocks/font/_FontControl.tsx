@@ -19,6 +19,7 @@ export default function FontControl( props ) {
 		setHasAccent,
 		handleFontFaceChange,
 	} = useFontSettings( props );
+
 	const {
 		attributes: { useDefaultFonts },
 	} = props;

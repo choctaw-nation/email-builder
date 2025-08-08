@@ -12,10 +12,19 @@ import metadata from './block.json';
 import FontControl from './_FontControl';
 import { DEFAULT_FONT_URL } from './lib/utils';
 
+import '../../stores/font-foundry/store';
+import { STORES } from '../../stores/consts';
+import { useSelect } from '@wordpress/data';
+
 registerBlockType( metadata.name, {
 	edit: ( props ) => {
 		const { attributes, setAttributes } = props;
 		const { useDefaultFonts, fontUrl } = attributes;
+
+		const fonts = useSelect( ( select: any ) => {
+			return select( STORES.FONT_FOUNDRY ).getFonts();
+		}, [] );
+		console.log( fonts );
 
 		const blockProps = useBlockProps( {
 			style: {
