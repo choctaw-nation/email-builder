@@ -53,3 +53,32 @@ function cno_read_svg( string $logo_path, string|false $alt_text, string $fallba
 function cno_echo_svg( string $logo_path, string|false $alt_text, string $fallback = 'This file could not be found' ): void {
 	echo cno_read_svg( $logo_path, $alt_text, $fallback );
 }
+
+/**
+ * Gets the content of the current post as JSON.
+ *
+ * @param 'json'|'preview' $type The type of content to retrieve.
+ * @param bool             $strip_comments Whether to strip HTML comments from the content.
+ * @return string|null The JSON-encoded content or null if not available.
+ */
+function cno_get_email_content( string $type, bool $strip_comments = true ): ?string {
+	if ( empty( get_the_content() ) ) {
+		return null;
+	}
+	if ( ! is_user_logged_in() || ! is_singular() ) {
+		return null;
+	}
+
+	$allowed_types = array( 'json', 'preview' );
+	if ( ! in_array( $type, $allowed_types, true ) ) {
+		wp_die( 'Invalid content type, must be one of: ' . implode( ', ', $allowed_types ), 'Type Error', 403, );
+	}
+
+	$content = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' . get_the_content();
+
+	if ( $strip_comments ) {
+		$content = preg_replace( '/<!--[\s\S]*?-->/', '', $content );
+	}
+
+	return 'json' === $type ? wp_json_encode( $content ) : $content;
+}
