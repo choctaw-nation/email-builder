@@ -1,4 +1,4 @@
-import { DEFAULT_FONTS } from '../font/utils';
+import { DEFAULT_FONTS } from '../font/lib/utils';
 
 export default function useFontFamilies() {
 	const defaultFontFamilies = DEFAULT_FONTS.map( ( fonts ) => {

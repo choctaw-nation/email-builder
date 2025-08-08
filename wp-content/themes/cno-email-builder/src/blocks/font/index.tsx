@@ -9,15 +9,22 @@ import {
 } from '@wordpress/components';
 
 import metadata from './block.json';
-import FontControl from './FontControl';
-import { DEFAULT_FONT_URL } from './utils';
-import useFontSettings from './useFontSettings';
+import FontControl from './_FontControl';
+import { DEFAULT_FONT_URL } from './lib/utils';
+
+import '../../stores/font-foundry/store';
+import { STORES } from '../../stores/consts';
+import { useSelect } from '@wordpress/data';
 
 registerBlockType( metadata.name, {
 	edit: ( props ) => {
 		const { attributes, setAttributes } = props;
-		const { fontImportUrl, setFontImportUrl, isUsingDefaultFonts } =
-			useFontSettings( props );
+		const { useDefaultFonts, fontUrl } = attributes;
+
+		const fonts = useSelect( ( select: any ) => {
+			return select( STORES.FONT_FOUNDRY ).getFonts();
+		}, [] );
+		console.log( fonts );
 
 		const blockProps = useBlockProps( {
 			style: {
@@ -38,28 +45,30 @@ registerBlockType( metadata.name, {
 								__next40pxDefaultSize
 								__nextHasNoMarginBottom
 								isBlock
-								onChange={ ( val ) =>
-									setFontImportUrl( val as string )
-								}
-								value={ fontImportUrl }
+								onChange={ ( val ) => {
+									setAttributes( {
+										useDefaultFonts: val === 'true',
+									} );
+								} }
+								value={ useDefaultFonts ? 'true' : 'false' }
 								label="Font Import Location"
 							>
 								<ToggleGroupControlOption
 									label="Default"
-									value="default"
+									value="true"
 								/>
 								<ToggleGroupControlOption
 									label="Custom"
-									value="custom"
+									value="false"
 								/>
 							</ToggleGroupControl>
-							{ ! isUsingDefaultFonts && (
+							{ ! useDefaultFonts && (
 								<TextControl
 									__next40pxDefaultSize
 									__nextHasNoMarginBottom
 									label="Custom Font URL"
 									placeholder={ DEFAULT_FONT_URL }
-									value={ attributes.fontUrl }
+									value={ fontUrl }
 									onChange={ ( fontUrl ) => {
 										setAttributes( { fontUrl } );
 									} }
@@ -80,7 +89,7 @@ registerBlockType( metadata.name, {
 						type="text/css"
 						dangerouslySetInnerHTML={ {
 							__html: `
-							@import url("${ attributes.fontUrl }");
+							@import url("${ useDefaultFonts ? DEFAULT_FONT_URL : fontUrl }");
 							:where(.email-wrapper__body) {
 								${ emailStyles( attributes ) }
 							}`,
@@ -97,7 +106,11 @@ registerBlockType( metadata.name, {
 				type="text/css"
 				dangerouslySetInnerHTML={ {
 					__html: `
-					@import url("${ attributes.fontUrl }");
+					@import url("${
+						attributes.useDefaultFonts
+							? DEFAULT_FONT_URL
+							: attributes.fontUrl
+					}");
 					${ emailStyles( attributes ) }`,
 				} }
 			/>

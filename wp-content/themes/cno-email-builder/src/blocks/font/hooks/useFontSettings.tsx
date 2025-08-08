@@ -1,9 +1,22 @@
 import { useState, useEffect } from '@wordpress/element';
-import { FontsState } from './types';
-import { DEFAULT_FONT_URL, DEFAULT_FONTS } from './utils';
+import { FontsState } from '../lib/types';
+import { DEFAULT_FONTS } from '../lib/utils';
+import { useDispatch } from '@wordpress/data';
+import { STORES } from '../../../stores/consts';
 
 export default function useFontSettings( { attributes, setAttributes } ) {
-	const { headingsFont, bodyFont, accentFont } = attributes;
+	const {
+		headingsFont,
+		bodyFont,
+		accentFont,
+		useDefaultFonts: isUsingDefaultFonts,
+	} = attributes;
+	const {
+		useDefaultFonts,
+		setFonts: setStoreFonts,
+		setHeadingsFont,
+	} = useDispatch( STORES.FONT_FOUNDRY );
+
 	const [ hasAccent, setHasAccent ] = useState(
 		attributes.accentFont.name || false
 	);
@@ -12,34 +25,17 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 		bodyFont,
 		accentFont,
 	} );
-	const [ fontImportUrl, setFontImportUrl ] = useState( 'default' );
-	const isUsingDefaultFonts = 'default' === fontImportUrl;
-
-	useEffect( () => {
-		setFontImportUrl(
-			attributes.fontUrl === DEFAULT_FONT_URL ? 'default' : 'custom'
-		);
-	}, [ attributes.fontUrl ] );
 
 	useEffect( () => {
 		if ( isUsingDefaultFonts ) {
-			setAttributes( { fontUrl: DEFAULT_FONT_URL } );
+			useDefaultFonts();
 		} else {
-			setAttributes( { fontUrl: '' } );
+			setStoreFonts( fonts );
 		}
-	}, [ fontImportUrl ] );
-
-	useEffect( () => {
 		setAttributes( {
 			...fonts,
 		} );
-	}, [ fonts ] );
-
-	useEffect( () => {
-		if ( ! hasAccent ) {
-			setAttributes( { accentFont: {} } );
-		}
-	}, [ hasAccent ] );
+	}, [ fonts, isUsingDefaultFonts ] );
 
 	const fontTabs = [
 		{
@@ -59,28 +55,6 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 		},
 	];
 
-	function handleFontStackChange(
-		val: 'serif' | 'sans-serif',
-		activeTab: keyof FontsState
-	) {
-		const fallbackStacks = {
-			serif: 'Georgia, Times New Roman, serif',
-			'sans-serif': 'Arial, Helvetica, sans-serif',
-		};
-
-		setFonts( ( prev ) => {
-			return {
-				...prev,
-				[ activeTab ]: {
-					...prev[ activeTab ],
-					fallbackStack: {
-						label: val,
-						value: fallbackStacks[ val ],
-					},
-				},
-			};
-		} );
-	}
 	function handleFontFaceChange( val: string, activeTab: keyof FontsState ) {
 		let fallbackStack;
 		if ( isUsingDefaultFonts ) {
@@ -88,13 +62,19 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 			if ( font ) {
 				fallbackStack = font.fallbackStack;
 			}
+			const payload = {
+				name: val,
+				fallbackStack,
+			};
+			if ( 'headingsFont' === activeTab ) {
+				setHeadingsFont( payload );
+			}
 			setFonts( ( prev ) => {
 				return {
 					...prev,
 					[ activeTab ]: {
 						...prev[ activeTab ],
-						name: val,
-						fallbackStack,
+						...payload,
 					},
 				};
 			} );
@@ -115,11 +95,8 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 		fontTabs,
 		hasAccent,
 		setHasAccent,
-		handleFontStackChange,
 		fonts,
+		setFonts,
 		handleFontFaceChange,
-		fontImportUrl,
-		setFontImportUrl,
-		isUsingDefaultFonts,
 	};
 }

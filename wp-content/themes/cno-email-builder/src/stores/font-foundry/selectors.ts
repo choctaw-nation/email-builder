@@ -1,19 +1,17 @@
-import { ActionPayload, State } from './types';
+import { State } from './types';
 
 export const selectors = {
-	getResponsiveBlockTypes( state: State ) {
-		const nonEmptyKeys = Object.keys( state ).filter( ( blockType ) => {
-			return Object.values( state[ blockType ] ).length > 0;
-		} );
-		return nonEmptyKeys;
+	getHeadingsFont( state: State ) {
+		return state.headingsFont;
 	},
-	isLastBlock( state: State, payload: ActionPayload ) {
-		const { clientId, parentId, blockType } = payload;
-		if ( ! state[ blockType ][ parentId ] ) {
-			return false;
-		}
-		return state[ blockType ][ parentId ].some(
-			( ids ) => ids[ ids.length - 1 ] === clientId
-		);
+	getBodyFont( state: State ) {
+		return state.bodyFont;
+	},
+	getFonts( state: State ) {
+		return state;
+		// return Object.values( state.fonts ).map( ( font ) => ( {
+		// 	label: font.title,
+		// 	value: `${ font.name }, ${ font.fallbackStack.value }`,
+		// } ) );
 	},
 };

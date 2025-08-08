@@ -1,9 +1,9 @@
-import { DEFAULT_FONT_URL, DEFAULT_FONTS } from '../../blocks/font/utils';
+import { DEFAULT_FONTS } from '../../blocks/font/lib/utils';
 import { FontAction, State } from './types';
 
 const initialState: State = {
-	fontUrl: DEFAULT_FONT_URL,
-	fonts: DEFAULT_FONTS,
+	headingsFont: DEFAULT_FONTS[ 1 ],
+	bodyFont: DEFAULT_FONTS[ 0 ],
 };
 
 export default function reducer(
@@ -11,13 +11,25 @@ export default function reducer(
 	action: FontAction
 ) {
 	switch ( action.type ) {
-		case 'ADD_CUSTOM_FONTS': {
-			return state;
-		}
-		case 'ADD_DEFAULT_FONTS': {
+		case 'USE_DEFAULT_FONTS': {
 			return initialState;
 		}
+		case 'SET_HEADINGS_FONT':
+			return {
+				...state,
+				headingsFont: action.payload,
+			};
+		case 'SET_BODY_FONT':
+			return {
+				...state,
+				bodyFont: action.payload,
+			};
+		case 'SET_FONTS':
+			return {
+				...state,
+				...action.payload,
+			};
 		default:
-			throw new Error( 'No action defined!' );
+			return state;
 	}
 }

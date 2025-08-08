@@ -1,16 +1,27 @@
 import { ActionPayload } from './types';
 
 export const actions = {
-	addBlockType( data: ActionPayload ) {
+	setHeadingsFont( data: ActionPayload ) {
 		return {
-			type: 'ADD_FONT',
-			payload: { ...data },
+			type: 'SET_HEADINGS_FONT',
+			payload: data,
 		};
 	},
-	removeBlockType( data: ActionPayload ) {
+	setBodyFont( data: ActionPayload ) {
 		return {
-			type: 'REMOVE_FONT',
-			payload: { ...data },
+			type: 'SET_BODY_FONT',
+			payload: data,
+		};
+	},
+	setFonts( data: ActionPayload ) {
+		return {
+			type: 'SET_FONTS',
+			payload: data,
+		};
+	},
+	useDefaultFonts() {
+		return {
+			type: 'USE_DEFAULT_FONTS',
 		};
 	},
 };
