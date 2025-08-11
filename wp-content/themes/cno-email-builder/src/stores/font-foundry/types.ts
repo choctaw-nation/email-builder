@@ -1,9 +1,10 @@
 import { FontsData } from '../../blocks/font/lib/types';
 
 export type State = {
+	fontFoundry: 'default' | 'custom';
+	fonts: FontsData[];
 	headingsFont: FontsData;
 	bodyFont: FontsData;
-	accentFont?: FontsData;
 };
 
 interface BlockTypeAction {
@@ -18,6 +19,7 @@ export type ActionPayload = {
 
 export interface UseDefaultFonts {
 	type: 'USE_DEFAULT_FONTS';
+	payload: 'custom' | 'default';
 }
 
 export interface SetHeadingsFont extends BlockTypeAction {
@@ -27,8 +29,12 @@ export interface SetHeadingsFont extends BlockTypeAction {
 export interface SetBodyFont extends BlockTypeAction {
 	type: 'SET_BODY_FONT';
 }
-export interface SetFonts {
-	type: 'SET_FONTS';
+
+export interface SetAccentFont extends BlockTypeAction {
+	type: 'SET_ACCENT_FONT';
+}
+export interface SetCustomFonts {
+	type: 'SET_CUSTOM_FONTS';
 	payload: {
 		headingsFont: FontsData;
 		bodyFont: FontsData;
@@ -39,5 +45,6 @@ export interface SetFonts {
 export type FontAction =
 	| SetHeadingsFont
 	| SetBodyFont
+	| SetAccentFont
 	| UseDefaultFonts
-	| SetFonts;
+	| SetCustomFonts;

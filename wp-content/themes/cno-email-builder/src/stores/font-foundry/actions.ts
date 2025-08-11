@@ -1,4 +1,4 @@
-import { ActionPayload } from './types';
+import { ActionPayload, State } from './types';
 
 export const actions = {
 	setHeadingsFont( data: ActionPayload ) {
@@ -13,15 +13,22 @@ export const actions = {
 			payload: data,
 		};
 	},
-	setFonts( data: ActionPayload ) {
+	setAccentFont( data: ActionPayload ) {
 		return {
-			type: 'SET_FONTS',
+			type: 'SET_ACCENT_FONT',
 			payload: data,
 		};
 	},
-	useDefaultFonts() {
+	setCustomFonts( data: State[ 'fonts' ] ) {
+		return {
+			type: 'SET_CUSTOM_FONTS',
+			payload: data,
+		};
+	},
+	setUseDefaultFonts( useDefault: boolean ) {
 		return {
 			type: 'USE_DEFAULT_FONTS',
+			payload: useDefault ? 'default' : 'custom',
 		};
 	},
 };

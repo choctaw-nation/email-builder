@@ -1,9 +1,12 @@
+import { heading } from '@wordpress/icons';
 import { DEFAULT_FONTS } from '../../blocks/font/lib/utils';
 import { FontAction, State } from './types';
 
 const initialState: State = {
-	headingsFont: DEFAULT_FONTS[ 1 ],
-	bodyFont: DEFAULT_FONTS[ 0 ],
+	fontFoundry: 'default',
+	fonts: DEFAULT_FONTS,
+	headingsFont: DEFAULT_FONTS[ 0 ],
+	bodyFont: DEFAULT_FONTS[ 1 ],
 };
 
 export default function reducer(
@@ -12,7 +15,17 @@ export default function reducer(
 ) {
 	switch ( action.type ) {
 		case 'USE_DEFAULT_FONTS': {
-			return initialState;
+			if ( 'default' === action.payload ) {
+				return initialState;
+			} else {
+				return {
+					...state,
+					fontFoundry: 'custom',
+					fonts: [],
+					headingsFont: undefined,
+					bodyFont: undefined,
+				};
+			}
 		}
 		case 'SET_HEADINGS_FONT':
 			return {
@@ -24,10 +37,21 @@ export default function reducer(
 				...state,
 				bodyFont: action.payload,
 			};
-		case 'SET_FONTS':
+		case 'SET_ACCENT_FONT':
 			return {
 				...state,
-				...action.payload,
+				accentFont: action.payload,
+			};
+		case 'SET_CUSTOM_FONTS':
+			return {
+				...state,
+				fontFoundry: 'custom',
+				fonts: Object.values( action.payload ).filter(
+					( font ) => font
+				),
+				headingsFont: action.payload.headingsFont,
+				bodyFont: action.payload.bodyFont,
+				accentFont: action.payload.accentFont,
 			};
 		default:
 			return state;

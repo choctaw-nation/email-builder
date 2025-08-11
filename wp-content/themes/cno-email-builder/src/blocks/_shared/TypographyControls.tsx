@@ -1,7 +1,6 @@
 import {
 	__experimentalFontFamilyControl as FontFamilyControl,
 	LineHeightControl,
-	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import {
 	Panel,
@@ -12,36 +11,46 @@ import {
 	FontSizePicker,
 	ColorPalette,
 } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
-
 import { CSSProperties } from 'react';
-import useFontFamilies from './_useFontFamilies';
 import { TextTransformControl } from './_TextControls';
 import useColorPalettes from './useColorPalettes';
+import useFontData from './_useFontData';
 
-export default function TypographyControls( { attributes, setAttributes } ) {
-	const fontSizes = useSelect(
-		( select ) => select( blockEditorStore ).getSettings().fontSizes,
-		[]
-	);
+export default function TypographyControls( {
+	attributes,
+	setAttributes,
+	textType,
+} ) {
 	const { choctawLanding, baseColorsPalette } = useColorPalettes();
-	const { defaultFontFamilies } = useFontFamilies();
+	const { fontFamilies, fontSizes, getHeadingsFont, getBodyFont } =
+		useFontData();
 
+	function handleFontFamilyChange( val ) {
+		if ( ! val ) {
+			const defaultFamily =
+				textType === 'headings' ? getHeadingsFont() : getBodyFont();
+			setAttributes( {
+				fontFamily: `${ defaultFamily.name }, ${ defaultFamily.fallbackStack.value }`,
+			} );
+		} else {
+			setAttributes( { fontFamily: val } );
+		}
+	}
 	return (
 		<Panel header="Typography">
 			<PanelBody title="Type Settings">
 				<Flex direction="column" gap={ 8 }>
-					<FlexBlock>
-						<FontFamilyControl
-							__next40pxDefaultSize
-							__nextHasNoMarginBottom
-							fontFamilies={ defaultFontFamilies }
-							value={ attributes.fontFamily }
-							onChange={ ( fontFamily ) => {
-								setAttributes( { fontFamily } );
-							} }
-						/>
-					</FlexBlock>
+					{ fontFamilies && (
+						<FlexBlock>
+							<FontFamilyControl
+								__next40pxDefaultSize
+								__nextHasNoMarginBottom
+								fontFamilies={ fontFamilies }
+								value={ attributes.fontFamily }
+								onChange={ handleFontFamilyChange }
+							/>
+						</FlexBlock>
+					) }
 					<FlexBlock>
 						<FontSizePicker
 							__next40pxDefaultSize

@@ -7,7 +7,7 @@ export type FontBlockAttributes = {
 export type FontsData = {
 	name: string;
 	title?: string;
-	fontWeights: number[];
+	fontWeights?: number[];
 	fontStyles?: string[];
 	fallbackStack: {
 		label: 'serif' | 'sans-serif';

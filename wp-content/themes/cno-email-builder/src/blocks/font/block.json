@@ -40,12 +40,7 @@
 			}
 		},
 		"accentFont": {
-			"type": "object",
-			"default": {
-				"fontWeight": "",
-				"fallbackStack": "",
-				"fontFace": ""
-			}
+			"type": "object"
 		}
 	},
 	"ancestor": [ "cno-email-blocks/head" ],

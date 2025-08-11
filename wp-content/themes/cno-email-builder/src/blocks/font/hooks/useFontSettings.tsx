@@ -11,14 +11,12 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 		accentFont,
 		useDefaultFonts: isUsingDefaultFonts,
 	} = attributes;
-	const {
-		useDefaultFonts,
-		setFonts: setStoreFonts,
-		setHeadingsFont,
-	} = useDispatch( STORES.FONT_FOUNDRY );
+	const { setUseDefaultFonts, setCustomFonts } = useDispatch(
+		STORES.FONT_FOUNDRY
+	);
 
 	const [ hasAccent, setHasAccent ] = useState(
-		attributes.accentFont.name || false
+		attributes?.accentFont?.name || false
 	);
 	const [ fonts, setFonts ] = useState< FontsState >( {
 		headingsFont,
@@ -27,10 +25,10 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 	} );
 
 	useEffect( () => {
-		if ( isUsingDefaultFonts ) {
-			useDefaultFonts();
+		if ( ! isUsingDefaultFonts ) {
+			setCustomFonts( fonts );
 		} else {
-			setStoreFonts( fonts );
+			setUseDefaultFonts( true );
 		}
 		setAttributes( {
 			...fonts,
@@ -56,7 +54,9 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 	];
 
 	function handleFontFaceChange( val: string, activeTab: keyof FontsState ) {
-		let fallbackStack;
+		let fallbackStack:
+			| FontsState[ keyof FontsState ][ 'fallbackStack' ]
+			| undefined;
 		if ( isUsingDefaultFonts ) {
 			const font = DEFAULT_FONTS.find( ( font ) => font.name === val );
 			if ( font ) {
@@ -66,9 +66,6 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 				name: val,
 				fallbackStack,
 			};
-			if ( 'headingsFont' === activeTab ) {
-				setHeadingsFont( payload );
-			}
 			setFonts( ( prev ) => {
 				return {
 					...prev,

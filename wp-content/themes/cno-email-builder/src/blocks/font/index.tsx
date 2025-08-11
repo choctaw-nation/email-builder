@@ -13,18 +13,19 @@ import FontControl from './_FontControl';
 import { DEFAULT_FONT_URL } from './lib/utils';
 
 import '../../stores/font-foundry/store';
+import { useDispatch } from '@wordpress/data';
 import { STORES } from '../../stores/consts';
-import { useSelect } from '@wordpress/data';
+import { useEffect } from '@wordpress/element';
 
 registerBlockType( metadata.name, {
 	edit: ( props ) => {
 		const { attributes, setAttributes } = props;
 		const { useDefaultFonts, fontUrl } = attributes;
+		const { setUseDefaultFonts } = useDispatch( STORES.FONT_FOUNDRY );
 
-		const fonts = useSelect( ( select: any ) => {
-			return select( STORES.FONT_FOUNDRY ).getFonts();
-		}, [] );
-		console.log( fonts );
+		useEffect( () => {
+			setUseDefaultFonts( useDefaultFonts );
+		}, [ useDefaultFonts ] );
 
 		const blockProps = useBlockProps( {
 			style: {

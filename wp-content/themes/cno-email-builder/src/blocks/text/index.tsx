@@ -33,7 +33,7 @@ registerBlockType( metadata.name, {
 		return (
 			<>
 				<InspectorControls>
-					<TypographyControls { ...props } />
+					<TypographyControls { ...props } textType="body" />
 					<SpacingControls
 						{ ...props }
 						splitOnAxis={ true }

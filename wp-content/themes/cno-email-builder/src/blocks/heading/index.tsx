@@ -31,7 +31,7 @@ registerBlockType( metadata.name, {
 		return (
 			<>
 				<InspectorControls>
-					<TypographyControls { ...props } />
+					<TypographyControls { ...props } textType="headings" />
 					<Panel>
 						<SpacingControls { ...props } only="margin" />
 					</Panel>
