@@ -64,6 +64,7 @@ registerBlockType( metadata.name, {
 				.responsive-col {
 					width: 100% !important;
 					display:block!important;
+					padding:0!important;
 				}
 				.responsive-col.not-last {
 					margin-bottom:10px;
