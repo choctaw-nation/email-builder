@@ -11,6 +11,7 @@ import {
 	FontSizePicker,
 	ColorPalette,
 } from '@wordpress/components';
+import { useState, useEffect } from '@wordpress/element';
 import { CSSProperties } from 'react';
 import { TextTransformControl } from './_TextControls';
 import useColorPalettes from './useColorPalettes';
@@ -22,15 +23,27 @@ export default function TypographyControls( {
 	textType,
 } ) {
 	const { choctawLanding, baseColorsPalette } = useColorPalettes();
-	const { fontFamilies, fontSizes, getHeadingsFont, getBodyFont } =
-		useFontData();
+	const { fontFamilies, fontSizes, headingsFont, bodyFont } = useFontData();
+	const [ headingsFontString, setHeadingsFontString ] = useState(
+		generateFontFamilyString( headingsFont )
+	);
+	const [ bodyFontString, setBodyFontString ] = useState(
+		generateFontFamilyString( bodyFont )
+	);
+	useEffect( () => {
+		setHeadingsFontString( generateFontFamilyString( headingsFont ) );
+	}, [ headingsFont ] );
+	useEffect( () => {
+		setBodyFontString( generateFontFamilyString( bodyFont ) );
+	}, [ bodyFont ] );
 
 	function handleFontFamilyChange( val ) {
 		if ( ! val ) {
-			const defaultFamily =
-				textType === 'headings' ? getHeadingsFont() : getBodyFont();
 			setAttributes( {
-				fontFamily: `${ defaultFamily.name }, ${ defaultFamily.fallbackStack.value }`,
+				fontFamily:
+					'headings' === textType
+						? headingsFontString
+						: bodyFontString,
 			} );
 		} else {
 			setAttributes( { fontFamily: val } );
@@ -46,7 +59,12 @@ export default function TypographyControls( {
 								__next40pxDefaultSize
 								__nextHasNoMarginBottom
 								fontFamilies={ fontFamilies }
-								value={ attributes.fontFamily }
+								value={
+									attributes.fontFamily ||
+									textType === 'headings'
+										? headingsFont
+										: bodyFont
+								}
 								onChange={ handleFontFamilyChange }
 							/>
 						</FlexBlock>
@@ -118,4 +136,8 @@ export function calcStyleObject( {
 		textTransform,
 		fontFamily,
 	};
+}
+
+function generateFontFamilyString( fontFamily: any ): string {
+	return `${ fontFamily.name }, ${ fontFamily.fallbackStack.value }`;
 }

@@ -15,17 +15,12 @@ import { DEFAULT_FONT_URL } from './lib/utils';
 import '../../stores/font-foundry/store';
 import { useDispatch } from '@wordpress/data';
 import { STORES } from '../../stores/consts';
-import { useEffect } from '@wordpress/element';
 
 registerBlockType( metadata.name, {
 	edit: ( props ) => {
 		const { attributes, setAttributes } = props;
 		const { useDefaultFonts, fontUrl } = attributes;
 		const { setUseDefaultFonts } = useDispatch( STORES.FONT_FOUNDRY );
-
-		useEffect( () => {
-			setUseDefaultFonts( useDefaultFonts );
-		}, [ useDefaultFonts ] );
 
 		const blockProps = useBlockProps( {
 			style: {
@@ -50,6 +45,7 @@ registerBlockType( metadata.name, {
 									setAttributes( {
 										useDefaultFonts: val === 'true',
 									} );
+									setUseDefaultFonts( val === 'true' );
 								} }
 								value={ useDefaultFonts ? 'true' : 'false' }
 								label="Font Import Location"

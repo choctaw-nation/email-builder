@@ -7,6 +7,9 @@ export const selectors = {
 	getFonts( state: State ) {
 		return state.fonts;
 	},
+	getAllFonts( state: State ) {
+		return { headingsFont: state.headingsFont, bodyFont: state.bodyFont };
+	},
 	getHeadingsFont( state: State ) {
 		return state.headingsFont;
 	},

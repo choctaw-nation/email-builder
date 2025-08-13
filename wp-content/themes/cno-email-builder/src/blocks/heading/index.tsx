@@ -8,7 +8,7 @@ import {
 	BlockControls,
 	HeadingLevelDropdown,
 } from '@wordpress/block-editor';
-import { ToolbarGroup, Panel, ColorPalette } from '@wordpress/components';
+import { ToolbarGroup, Panel } from '@wordpress/components';
 import { heading } from '@wordpress/icons';
 import TypographyControls, {
 	calcStyleObject,
