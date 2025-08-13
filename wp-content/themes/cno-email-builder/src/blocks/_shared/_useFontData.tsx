@@ -17,7 +17,7 @@ export default function useFontData(): {
 		( select ) => select( blockEditorStore ).getSettings().fontSizes,
 		[]
 	);
-	const fontFoundry = useSelect( ( select ) => {
+	const fontFoundry = useSelect( ( select: any ) => {
 		return select( STORES.FONT_FOUNDRY ).getFontFoundry();
 	}, [] );
 

@@ -22,19 +22,28 @@ export default function TypographyControls( {
 	setAttributes,
 	textType,
 } ) {
+	const isHeadings = 'headings' === textType;
 	const { choctawLanding, baseColorsPalette } = useColorPalettes();
 	const { fontFamilies, fontSizes, headingsFont, bodyFont } = useFontData();
+
 	const [ headingsFontString, setHeadingsFontString ] = useState(
 		generateFontFamilyString( headingsFont )
 	);
+	useEffect( () => {
+		setHeadingsFontString( generateFontFamilyString( headingsFont ) );
+		setAttributes( {
+			fontFamily: isHeadings ? headingsFontString : bodyFontString,
+		} );
+	}, [ headingsFont ] );
+
 	const [ bodyFontString, setBodyFontString ] = useState(
 		generateFontFamilyString( bodyFont )
 	);
 	useEffect( () => {
-		setHeadingsFontString( generateFontFamilyString( headingsFont ) );
-	}, [ headingsFont ] );
-	useEffect( () => {
 		setBodyFontString( generateFontFamilyString( bodyFont ) );
+		setAttributes( {
+			fontFamily: isHeadings ? headingsFontString : bodyFontString,
+		} );
 	}, [ bodyFont ] );
 
 	function handleFontFamilyChange( val ) {
@@ -60,8 +69,7 @@ export default function TypographyControls( {
 								__nextHasNoMarginBottom
 								fontFamilies={ fontFamilies }
 								value={
-									attributes.fontFamily ||
-									textType === 'headings'
+									attributes.fontFamily || isHeadings
 										? headingsFont
 										: bodyFont
 								}

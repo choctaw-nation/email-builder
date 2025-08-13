@@ -2,6 +2,7 @@ import { addFilter } from '@wordpress/hooks';
 import domReady from '@wordpress/dom-ready';
 import removeDefaultBlockClasses from './removeDefaultBlockClasses';
 import { disableAdvancedPanel } from './disableAdvancedPanel';
+import { initHeadingFontSync, initBodyFontSync } from './font-sync';
 
 domReady( () => {
 	const namespace = 'cno-email-builder';
@@ -16,4 +17,6 @@ domReady( () => {
 			filterCallback
 		);
 	} );
+	initHeadingFontSync();
+	initBodyFontSync();
 } );

@@ -1,3 +1,4 @@
+import { FontsData } from '../../blocks/font/lib/types';
 import { ActionPayload, State } from './types';
 
 export const actions = {
@@ -25,10 +26,24 @@ export const actions = {
 			payload: data,
 		};
 	},
-	setUseDefaultFonts( useDefault: boolean ) {
+	setUseDefaultFonts( {
+		fontFoundry,
+		headingsFont,
+		bodyFont,
+	}: {
+		fontFoundry: 'custom' | 'default';
+		headingsFont?: FontsData;
+		bodyFont?: FontsData;
+	} ) {
+		const fontsData = [ headingsFont, bodyFont ].filter( ( font ) => font );
 		return {
 			type: 'USE_DEFAULT_FONTS',
-			payload: useDefault ? 'default' : 'custom',
+			payload: {
+				fonts: fontsData as State[ 'fonts' ],
+				fontFoundry,
+				headingsFont,
+				bodyFont,
+			},
 		};
 	},
 };

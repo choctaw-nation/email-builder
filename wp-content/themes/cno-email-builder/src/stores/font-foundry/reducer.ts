@@ -1,4 +1,3 @@
-import { heading } from '@wordpress/icons';
 import { DEFAULT_FONTS } from '../../blocks/font/lib/utils';
 import { FontAction, State } from './types';
 
@@ -15,8 +14,11 @@ export default function reducer(
 ) {
 	switch ( action.type ) {
 		case 'USE_DEFAULT_FONTS': {
-			if ( 'default' === action.payload ) {
-				return initialState;
+			if ( 'default' === action.payload.fontFoundry ) {
+				return {
+					...state,
+					...action.payload,
+				};
 			} else {
 				return {
 					...state,

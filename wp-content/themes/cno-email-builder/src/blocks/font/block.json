@@ -27,16 +27,14 @@
 			"type": "object",
 			"default": {
 				"fontWeight": "",
-				"fallbackStack": "",
-				"fontFace": ""
+				"fallbackStack": ""
 			}
 		},
 		"bodyFont": {
 			"type": "object",
 			"default": {
 				"fontWeight": "",
-				"fallbackStack": "",
-				"fontFace": ""
+				"fallbackStack": ""
 			}
 		},
 		"accentFont": {

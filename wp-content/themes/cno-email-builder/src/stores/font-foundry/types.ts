@@ -5,6 +5,7 @@ export type State = {
 	fonts: FontsData[];
 	headingsFont: FontsData;
 	bodyFont: FontsData;
+	accentFont?: FontsData;
 };
 
 interface BlockTypeAction {
@@ -19,7 +20,11 @@ export type ActionPayload = {
 
 export interface UseDefaultFonts {
 	type: 'USE_DEFAULT_FONTS';
-	payload: 'custom' | 'default';
+	payload: {
+		fontFoundry: 'custom' | 'default';
+		headingsFont?: FontsData;
+		bodyFont?: FontsData;
+	};
 }
 
 export interface SetHeadingsFont extends BlockTypeAction {

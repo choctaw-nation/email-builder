@@ -28,7 +28,10 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 		if ( ! isUsingDefaultFonts ) {
 			setCustomFonts( fonts );
 		} else {
-			setUseDefaultFonts( true );
+			setUseDefaultFonts( {
+				fontFoundry: 'default',
+				...fonts,
+			} );
 		}
 		setAttributes( {
 			...fonts,
@@ -65,6 +68,7 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 			const payload = {
 				name: val,
 				fallbackStack,
+				title: font?.title,
 			};
 			setFonts( ( prev ) => {
 				return {

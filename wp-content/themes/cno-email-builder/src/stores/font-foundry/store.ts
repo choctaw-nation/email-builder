@@ -11,6 +11,7 @@ import { STORES } from '../consts';
 import { actions } from './actions';
 import { selectors } from './selectors';
 import reducer from './reducer';
+import { DEFAULT_FONTS } from '../../blocks/font/lib/utils';
 
 const store = createReduxStore( STORES.FONT_FOUNDRY, {
 	reducer,
@@ -46,7 +47,11 @@ function initFontStoreFromBlocks( fontBlock: any ) {
 		bodyFont,
 		accentFont,
 	};
-	setUseDefaultFonts( useDefaultFonts );
+	setUseDefaultFonts( {
+		fontFoundry: useDefaultFonts ? 'default' : 'custom',
+		headingsFont: DEFAULT_FONTS[ 0 ],
+		bodyFont: DEFAULT_FONTS[ 1 ],
+	} );
 	if ( ! useDefaultFonts ) {
 		setCustomFonts( customFonts );
 	}

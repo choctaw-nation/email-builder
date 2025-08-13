@@ -45,7 +45,9 @@ registerBlockType( metadata.name, {
 									setAttributes( {
 										useDefaultFonts: val === 'true',
 									} );
-									setUseDefaultFonts( val === 'true' );
+									setUseDefaultFonts( {
+										fontFoundry: val === 'true',
+									} );
 								} }
 								value={ useDefaultFonts ? 'true' : 'false' }
 								label="Font Import Location"
