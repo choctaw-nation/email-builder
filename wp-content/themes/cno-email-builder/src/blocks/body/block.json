@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "cno-email-blocks/body",
 	"version": "0.1.0",
-	"title": "CNO Email Body",
+	"title": "Email Body",
 	"category": "cno-email-blocks",
 	"icon": "block-default",
 	"description": "Email Body adds some controls for when the email is viewed in a browser.",

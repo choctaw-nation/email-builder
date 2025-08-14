@@ -2,8 +2,8 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "cno-email-blocks/divider",
-	"version": "0.1.0",
-	"title": "CNO Email Divider",
+	"version": "1.0.0",
+	"title": "Divider",
 	"category": "cno-email-blocks",
 	"icon": "block-default",
 	"description": "Divider block",
@@ -34,6 +34,6 @@
 			"type": "object"
 		}
 	},
-	"ancestor": [ "cno-email-blocks/body" ],
+	"ancestor": [ "cno-email-blocks/email-wrapper" ],
 	"editorScript": "file:./index.tsx"
 }

@@ -2,8 +2,8 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "cno-email-blocks/section",
-	"version": "0.1.0",
-	"title": "CNO Email Section",
+	"version": "1.0.0",
+	"title": "Section",
 	"category": "cno-email-blocks",
 	"icon": "block-default",
 	"description": "Section block for email content",
@@ -23,6 +23,6 @@
 			"type": "object"
 		}
 	},
-	"ancestor": [ "cno-email-blocks/body" ],
+	"ancestor": [ "cno-email-blocks/email-wrapper" ],
 	"editorScript": "file:./index.tsx"
 }
