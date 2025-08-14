@@ -7,3 +7,14 @@
 		padding-inline: 1rem;
 	}
 }
+
+.email-preview {
+	font-size: 1.25rem;
+	padding-block: 1rem;
+
+	&__missing {
+		color: rgb(249, 64, 64);
+		font-style: italic;
+		text-transform: uppercase;
+	}
+}

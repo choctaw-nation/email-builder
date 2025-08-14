@@ -1,6 +1,6 @@
 import { useState, useEffect } from '@wordpress/element';
-import { FontsState } from '../../../font/lib/types';
-import { DEFAULT_FONTS } from '../../../font/lib/utils';
+import { FontsState } from '../../../_lib/types';
+import { DEFAULT_FONTS } from '../utils';
 
 export default function useFontSettings( { attributes, setAttributes } ) {
 	const {

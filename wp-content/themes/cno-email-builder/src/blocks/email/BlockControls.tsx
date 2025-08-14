@@ -11,7 +11,7 @@ import {
 import './editor.scss';
 
 import FontControl from './font-controls/_FontControl';
-import { DEFAULT_FONT_URL } from '../font/lib/utils';
+import { DEFAULT_FONT_URL } from './font-controls/utils';
 
 export default function BlockControls( props ) {
 	const {

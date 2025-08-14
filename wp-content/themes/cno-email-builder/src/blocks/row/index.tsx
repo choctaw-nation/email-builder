@@ -47,7 +47,7 @@ registerBlockType( metadata.name, {
 		);
 	},
 	save: ( { attributes } ) => {
-		const { columnGap, rowGap, maxWidth } = attributes;
+		const { maxWidth } = attributes;
 		const blockProps = useBlockProps.save( {
 			style: {
 				maxWidth: Math.min( maxWidth, MAX_WIDTH ),
