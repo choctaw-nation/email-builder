@@ -1,6 +1,6 @@
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
-import { useMemo } from '@wordpress/element';
+import { useEffect, useMemo, useState } from '@wordpress/element';
 import { FontsData } from '../font/lib/types';
 
 export default function useFontData( props ): {
@@ -10,17 +10,21 @@ export default function useFontData( props ): {
 		fontFamily: string;
 	} > | null;
 	fontSizes: Array< { name: string; size: number; slug: string } >;
-	headingsFont?: string;
-	bodyFont?: string;
+	headingsFont: FontsData;
+	bodyFont: FontsData;
+	fontFamilyString: string;
+	handleFontFamilyChange: ( val: string ) => void;
 } {
-	const { context } = props;
+	const { context, attributes, setAttributes, textType } = props;
+	const isHeadings = 'headings' === textType;
 	const fontSizes = useSelect(
 		( select ) => select( blockEditorStore ).getSettings().fontSizes,
 		[]
 	);
-	const headingsFont = context[ 'cno-email-blocks/headingsFont' ];
-	const bodyFont = context[ 'cno-email-blocks/bodyFont' ];
-	const fonts: Array< FontsData > = useMemo(
+	const headingsFont: FontsData = context[ 'cno-email-blocks/headingsFont' ];
+	const bodyFont: FontsData = context[ 'cno-email-blocks/bodyFont' ];
+
+	const fonts = useMemo(
 		() => [ headingsFont, bodyFont ],
 		[ headingsFont, bodyFont ]
 	);
@@ -29,17 +33,55 @@ export default function useFontData( props ): {
 		if ( fonts.length === 0 ) {
 			return null;
 		}
-		return fonts.map( ( font ) => ( {
-			slug: font.name,
-			name: font.title,
-			fontFamily: `${ font.name }, ${ font.fallbackStack.value }`,
-		} ) );
+		return fonts
+			.map( ( font ) => ( {
+				slug: font.name,
+				name: font.title,
+				fontFamily: `${ font.name }, ${ font.fallbackStack.value }`,
+			} ) )
+			.filter(
+				( family, index, self ) =>
+					self.findIndex( ( f ) => f.slug === family.slug ) === index
+			);
 	}, [ fonts ] );
 
+	const inheritedFontFamilyString = useMemo(
+		() => generateFontFamilyString( isHeadings ? headingsFont : bodyFont ),
+		[ headingsFont, bodyFont ]
+	);
+	const [ fontFamilyString, setFontFamilyString ] = useState(
+		attributes.fontFamilyOverride || inheritedFontFamilyString
+	);
+
+	useEffect( () => {
+		setAttributes( { fontFamily: inheritedFontFamilyString } );
+	}, [ inheritedFontFamilyString ] );
+
+	function handleFontFamilyChange( val ) {
+		if ( ! val ) {
+			setFontFamilyString( '' );
+			setAttributes( {
+				fontFamily: generateFontFamilyString(
+					isHeadings ? headingsFont : bodyFont
+				),
+				fontFamilyOverride: null,
+			} );
+		} else {
+			setFontFamilyString( val );
+			setAttributes( { fontFamilyOverride: val } );
+		}
+	}
+
 	return {
+		fontFamilyString,
+		handleFontFamilyChange,
 		fontFamilies,
 		fontSizes,
 		headingsFont,
 		bodyFont,
 	};
+}
+
+function generateFontFamilyString( fontFamily: any ): string {
+	return `${ fontFamily.name }, ${ fontFamily.fallbackStack.value }`;
 }

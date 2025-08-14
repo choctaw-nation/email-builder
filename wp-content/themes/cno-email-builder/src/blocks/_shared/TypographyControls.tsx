@@ -11,43 +11,22 @@ import {
 	FontSizePicker,
 	ColorPalette,
 } from '@wordpress/components';
-import { useEffect, useMemo } from '@wordpress/element';
 import { CSSProperties } from 'react';
 import { TextTransformControl } from './_TextControls';
+
 import useColorPalettes from './hooks/useColorPalettes';
-import useFontData from './_useFontData';
 
 export default function TypographyControls( props ) {
-	const { attributes, setAttributes, textType } = props;
-	const isHeadings = 'headings' === textType;
+	const {
+		attributes,
+		setAttributes,
+		fontSizes,
+		fontFamilies,
+		fontFamilyString,
+		handleFontFamilyChange,
+	} = props;
 	const { choctawLanding, baseColorsPalette } = useColorPalettes();
-	const { fontFamilies, fontSizes, headingsFont, bodyFont } =
-		useFontData( props );
 
-	const fontFamilyString = useMemo(
-		() =>
-			attributes.fontFamily ||
-			generateFontFamilyString( isHeadings ? headingsFont : bodyFont ),
-		[ headingsFont, bodyFont ]
-	);
-	console.log( 'context-based font family string:', fontFamilyString );
-	console.log( 'attribute-based font family string:', attributes.fontFamily );
-
-	useEffect( () => {
-		setAttributes( {
-			fontFamily: fontFamilyString,
-		} );
-	}, [ fontFamilyString ] );
-
-	function handleFontFamilyChange( val ) {
-		if ( ! val ) {
-			setAttributes( {
-				fontFamily: fontFamilyString,
-			} );
-		} else {
-			setAttributes( { fontFamily: val } );
-		}
-	}
 	return (
 		<Panel header="Typography">
 			<PanelBody title="Type Settings">
@@ -58,11 +37,7 @@ export default function TypographyControls( props ) {
 								__next40pxDefaultSize
 								__nextHasNoMarginBottom
 								fontFamilies={ fontFamilies }
-								value={
-									attributes.fontFamily || isHeadings
-										? headingsFont
-										: bodyFont
-								}
+								value={ fontFamilyString }
 								onChange={ handleFontFamilyChange }
 							/>
 						</FlexBlock>
@@ -126,16 +101,13 @@ export function calcStyleObject( {
 	lineHeight,
 	textTransform,
 	fontFamily,
+	fontFamilyOverride,
 } ): CSSProperties {
 	return {
 		color,
 		fontSize,
 		lineHeight,
 		textTransform,
-		fontFamily,
+		fontFamily: fontFamilyOverride || fontFamily,
 	};
-}
-
-function generateFontFamilyString( fontFamily: any ): string {
-	return `${ fontFamily.name }, ${ fontFamily.fallbackStack.value }`;
 }

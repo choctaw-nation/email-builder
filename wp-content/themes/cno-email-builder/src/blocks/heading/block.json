@@ -40,6 +40,9 @@
 		"fontFamily": {
 			"type": "string"
 		},
+		"fontFamilyOverride": {
+			"type": "string"
+		},
 		"fontSize": {
 			"type": "string",
 			"default": "20px"

@@ -14,12 +14,14 @@ import TypographyControls, {
 	calcStyleObject,
 } from '../_shared/TypographyControls';
 import SpacingControls, { calcSpacingObject } from '../_shared/SpacingControl';
+import useFontData from '../_shared/_useFontData';
 
 registerBlockType( metadata.name, {
 	icon: heading,
 	edit: ( props ) => {
 		const { attributes, setAttributes } = props;
 		const { content, level } = attributes;
+		const fontData = useFontData( { ...props, textType: 'headings' } );
 		const blockProps = useBlockProps( {
 			style: {
 				...calcStyleObject( attributes ),
@@ -31,7 +33,7 @@ registerBlockType( metadata.name, {
 		return (
 			<>
 				<InspectorControls>
-					<TypographyControls { ...props } textType="headings" />
+					<TypographyControls { ...props } { ...fontData } />
 					<Panel>
 						<SpacingControls { ...props } only="margin" />
 					</Panel>
