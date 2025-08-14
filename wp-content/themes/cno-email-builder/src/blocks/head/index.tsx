@@ -24,6 +24,10 @@ registerBlockType( metadata.name, {
 					'cno-email-blocks/font',
 					{
 						fontUrl: 'https://use.typekit.net/exd7pgy.css',
+						lock: {
+							move: true,
+							remove: true,
+						},
 					},
 				],
 			],

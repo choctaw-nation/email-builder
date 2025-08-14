@@ -9,7 +9,7 @@ import { ColorPalette, Panel, PanelBody } from '@wordpress/components';
 import { useEffect } from '@wordpress/element';
 import metadata from './block.json';
 import { allowedBlocks } from '../_lib/allowedBlocks';
-import useColorPalettes from '../_shared/useColorPalettes';
+import useColorPalettes from '../_shared/hooks/useColorPalettes';
 
 registerBlockType( metadata.name, {
 	edit: ( { attributes: { backgroundColor }, setAttributes, context } ) => {

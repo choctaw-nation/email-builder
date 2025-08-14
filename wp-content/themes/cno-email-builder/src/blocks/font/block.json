@@ -41,6 +41,12 @@
 			"type": "object"
 		}
 	},
+	"usesContext": [
+		"cno-email-blocks/fontUrl",
+		"cno-email-blocks/headingsFont",
+		"cno-email-blocks/bodyFont",
+		"cno-email-blocks/accentFont"
+	],
 	"ancestor": [ "cno-email-blocks/head" ],
 	"editorScript": "file:./index.tsx"
 }

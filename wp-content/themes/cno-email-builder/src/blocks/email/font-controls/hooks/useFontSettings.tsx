@@ -1,8 +1,6 @@
 import { useState, useEffect } from '@wordpress/element';
-import { FontsState } from '../lib/types';
-import { DEFAULT_FONTS } from '../lib/utils';
-import { useDispatch } from '@wordpress/data';
-import { STORES } from '../../../stores/consts';
+import { FontsState } from '../../../font/lib/types';
+import { DEFAULT_FONTS } from '../../../font/lib/utils';
 
 export default function useFontSettings( { attributes, setAttributes } ) {
 	const {
@@ -11,9 +9,6 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 		accentFont,
 		useDefaultFonts: isUsingDefaultFonts,
 	} = attributes;
-	const { setUseDefaultFonts, setCustomFonts } = useDispatch(
-		STORES.FONT_FOUNDRY
-	);
 
 	const [ hasAccent, setHasAccent ] = useState(
 		attributes?.accentFont?.name || false
@@ -25,18 +20,8 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 	} );
 
 	useEffect( () => {
-		if ( ! isUsingDefaultFonts ) {
-			setCustomFonts( fonts );
-		} else {
-			setUseDefaultFonts( {
-				fontFoundry: 'default',
-				...fonts,
-			} );
-		}
-		setAttributes( {
-			...fonts,
-		} );
-	}, [ fonts, isUsingDefaultFonts ] );
+		setAttributes( { ...fonts } );
+	}, [ fonts ] );
 
 	const fontTabs = [
 		{

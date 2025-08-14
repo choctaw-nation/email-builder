@@ -11,53 +11,22 @@ import {
 	FontSizePicker,
 	ColorPalette,
 } from '@wordpress/components';
-import { useState, useEffect } from '@wordpress/element';
 import { CSSProperties } from 'react';
 import { TextTransformControl } from './_TextControls';
-import useColorPalettes from './useColorPalettes';
-import useFontData from './_useFontData';
 
-export default function TypographyControls( {
-	attributes,
-	setAttributes,
-	textType,
-} ) {
-	const isHeadings = 'headings' === textType;
+import useColorPalettes from './hooks/useColorPalettes';
+
+export default function TypographyControls( props ) {
+	const {
+		attributes,
+		setAttributes,
+		fontSizes,
+		fontFamilies,
+		fontFamilyString,
+		handleFontFamilyChange,
+	} = props;
 	const { choctawLanding, baseColorsPalette } = useColorPalettes();
-	const { fontFamilies, fontSizes, headingsFont, bodyFont } = useFontData();
 
-	const [ headingsFontString, setHeadingsFontString ] = useState(
-		generateFontFamilyString( headingsFont )
-	);
-	useEffect( () => {
-		setHeadingsFontString( generateFontFamilyString( headingsFont ) );
-		setAttributes( {
-			fontFamily: isHeadings ? headingsFontString : bodyFontString,
-		} );
-	}, [ headingsFont ] );
-
-	const [ bodyFontString, setBodyFontString ] = useState(
-		generateFontFamilyString( bodyFont )
-	);
-	useEffect( () => {
-		setBodyFontString( generateFontFamilyString( bodyFont ) );
-		setAttributes( {
-			fontFamily: isHeadings ? headingsFontString : bodyFontString,
-		} );
-	}, [ bodyFont ] );
-
-	function handleFontFamilyChange( val ) {
-		if ( ! val ) {
-			setAttributes( {
-				fontFamily:
-					'headings' === textType
-						? headingsFontString
-						: bodyFontString,
-			} );
-		} else {
-			setAttributes( { fontFamily: val } );
-		}
-	}
 	return (
 		<Panel header="Typography">
 			<PanelBody title="Type Settings">
@@ -68,11 +37,7 @@ export default function TypographyControls( {
 								__next40pxDefaultSize
 								__nextHasNoMarginBottom
 								fontFamilies={ fontFamilies }
-								value={
-									attributes.fontFamily || isHeadings
-										? headingsFont
-										: bodyFont
-								}
+								value={ fontFamilyString }
 								onChange={ handleFontFamilyChange }
 							/>
 						</FlexBlock>
@@ -136,16 +101,13 @@ export function calcStyleObject( {
 	lineHeight,
 	textTransform,
 	fontFamily,
+	fontFamilyOverride,
 } ): CSSProperties {
 	return {
 		color,
 		fontSize,
 		lineHeight,
 		textTransform,
-		fontFamily,
+		fontFamily: fontFamilyOverride || fontFamily,
 	};
-}
-
-function generateFontFamilyString( fontFamily: any ): string {
-	return `${ fontFamily.name }, ${ fontFamily.fallbackStack.value }`;
 }

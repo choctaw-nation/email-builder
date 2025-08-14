@@ -20,13 +20,53 @@
 		},
 		"title": {
 			"type": "string"
+		},
+		"useDefaultFonts": {
+			"type": "boolean",
+			"default": true
+		},
+		"fontUrl": {
+			"type": "string",
+			"default": "https://use.typekit.net/exd7pgy.css"
+		},
+		"headingsFont": {
+			"type": "object",
+			"default": {
+				"name": "pill-gothic-300mg",
+				"title": "Pill Gothic 300mg",
+				"fontWeights": [ 400, 700 ],
+				"fontStyles": [ "normal", " italic" ],
+				"fallbackStack": {
+					"label": "sans-serif",
+					"value": "Arial, Helvetica, sans-serif"
+				}
+			}
+		},
+		"bodyFont": {
+			"type": "object",
+			"default": {
+				"name": "gill-sans-nova",
+				"title": "Gill Sans Nova",
+				"fontWeights": [ 400, 700 ],
+				"fontStyles": [ "normal", " italic" ],
+				"fallbackStack": {
+					"label": "sans-serif",
+					"value": "Arial, Helvetica, sans-serif"
+				}
+			}
+		},
+		"accentFont": {
+			"type": "object"
 		}
 	},
 	"providesContext": {
 		"cno-email-blocks/previewText": "previewText",
-		"cno-email-blocks/title": "title"
+		"cno-email-blocks/title": "title",
+		"cno-email-blocks/fontUrl": "fontUrl",
+		"cno-email-blocks/headingsFont": "headingsFont",
+		"cno-email-blocks/bodyFont": "bodyFont",
+		"cno-email-blocks/accentFont": "accentFont"
 	},
 	"editorScript": "file:./index.tsx",
-	"editorStyle": "file:./index.css",
-	"render": "file:./render.php"
+	"editorStyle": "file:./index.css"
 }

@@ -6,7 +6,7 @@ export type FontBlockAttributes = {
 };
 export type FontsData = {
 	name: string;
-	title?: string;
+	title: string;
 	fontWeights?: number[];
 	fontStyles?: string[];
 	fallbackStack: {

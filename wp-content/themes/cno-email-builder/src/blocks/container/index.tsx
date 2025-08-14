@@ -19,7 +19,7 @@ import metadata from './block.json';
 import { allowedBlocks } from '../_lib/allowedBlocks';
 import { MAX_WIDTH } from '../_lib/consts';
 import SpacingControls, { calcSpacingObject } from '../_shared/SpacingControl';
-import useColorPalettes from '../_shared/useColorPalettes';
+import useColorPalettes from '../_shared/hooks/useColorPalettes';
 
 registerBlockType( metadata.name, {
 	icon: homeButton,

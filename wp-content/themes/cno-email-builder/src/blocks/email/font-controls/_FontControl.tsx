@@ -8,7 +8,7 @@ import {
 import useFontSettings from './hooks/useFontSettings';
 import CustomFontDefinitions from './CustomFontDefinitions';
 import DefaultFontPicker from './DefaultFontPicker';
-import { FontsState } from './lib/types';
+import { FontsState } from '../../font/lib/types';
 
 export default function FontControl( props ) {
 	const {
@@ -24,7 +24,7 @@ export default function FontControl( props ) {
 		attributes: { useDefaultFonts },
 	} = props;
 	return (
-		<PanelBody title="Font Definition">
+		<PanelBody title="Font Definitions" initialOpen={ false }>
 			<Flex gap={ 8 } direction="column">
 				{ ! useDefaultFonts && (
 					<FlexItem isBlock>
@@ -44,7 +44,11 @@ export default function FontControl( props ) {
 								? fontTabs.filter(
 										( tab ) => 'accentFont' !== tab.name
 								  )
-								: fontTabs
+								: fontTabs.filter( ( tab ) =>
+										hasAccent
+											? tab
+											: 'accentFont' !== tab.name
+								  )
 						}
 						children={ ( tab ) =>
 							useDefaultFonts

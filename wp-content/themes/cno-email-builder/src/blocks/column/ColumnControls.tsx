@@ -1,13 +1,11 @@
 import { InspectorControls, HeightControl } from '@wordpress/block-editor';
-import { Panel, PanelBody } from '@wordpress/components';
-import FlexContainer from '../_lib/FlexContainer';
-
+import { Flex, Panel, PanelBody } from '@wordpress/components';
 export default function ColumnControls( { attributes, setAttributes } ) {
 	return (
 		<InspectorControls>
 			<Panel header="Column Settings">
 				<PanelBody>
-					<FlexContainer>
+					<Flex gap={ 8 } direction="column">
 						<HeightControl
 							label="Column Width"
 							value={ attributes.width || '' }
@@ -22,7 +20,7 @@ export default function ColumnControls( { attributes, setAttributes } ) {
 								setAttributes( { height } );
 							} }
 						/>
-					</FlexContainer>
+					</Flex>
 				</PanelBody>
 			</Panel>
 		</InspectorControls>
