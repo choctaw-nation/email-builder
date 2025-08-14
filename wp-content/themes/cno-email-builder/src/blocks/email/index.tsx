@@ -7,16 +7,18 @@ import {
 } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
-import metadata from './block.json';
 
+import metadata from './block.json';
+import '../../stores/responsive-styles/store';
 import BlockControls from './BlockControls';
 import { STORES } from '../../stores/consts';
+import { FontsData } from '../_lib/types';
 
 registerBlockType( metadata.name, {
 	icon: table,
 	edit: ( props ) => {
 		const {
-			attributes: { previewText },
+			attributes: { previewText, fontUrl, headingsFont, bodyFont },
 			setAttributes,
 		} = props;
 		const responsiveBlocks = useSelect( ( select: any ) => {
@@ -50,6 +52,16 @@ registerBlockType( metadata.name, {
 							) }
 						</div>
 					</div>
+					<style
+						type="text/css"
+						dangerouslySetInnerHTML={ {
+							__html: `
+					@import url("${ fontUrl }");
+					:where(.email-wrapper__body) {
+						${ emailStyles( headingsFont, bodyFont ) }
+					}`,
+						} }
+					/>
 					<div { ...innerBlocksProps } />
 				</div>
 			</>
@@ -72,7 +84,13 @@ registerBlockType( metadata.name, {
 				{ attributes.responsiveBlocks.length && (
 					<style
 						dangerouslySetInnerHTML={ {
-							__html: `@media screen and (max-width:450px) {
+							__html: `
+							@import url("${ attributes.fontUrl }");
+					:where(.email-wrapper__body) {
+						${ emailStyles( attributes.headingsFont, attributes.bodyFont ) }
+					}
+
+				@media screen and (max-width:450px) {
 				.responsive-col {
 					width: 100% !important;
 					display:block!important;
@@ -90,3 +108,17 @@ registerBlockType( metadata.name, {
 		</html>
 	),
 } );
+
+function emailStyles( headingsFont: FontsData, bodyFont: FontsData ): string {
+	return `
+		body,p,a,td {
+			text-wrap:balance;
+			font-family: ${ bodyFont.name }, ${ bodyFont.fallbackStack.value }
+		}
+		
+		h1,h2,h3,h4,h5,h6 {
+			text-wrap:balance;
+			font-family: ${ headingsFont.name }, ${ headingsFont.fallbackStack.value };
+		}
+	`;
+}
