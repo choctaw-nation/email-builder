@@ -11,48 +11,38 @@ import {
 	FontSizePicker,
 	ColorPalette,
 } from '@wordpress/components';
-import { useState, useEffect } from '@wordpress/element';
+import { useEffect, useMemo } from '@wordpress/element';
 import { CSSProperties } from 'react';
 import { TextTransformControl } from './_TextControls';
-import useColorPalettes from './useColorPalettes';
+import useColorPalettes from './hooks/useColorPalettes';
 import useFontData from './_useFontData';
 
-export default function TypographyControls( {
-	attributes,
-	setAttributes,
-	textType,
-} ) {
+export default function TypographyControls( props ) {
+	const { attributes, setAttributes, textType } = props;
 	const isHeadings = 'headings' === textType;
 	const { choctawLanding, baseColorsPalette } = useColorPalettes();
-	const { fontFamilies, fontSizes, headingsFont, bodyFont } = useFontData();
+	const { fontFamilies, fontSizes, headingsFont, bodyFont } =
+		useFontData( props );
 
-	const [ headingsFontString, setHeadingsFontString ] = useState(
-		generateFontFamilyString( headingsFont )
+	const fontFamilyString = useMemo(
+		() =>
+			attributes.fontFamily ||
+			generateFontFamilyString( isHeadings ? headingsFont : bodyFont ),
+		[ headingsFont, bodyFont ]
 	);
-	useEffect( () => {
-		setHeadingsFontString( generateFontFamilyString( headingsFont ) );
-		setAttributes( {
-			fontFamily: isHeadings ? headingsFontString : bodyFontString,
-		} );
-	}, [ headingsFont ] );
+	console.log( 'context-based font family string:', fontFamilyString );
+	console.log( 'attribute-based font family string:', attributes.fontFamily );
 
-	const [ bodyFontString, setBodyFontString ] = useState(
-		generateFontFamilyString( bodyFont )
-	);
 	useEffect( () => {
-		setBodyFontString( generateFontFamilyString( bodyFont ) );
 		setAttributes( {
-			fontFamily: isHeadings ? headingsFontString : bodyFontString,
+			fontFamily: fontFamilyString,
 		} );
-	}, [ bodyFont ] );
+	}, [ fontFamilyString ] );
 
 	function handleFontFamilyChange( val ) {
 		if ( ! val ) {
 			setAttributes( {
-				fontFamily:
-					'headings' === textType
-						? headingsFontString
-						: bodyFontString,
+				fontFamily: fontFamilyString,
 			} );
 		} else {
 			setAttributes( { fontFamily: val } );

@@ -1,9 +1,9 @@
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
-import { useState, useEffect } from '@wordpress/element';
-import { STORES } from '../../stores/consts';
+import { useMemo } from '@wordpress/element';
+import { FontsData } from '../font/lib/types';
 
-export default function useFontData(): {
+export default function useFontData( props ): {
 	fontFamilies: Array< {
 		slug: string;
 		name: string;
@@ -13,39 +13,28 @@ export default function useFontData(): {
 	headingsFont?: string;
 	bodyFont?: string;
 } {
+	const { context } = props;
 	const fontSizes = useSelect(
 		( select ) => select( blockEditorStore ).getSettings().fontSizes,
 		[]
 	);
-	const fontFoundry = useSelect( ( select: any ) => {
-		return select( STORES.FONT_FOUNDRY ).getFontFoundry();
-	}, [] );
-
-	const fonts = useSelect(
-		( select: any ) => {
-			return select( STORES.FONT_FOUNDRY ).getFonts();
-		},
-		[ fontFoundry ]
+	const headingsFont = context[ 'cno-email-blocks/headingsFont' ];
+	const bodyFont = context[ 'cno-email-blocks/bodyFont' ];
+	const fonts: Array< FontsData > = useMemo(
+		() => [ headingsFont, bodyFont ],
+		[ headingsFont, bodyFont ]
 	);
-	const [ fontFamilies, setFontFamilies ] = useState( [] );
 
-	useEffect( () => {
-		if ( ! fonts || 0 === fonts.length ) {
-			console.warn( 'no fonts!' );
-			return;
+	const fontFamilies = useMemo( () => {
+		if ( fonts.length === 0 ) {
+			return null;
 		}
-		const families = fonts.map( ( font ) => ( {
+		return fonts.map( ( font ) => ( {
 			slug: font.name,
 			name: font.title,
 			fontFamily: `${ font.name }, ${ font.fallbackStack.value }`,
 		} ) );
-		setFontFamilies( families );
 	}, [ fonts ] );
-
-	const { headingsFont, bodyFont } = useSelect(
-		( select: any ) => select( STORES.FONT_FOUNDRY ).getAllFonts(),
-		[ fonts ]
-	);
 
 	return {
 		fontFamilies,

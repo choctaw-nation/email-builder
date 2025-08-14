@@ -19,7 +19,6 @@ registerBlockType( metadata.name, {
 	icon: heading,
 	edit: ( props ) => {
 		const { attributes, setAttributes } = props;
-		// console.log( attributes );
 		const { content, level } = attributes;
 		const blockProps = useBlockProps( {
 			style: {
