@@ -8,18 +8,20 @@ import {
 	BlockControls,
 	HeadingLevelDropdown,
 } from '@wordpress/block-editor';
-import { ToolbarGroup, Panel, ColorPalette } from '@wordpress/components';
+import { ToolbarGroup, Panel } from '@wordpress/components';
 import { heading } from '@wordpress/icons';
 import TypographyControls, {
 	calcStyleObject,
 } from '../_shared/TypographyControls';
 import SpacingControls, { calcSpacingObject } from '../_shared/SpacingControl';
+import useFontData from '../_shared/_useFontData';
 
 registerBlockType( metadata.name, {
 	icon: heading,
 	edit: ( props ) => {
 		const { attributes, setAttributes } = props;
 		const { content, level } = attributes;
+		const fontData = useFontData( { ...props, textType: 'headings' } );
 		const blockProps = useBlockProps( {
 			style: {
 				...calcStyleObject( attributes ),
@@ -31,7 +33,7 @@ registerBlockType( metadata.name, {
 		return (
 			<>
 				<InspectorControls>
-					<TypographyControls { ...props } />
+					<TypographyControls { ...props } { ...fontData } />
 					<Panel>
 						<SpacingControls { ...props } only="margin" />
 					</Panel>

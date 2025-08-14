@@ -1,5 +1,5 @@
 import { SelectControl } from '@wordpress/components';
-import { DEFAULT_FONTS } from './utils';
+import { DEFAULT_FONTS } from '../../font/lib/utils';
 
 export default function DefaultFontPicker( { handleChange, value } ) {
 	return (

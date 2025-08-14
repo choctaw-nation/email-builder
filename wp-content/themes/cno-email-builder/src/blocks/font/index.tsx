@@ -1,112 +1,44 @@
 import { registerBlockType } from '@wordpress/blocks';
-import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import {
-	Panel,
-	PanelBody,
-	TextControl,
-	__experimentalToggleGroupControl as ToggleGroupControl,
-	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
-} from '@wordpress/components';
+import { useBlockProps } from '@wordpress/block-editor';
 
 import metadata from './block.json';
-import FontControl from './FontControl';
-import { DEFAULT_FONT_URL } from './utils';
-import useFontSettings from './useFontSettings';
+import { FontsData } from './lib/types';
+import useFontContext from './hooks/useFontContext';
 
 registerBlockType( metadata.name, {
 	edit: ( props ) => {
-		const { attributes, setAttributes } = props;
-		const { fontImportUrl, setFontImportUrl, isUsingDefaultFonts } =
-			useFontSettings( props );
-
-		const blockProps = useBlockProps( {
-			style: {
-				display: 'grid',
-				placeContent: 'center',
-				paddingBlock: '1rem',
-				textAlign: 'center',
-				backgroundColor: '#4b4b4b',
-				color: 'white',
-			},
-		} );
+		const { fontUrl, headingsFont, bodyFont } = useFontContext( props );
+		const blockProps = useBlockProps();
 		return (
-			<>
-				<InspectorControls>
-					<Panel header="Font Settings">
-						<PanelBody title="Import Font">
-							<ToggleGroupControl
-								__next40pxDefaultSize
-								__nextHasNoMarginBottom
-								isBlock
-								onChange={ ( val ) =>
-									setFontImportUrl( val as string )
-								}
-								value={ fontImportUrl }
-								label="Font Import Location"
-							>
-								<ToggleGroupControlOption
-									label="Default"
-									value="default"
-								/>
-								<ToggleGroupControlOption
-									label="Custom"
-									value="custom"
-								/>
-							</ToggleGroupControl>
-							{ ! isUsingDefaultFonts && (
-								<TextControl
-									__next40pxDefaultSize
-									__nextHasNoMarginBottom
-									label="Custom Font URL"
-									placeholder={ DEFAULT_FONT_URL }
-									value={ attributes.fontUrl }
-									onChange={ ( fontUrl ) => {
-										setAttributes( { fontUrl } );
-									} }
-								/>
-							) }
-						</PanelBody>
-						<FontControl { ...props } />
-					</Panel>
-				</InspectorControls>
-				<div { ...blockProps }>
-					<div>
-						<h2 style={ { margin: 0 } }>Font Block</h2>
-						<p style={ { margin: 0 } }>
-							Use this block's settings to add some custom fonts.
-						</p>
-					</div>
-					<style
-						type="text/css"
-						dangerouslySetInnerHTML={ {
-							__html: `
-							@import url("${ attributes.fontUrl }");
-							:where(.email-wrapper__body) {
-								${ emailStyles( attributes ) }
-							}`,
-						} }
-					/>
-				</div>
-			</>
+			<style
+				{ ...blockProps }
+				type="text/css"
+				dangerouslySetInnerHTML={ {
+					__html: `
+					@import url("${ fontUrl }");
+					:where(.email-wrapper__body) {
+						${ emailStyles( headingsFont, bodyFont ) }
+					}`,
+				} }
+			/>
 		);
 	},
 
-	save: ( { attributes } ) => {
+	save: ( { attributes: { fontUrl, headingsFont, bodyFont } } ) => {
 		return (
 			<style
 				type="text/css"
 				dangerouslySetInnerHTML={ {
 					__html: `
-					@import url("${ attributes.fontUrl }");
-					${ emailStyles( attributes ) }`,
+					@import url("${ fontUrl }");
+					${ emailStyles( headingsFont, bodyFont ) }`,
 				} }
 			/>
 		);
 	},
 } );
 
-function emailStyles( attributes ): string {
-	const { headingsFont, bodyFont } = attributes;
+function emailStyles( headingsFont: FontsData, bodyFont: FontsData ): string {
 	return `
 		body,p,a,td {
 			text-wrap:balance;

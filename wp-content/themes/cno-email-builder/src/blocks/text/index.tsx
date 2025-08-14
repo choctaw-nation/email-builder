@@ -13,11 +13,13 @@ import TypographyControls, {
 } from '../_shared/TypographyControls';
 import LinkSettings from '../_shared/LinkSettings';
 import SpacingControls, { calcSpacingObject } from '../_shared/SpacingControl';
+import useFontData from '../_shared/_useFontData';
 
 registerBlockType( metadata.name, {
 	icon: paragraph,
 	edit: ( props ) => {
 		const { attributes, setAttributes } = props;
+		const fontData = useFontData( { ...props, textType: 'body' } );
 		const { content, linkDestination } = attributes;
 		const isLink = !! linkDestination;
 		const blockProps = useBlockProps( {
@@ -33,7 +35,7 @@ registerBlockType( metadata.name, {
 		return (
 			<>
 				<InspectorControls>
-					<TypographyControls { ...props } />
+					<TypographyControls { ...props } { ...fontData } />
 					<SpacingControls
 						{ ...props }
 						splitOnAxis={ true }

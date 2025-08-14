@@ -32,6 +32,9 @@
 		"fontFamily": {
 			"type": "string"
 		},
+		"fontFamilyOverride": {
+			"type": "string"
+		},
 		"fontSize": {
 			"type": "string",
 			"default": "16px"
@@ -70,6 +73,11 @@
 			"type": "object"
 		}
 	},
+	"usesContext": [
+		"cno-email-blocks/headingsFont",
+		"cno-email-blocks/bodyFont",
+		"cno-email-blocks/accentFont"
+	],
 	"ancestor": [ "cno-email-blocks/body" ],
 	"editorScript": "file:./index.tsx"
 }
