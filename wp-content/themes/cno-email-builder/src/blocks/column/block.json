@@ -2,8 +2,8 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "cno-email-blocks/column",
-	"version": "0.1.0",
-	"title": "CNO Email Column",
+	"version": "1.0.0",
+	"title": " Column",
 	"category": "cno-email-blocks",
 	"icon": "block-default",
 	"description": "Column block",
@@ -46,7 +46,7 @@
 		"cno-email-blocks/rowGap",
 		"cno-email-blocks/canWrap"
 	],
-	"ancestor": [ "cno-email-blocks/body" ],
+	"ancestor": [ "cno-email-blocks/email-wrapper" ],
 	"parent": [ "cno-email-blocks/row" ],
 	"editorScript": "file:./index.tsx"
 }

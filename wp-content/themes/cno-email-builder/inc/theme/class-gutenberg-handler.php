@@ -150,118 +150,28 @@ class Gutenberg_Handler {
 			$registered_blocks   = \WP_Block_Type_Registry::get_instance()->get_all_registered();
 			$allowed_block_types = array_keys( $registered_blocks );
 		}
-		if ( $is_administrator ) {
-			$disallowed_blocks = array(
-				'core/button',
-				'core/buttons',
-				'core/calendar',
-				'core/categories',
-				'core/comments',
-				'core/comment-author-name',
-				'core/comment-content',
-				'core/comment-date',
-				'core/comment-edit-link',
-				'core/comment-reply-link',
-				'core/comment-template',
-				'core/comment-pagination-previous',
-				'core/comments-author-avatar',
-				'core/comments-pagination',
-				'core/comments-pagination-next',
-				'core/comments-pagination-numbers',
-				'core/comments-title',
-				'core/embed',
-				'core/file',
-				'core/latest-comments',
-				'core/latest-posts',
-				'core/loginout',
-				'core/missing',
-				'core/nextpage',
-				'core/page-list-item',
-				'core/page-list',
-				'core/post-author',
-				'core/post-author-biography',
-				'core/post-author-name',
-				'core/post-comment',
-				'core/post-comments',
-				'core/post-comments-count',
-				'core/post-comments-form',
-				'core/post-comments-link',
-				'core/post-date',
-				'core/post-navigation-link',
-				'core/post-terms',
-				'core/rss',
-				'core/search',
-				'core/site-logo',
-				'core/site-tagline',
-				'core/site-title',
-				'core/social-link',
-				'core/social-links',
-				'core/spacer',
-				'core/tag-cloud',
-				'core/term-description',
-				'core/video',
-				'core/verse',
-				'core/quote',
-				'core/query',
-				'core/table',
-				'core/pullquote',
-				'core/gallery',
-				'core/audio',
-				'core/cover',
-				'core/group',
-				'core/media-text',
-				'core/columns',
-				'core/column',
-				'core/more',
-				'core/separator',
-				'core/shortcode',
-				'core/code',
-				'core/details',
-				'core/preformatted',
-				'core/classic',
-				'core/avatar',
-			);
-
-			// Create a new array for the allowed blocks.
-			$filtered_blocks = array();
-
-			// Loop through each block in the allowed blocks list.
-			foreach ( $allowed_block_types as $block ) {
-
-				// Check if the block is not in the disallowed blocks list.
-				if ( ! in_array( $block, $disallowed_blocks, true ) ) {
-
-					// If it's not disallowed, add it to the filtered list.
-					$filtered_blocks[] = $block;
-				}
-			}
-
-			// Return the filtered list of allowed blocks
-			return $filtered_blocks;
+		if ( $is_administrator ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
+			// return true; phpcs:ignore Squiz.PHP.CommentedOutCode.Found
 		}
-
-		if ( ! $is_administrator ) {
-			$allowed_block_types = array(
-				'core/list',
-				'core/list-item',
-				'core/pattern',
-				'core/block',
-				'cno-email-blocks/email-wrapper',
-				'cno-email-blocks/container',
-				'cno-email-blocks/section',
-				'cno-email-blocks/divider',
-				'cno-email-blocks/button',
-				'cno-email-blocks/column',
-				'cno-email-blocks/image',
-				'cno-email-blocks/row',
-				'cno-email-blocks/text',
-				'cno-email-blocks/font',
-				'cno-email-blocks/head',
-				'cno-email-blocks/body',
-				'cno-email-blocks/heading',
-			);
-			return $allowed_block_types;
-		}
+		$allowed_block_types = array(
+			'core/list',
+			'core/list-item',
+			'core/pattern',
+			'core/block',
+			'cno-email-blocks/email-wrapper',
+			'cno-email-blocks/container',
+			'cno-email-blocks/section',
+			'cno-email-blocks/divider',
+			'cno-email-blocks/button',
+			'cno-email-blocks/column',
+			'cno-email-blocks/image',
+			'cno-email-blocks/row',
+			'cno-email-blocks/text',
+			'cno-email-blocks/font',
+			'cno-email-blocks/head',
+			'cno-email-blocks/body',
+			'cno-email-blocks/heading',
+		);
 		return $allowed_block_types;
 	}
 

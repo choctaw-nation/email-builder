@@ -2,8 +2,8 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "cno-email-blocks/email-wrapper",
-	"version": "0.1.0",
-	"title": "CNO Email Wrapper",
+	"version": "1.0.0",
+	"title": "Email Wrapper",
 	"category": "cno-email-blocks",
 	"icon": "block-default",
 	"description": "Wrapper block for email content",
@@ -57,6 +57,10 @@
 		},
 		"accentFont": {
 			"type": "object"
+		},
+		"responsiveBlocks": {
+			"type": "array",
+			"default": []
 		}
 	},
 	"providesContext": {

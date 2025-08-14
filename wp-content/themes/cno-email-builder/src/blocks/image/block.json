@@ -1,8 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
+	"version": "1.0.0",
 	"name": "cno-email-blocks/image",
-	"title": "CNO Email Image",
+	"title": "Image",
 	"icon": "image",
 	"category": "cno-email-blocks",
 	"description": "Insert an image.",
@@ -69,7 +70,7 @@
 			"attribute": "rel"
 		}
 	},
-	"ancestor": [ "cno-email-blocks/body" ],
+	"ancestor": [ "cno-email-blocks/email-wrapper" ],
 	"supports": {
 		"anchor": false,
 		"html": false,

@@ -2,8 +2,8 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "cno-email-blocks/heading",
-	"version": "0.1.0",
-	"title": "CNO Email Heading",
+	"version": "1.0.0",
+	"title": "Heading",
 	"category": "cno-email-blocks",
 	"icon": "block-default",
 	"description": "Add a heading to your email.",
@@ -64,6 +64,6 @@
 		"cno-email-blocks/bodyFont",
 		"cno-email-blocks/accentFont"
 	],
-	"ancestor": [ "cno-email-blocks/body" ],
+	"ancestor": [ "cno-email-blocks/email-wrapper" ],
 	"editorScript": "file:./index.tsx"
 }

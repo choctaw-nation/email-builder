@@ -8,7 +8,7 @@ import {
 import useFontSettings from './hooks/useFontSettings';
 import CustomFontDefinitions from './CustomFontDefinitions';
 import DefaultFontPicker from './DefaultFontPicker';
-import { FontsState } from '../../font/lib/types';
+import { FontsState } from '../../_lib/types';
 
 export default function FontControl( props ) {
 	const {
