@@ -25,7 +25,8 @@ export default function TypographyControls( props ) {
 		fontFamilyString,
 		handleFontFamilyChange,
 	} = props;
-	const { choctawLanding, baseColorsPalette } = useColorPalettes();
+	const colors = useColorPalettes();
+	const palettes = Object.values( colors );
 
 	return (
 		<Panel header="Typography">
@@ -80,7 +81,7 @@ export default function TypographyControls( props ) {
 						<ColorPalette
 							value={ attributes.color }
 							onChange={ ( color ) => setAttributes( { color } ) }
-							colors={ [ baseColorsPalette, choctawLanding ] }
+							colors={ palettes }
 						/>
 					</FlexBlock>
 				</Flex>

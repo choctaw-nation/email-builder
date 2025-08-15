@@ -1,4 +1,4 @@
-import { FontsData } from '../../_lib/types';
+import { FontsData } from '../../../_lib/types';
 
 export const DEFAULT_FONT_URL = 'https://use.typekit.net/exd7pgy.css';
 

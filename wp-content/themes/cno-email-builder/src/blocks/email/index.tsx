@@ -5,41 +5,102 @@ import {
 	useBlockProps,
 	useInnerBlocksProps,
 } from '@wordpress/block-editor';
-import { useSelect } from '@wordpress/data';
-import { useEffect } from '@wordpress/element';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { useEffect, useState } from '@wordpress/element';
 
 import metadata from './block.json';
+
 import '../../stores/responsive-styles/store';
+import '../../stores/colors/store';
+
+import { actions as ColorStoreActions } from '../../stores/colors/actions';
+import { State as ColorStoreState } from '../../stores/colors/types';
+
 import BlockControls from './BlockControls';
+
 import { STORES } from '../../stores/consts';
-import { FontsData } from '../_lib/types';
+
+import type { FontsData } from '../_lib/types';
 
 registerBlockType( metadata.name, {
 	icon: table,
 	edit: ( props ) => {
 		const {
-			attributes: { previewText, fontUrl, headingsFont, bodyFont },
+			attributes: {
+				previewText,
+				fontUrl,
+				headingsFont,
+				bodyFont,
+				customColorPalette,
+			},
 			setAttributes,
 		} = props;
-		const responsiveBlocks = useSelect( ( select: any ) => {
-			const store = select( STORES.RESPONSIVE_STYLES );
-			const blockTypes = store.getResponsiveBlockTypes();
-			return blockTypes;
-		}, [] );
+
+		const responsiveBlocks = useSelect(
+			( select: any ) =>
+				select( STORES.RESPONSIVE_STYLES ).getResponsiveBlockTypes(),
+			[]
+		);
+		const {
+			setColor,
+			removeColor,
+			allowCustomColors,
+		}: typeof ColorStoreActions = useDispatch( STORES.COLORS );
+		const [ hasCustomColors, setHasCustomColors ] = useState(
+			!! customColorPalette &&
+				Object.values( customColorPalette ).length > 0
+		);
+
+		useEffect( () => {
+			allowCustomColors( hasCustomColors );
+		}, [ hasCustomColors ] );
+
+		useEffect( () => {
+			if ( ! hasCustomColors ) {
+				return;
+			}
+			Object.entries( customColorPalette ).forEach(
+				( [ key, value ] ) => {
+					if ( value ) {
+						setColor( {
+							color: key as keyof ColorStoreState,
+							value: value as string,
+						} );
+					} else {
+						removeColor( { color: key as keyof ColorStoreState } );
+					}
+				}
+			);
+		}, [ customColorPalette, hasCustomColors ] );
 
 		useEffect( () => {
 			setAttributes( { responsiveBlocks } );
 		}, [ responsiveBlocks ] );
+
 		const blockProps = useBlockProps( { className: 'email-wrapper' } );
 		const innerBlocksProps = useInnerBlocksProps(
 			{ className: 'email-wrapper__body' },
 			{
-				template: [ [ 'cno-email-blocks/body' ] ],
+				template: [
+					[
+						'cno-email-blocks/container',
+						{
+							attributes: { lock: { move: true, remove: true } },
+						},
+						[ [ 'cno-email-blocks/text' ] ],
+					],
+				],
+				templateLock: false,
+				renderAppender: false,
 			}
 		);
 		return (
 			<>
-				<BlockControls { ...props } />
+				<BlockControls
+					{ ...props }
+					hasCustomColors={ hasCustomColors }
+					setHasCustomColors={ setHasCustomColors }
+				/>
 				<div { ...blockProps }>
 					<div className="email-wrapper__header">
 						<div className="email-preview">
@@ -103,7 +164,29 @@ registerBlockType( metadata.name, {
 						} }
 					/>
 				) }
-				<InnerBlocks.Content />
+				<body
+					style={ {
+						margin: 0,
+						padding: 0,
+						backgroundColor: attributes.backgroundColor,
+					} }
+					bgColor={ attributes.backgroundColor }
+				>
+					<div
+						style={ {
+							display: 'none',
+							overflow: 'hidden',
+							lineHeight: '1px',
+							opacity: 0,
+							maxHeight: 0,
+							maxWidth: 0,
+						} }
+						data-skip-in-text="true"
+					>
+						{ attributes.previewText }
+					</div>
+					<InnerBlocks.Content />
+				</body>
 			</head>
 		</html>
 	),
