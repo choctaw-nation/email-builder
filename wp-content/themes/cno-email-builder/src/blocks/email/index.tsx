@@ -30,11 +30,22 @@ registerBlockType( metadata.name, {
 		useEffect( () => {
 			setAttributes( { responsiveBlocks } );
 		}, [ responsiveBlocks ] );
+
 		const blockProps = useBlockProps( { className: 'email-wrapper' } );
 		const innerBlocksProps = useInnerBlocksProps(
 			{ className: 'email-wrapper__body' },
 			{
-				template: [ [ 'cno-email-blocks/body' ] ],
+				template: [
+					[
+						'cno-email-blocks/container',
+						{
+							attributes: { lock: { move: true, remove: true } },
+						},
+						[ [ 'cno-email-blocks/text' ] ],
+					],
+				],
+				templateLock: false,
+				renderAppender: false,
 			}
 		);
 		return (
@@ -103,7 +114,29 @@ registerBlockType( metadata.name, {
 						} }
 					/>
 				) }
-				<InnerBlocks.Content />
+				<body
+					style={ {
+						margin: 0,
+						padding: 0,
+						backgroundColor: attributes.backgroundColor,
+					} }
+					bgColor={ attributes.backgroundColor }
+				>
+					<div
+						style={ {
+							display: 'none',
+							overflow: 'hidden',
+							lineHeight: '1px',
+							opacity: 0,
+							maxHeight: 0,
+							maxWidth: 0,
+						} }
+						data-skip-in-text="true"
+					>
+						{ attributes.previewText }
+					</div>
+					<InnerBlocks.Content />
+				</body>
 			</head>
 		</html>
 	),
