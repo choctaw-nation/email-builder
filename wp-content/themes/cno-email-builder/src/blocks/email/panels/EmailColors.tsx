@@ -1,16 +1,14 @@
 import {
 	ColorIndicator,
 	ColorPalette,
-	ColorPicker,
 	Flex,
 	FlexBlock,
-	FlexItem,
 	Panel,
 	PanelBody,
 	TabPanel,
 	ToggleControl,
 } from '@wordpress/components';
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 
 type CustomColorPalette = {
 	primary: string;
@@ -21,16 +19,16 @@ type CustomColorPalette = {
 export default function EmailColors( {
 	attributes: { customColorPalette },
 	setAttributes,
+	hasCustomColors,
+	setHasCustomColors,
 }: {
 	attributes: { customColorPalette: CustomColorPalette };
 	setAttributes: (
 		newAttributes: Partial< { customColorPalette: CustomColorPalette } >
 	) => void;
+	hasCustomColors: boolean;
+	setHasCustomColors: ( val: boolean ) => void;
 } ) {
-	const [ hasCustomColors, setHasCustomColors ] = useState(
-		!! customColorPalette && Object.values( customColorPalette ).length > 0
-	);
-
 	return (
 		<Panel>
 			<PanelBody>
@@ -64,7 +62,6 @@ export default function EmailColors( {
 													: ''
 											}
 											onChange={ ( val ) => {
-												console.log( val );
 												setAttributes( {
 													customColorPalette: {
 														...customColorPalette,

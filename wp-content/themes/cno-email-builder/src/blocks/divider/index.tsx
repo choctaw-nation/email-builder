@@ -44,7 +44,6 @@ registerBlockType( metadata.name, {
 									label="Border"
 									value={ attributes.border || {} }
 									onChange={ ( val ) => {
-										console.log( val );
 										setAttributes( {
 											border: val,
 										} );

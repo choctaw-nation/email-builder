@@ -1,5 +1,7 @@
 import { useSelect } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
+import { STORES } from '../../../stores/consts';
+import { useMemo, useState, useEffect } from '@wordpress/element';
 
 const choctawLanding = {
 	name: 'Choctaw Landing',
@@ -20,6 +22,10 @@ export default function useColorPalettes() {
 		( select ) => select( blockEditorStore ).getSettings().colors,
 		[]
 	);
+	const customColors = useSelect(
+		( select ) => select( STORES.COLORS ).getColors(),
+		[]
+	);
 	const baseColorsPalette = {
 		name: 'Base Colors',
 		colors: baseColors.map( ( { name, color } ) => ( {
@@ -27,6 +33,41 @@ export default function useColorPalettes() {
 			color,
 		} ) ),
 	};
+	const [ customColorPalette, setCustomColorPalette ] = useState< {
+		name: string;
+		colors: Array< { name: string; color: string | undefined } >;
+	} | null >( null );
 
-	return { baseColorsPalette, choctawLanding };
+	useEffect( () => {
+		if ( ! customColors ) {
+			return;
+		}
+		setCustomColorPalette( {
+			name: 'Custom Palette',
+			colors: Object.entries( customColors ).map(
+				( [ key, value ] ) => ( {
+					name:
+						key.substring( 0, 1 ).toUpperCase() +
+						key.substring( 1 ),
+					color: value as string | undefined,
+				} )
+			),
+		} );
+	}, [ customColors ] );
+
+	const palette = useMemo( () => {
+		const palette = {
+			baseColorsPalette,
+			choctawLanding,
+		};
+		if ( customColorPalette ) {
+			return {
+				...palette,
+				customColorPalette,
+			};
+		} else {
+			return palette;
+		}
+	}, [ customColorPalette ] );
+	return palette;
 }
