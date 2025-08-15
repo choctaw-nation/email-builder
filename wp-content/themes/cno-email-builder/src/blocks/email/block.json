@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "cno-email-blocks/email-wrapper",
 	"version": "1.0.0",
-	"title": "Email Wrapper",
+	"title": "Email",
 	"category": "cno-email-blocks",
 	"icon": "block-default",
 	"description": "Wrapper block for email content",
@@ -16,10 +16,17 @@
 	},
 	"attributes": {
 		"previewText": {
-			"type": "string"
+			"type": "string",
+			"default": ""
 		},
 		"title": {
-			"type": "string"
+			"type": "string",
+			"default": ""
+		},
+		"backgroundColor": {
+			"type": "string",
+			"attribute": "style.backgroundColor",
+			"default": "gray"
 		},
 		"useDefaultFonts": {
 			"type": "boolean",
