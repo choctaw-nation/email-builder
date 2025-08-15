@@ -12,7 +12,7 @@
 		"html": false,
 		"className": false,
 		"inserter": true,
-		"multiple": true
+		"splitting": true
 	},
 	"attributes": {
 		"content": {

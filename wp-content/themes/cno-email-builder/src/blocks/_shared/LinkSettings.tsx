@@ -1,6 +1,6 @@
 import { ToolbarButton, ToggleControl, Button } from '@wordpress/components';
 import { URLPopover, URLInput } from '@wordpress/block-editor';
-import { keyboardReturn, link } from '@wordpress/icons';
+import { keyboardReturn, link, linkOff } from '@wordpress/icons';
 import { useState } from '@wordpress/element';
 
 export default function LinkSettings( { attributes, setAttributes } ) {
@@ -68,13 +68,23 @@ export default function LinkSettings( { attributes, setAttributes } ) {
 						</form>
 					) }
 					{ linkIsSet && ! isEditing && (
-						<URLPopover.LinkViewer
-							url={ url }
-							onEditLinkClick={ () => {
-								setUrl( '' );
-								setIsEditing( true );
-							} }
-						/>
+						<>
+							<URLPopover.LinkViewer
+								url={ url }
+								onEditLinkClick={ () => {
+									setUrl( '' );
+									setIsEditing( true );
+								} }
+							/>
+							<Button
+								__next40pxDefaultSize
+								icon={ linkOff }
+								onClick={ () => {
+									setUrl( '' );
+									setAttributes( { linkDestination: '' } );
+								} }
+							/>
+						</>
 					) }
 				</URLPopover>
 			) }

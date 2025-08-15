@@ -8,12 +8,12 @@
 $email_wrapper_block = parse_blocks( get_the_content() )[0];
 get_header();
 
-$body_block = $email_wrapper_block['innerBlocks'][1];
-echo "<style type='text/css'>body {background-color:{$body_block['attrs']['backgroundColor']}</style>";
+$body_bg_color = isset( $email_wrapper_block['attrs']['backgroundColor'] ) ? $email_wrapper_block['attrs']['backgroundColor'] : 'gray';
+echo "<style type='text/css'>body {background-color:{$body_bg_color}}</style>";
 ?>
-<main class="container-xxl gx-5">
-	<div class="row gx-0 my-3 gap-3 min-vh-100 justify-content-between">
-	<section class="col-12 order-2 order-md-1 col-sm-8 flex-grow-1 flex-shrink-1">
+<main class="container-xxl">
+	<div class="row row-gap-3 my-3 min-vh-100 justify-content-center justify-content-md-between">
+	<section class="col-12 col-md-8 order-2 order-md-1">
 	<?php
 	$content = cno_get_email_content( 'preview' );
 	if ( ! $content ) {
@@ -23,7 +23,7 @@ echo "<style type='text/css'>body {background-color:{$body_block['attrs']['backg
 	}
 	?>
 	</section>
-	<aside class="col-auto flex-grow-1 flex-md-grow-0 flex-shrink-1 bg-white order-1 order-md-2 p-3">
+	<aside class="col-auto flex-md-grow-0 col-md-4 bg-white order-1 order-md-2 p-3">
 		<h1>Email Preview</h1>
 		<div class="my-3"><p><strong>Preview Text:</strong> <?php echo $email_wrapper_block['attrs']['previewText']; ?></p></div>
 		<?php if ( is_user_logged_in() ) : ?>

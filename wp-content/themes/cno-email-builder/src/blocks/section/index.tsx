@@ -26,6 +26,7 @@ registerBlockType( metadata.name, {
 			template: [
 				[ 'core/paragraph', { placeholder: 'Add some content...' } ],
 			],
+			templateLock: false,
 		} );
 		return (
 			<>

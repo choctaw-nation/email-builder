@@ -16,7 +16,8 @@
 		"color": {
 			"background": false,
 			"text": false
-		}
+		},
+		"splitting": true
 	},
 	"attributes": {
 		"level": {
