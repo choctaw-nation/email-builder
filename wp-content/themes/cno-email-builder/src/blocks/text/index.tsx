@@ -53,6 +53,7 @@ registerBlockType( metadata.name, {
 				</BlockControls>
 				{ isLink ? (
 					<RichText
+						identifier="content"
 						{ ...blockProps }
 						tagName="a"
 						value={ content }
@@ -63,6 +64,7 @@ registerBlockType( metadata.name, {
 				) : (
 					<RichText
 						{ ...blockProps }
+						identifier="content"
 						tagName="p"
 						allowedFormats={ [ 'core/bold', 'core/italic' ] }
 						placeholder="Type something nice here…"

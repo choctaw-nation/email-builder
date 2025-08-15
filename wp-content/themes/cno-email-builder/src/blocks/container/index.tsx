@@ -68,7 +68,7 @@ registerBlockType( metadata.name, {
 								</FlexItem>
 							</Flex>
 						</PanelBody>
-						<PanelBody title="Color">
+						<PanelBody title="Background Color">
 							<ColorPalette
 								value={ props.attributes.backgroundColor }
 								onChange={ ( backgroundColor ) =>
@@ -95,9 +95,9 @@ registerBlockType( metadata.name, {
 			style: {
 				maxWidth,
 				...calcSpacingObject( attributes ),
-				backgroundColor: attributes.backgroundColor,
+				backgroundColor: attributes.backgroundColor || 'gray',
 			},
-			bgColor: attributes.backgroundColor,
+			bgColor: attributes.backgroundColor || 'gray',
 			align: 'center',
 			width: '100%',
 			border: '0',

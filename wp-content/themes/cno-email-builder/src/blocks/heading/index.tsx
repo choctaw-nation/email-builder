@@ -55,6 +55,7 @@ registerBlockType( metadata.name, {
 				<RichText
 					allowedFormats={ [ 'core/bold', 'core/italic' ] }
 					{ ...blockProps }
+					identifier="content"
 					tagName={ `h${ level }` }
 					placeholder="Insert a heading..."
 					value={ content }
