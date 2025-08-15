@@ -68,6 +68,9 @@
 		"responsiveBlocks": {
 			"type": "array",
 			"default": []
+		},
+		"customColorPalette": {
+			"type": "object"
 		}
 	},
 	"providesContext": {

@@ -9,10 +9,14 @@ import { useSelect } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 
 import metadata from './block.json';
+
 import '../../stores/responsive-styles/store';
+
 import BlockControls from './BlockControls';
+
 import { STORES } from '../../stores/consts';
-import { FontsData } from '../_lib/types';
+
+import type { FontsData } from '../_lib/types';
 
 registerBlockType( metadata.name, {
 	icon: table,

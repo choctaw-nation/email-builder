@@ -5,11 +5,11 @@ import {
 	TextControl,
 } from '@wordpress/components';
 
-export default function CustomFontDefinitions(
-	activeTab: string,
+export default function CustomFontDefinitions( {
+	activeTab,
 	fonts,
-	setFonts
-) {
+	setFonts,
+} ) {
 	function handleChange(
 		val: string,
 		property: 'fontFaceTitle' | 'fontFaceName' | 'fontStack'
