@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from '@wordpress/element';
+import { useState, useEffect, Fragment, useMemo } from '@wordpress/element';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 import { PanelBody, Flex, BoxControl, FlexBlock } from '@wordpress/components';
@@ -24,28 +24,33 @@ export default function SpacingControls( {
 	sides?: AllowedSides[];
 	splitOnAxis?: boolean;
 } ) {
-	const [ margin, setMargin ] = useState( attributes.margin || {} );
-	const [ padding, setPadding ] = useState( attributes.padding || {} );
-	const [ spacingLookup, setSpacingLookup ] = useState( {} );
+	const [ margin, setMargin ] = useState< SpacingValues >(
+		attributes.margin || {}
+	);
+	const [ padding, setPadding ] = useState< SpacingValues >(
+		attributes.padding || {}
+	);
 	const spacingSizes = useSelect(
 		( select ) =>
 			select( blockEditorStore ).getSettings().__experimentalFeatures
 				.spacing.spacingSizes.theme,
 		[]
 	);
-
-	useEffect( () => {
+	const spacingLookup: Record< number, string > | null = useMemo( () => {
 		if ( ! spacingSizes ) {
-			return;
+			return null;
 		}
 		const spacersMap = {};
 		spacingSizes.forEach(
 			( obj ) => ( spacersMap[ obj.slug ] = obj.size )
 		);
-		setSpacingLookup( spacersMap );
+		return spacersMap;
 	}, [ spacingSizes ] );
 
 	useEffect( () => {
+		if ( ! spacingLookup ) {
+			return;
+		}
 		const newValues: { margin: SpacingValues; padding: SpacingValues } = {
 			margin: {},
 			padding: {},
@@ -53,13 +58,17 @@ export default function SpacingControls( {
 		Object.entries( margin ).forEach(
 			( [ key, value ] ) =>
 				( newValues.margin[ key ] =
-					spacingLookup[ value?.slice( -2 ) || undefined ] )
+					typeof value === 'string'
+						? spacingLookup[ value.slice( -2 ) ]
+						: value )
 		);
-		Object.entries( padding ).forEach(
-			( [ key, value ] ) =>
-				( newValues.padding[ key ] =
-					spacingLookup[ value?.slice( -2 ) || undefined ] )
-		);
+
+		Object.entries( padding ).forEach( ( [ key, value ] ) => {
+			newValues.padding[ key ] =
+				typeof value === 'string'
+					? spacingLookup[ value.slice( -2 ) ]
+					: value;
+		} );
 		setAttributes( {
 			margin: newValues.margin,
 			padding: newValues.padding,
