@@ -65,7 +65,7 @@ class Theme_Init {
 
 		$utility_files = array(
 			'gutenberg-handler' => 'Gutenberg_Handler',
-			'post-override'     => null,
+			'post-override'     => 'Post_Override',
 
 		);
 		foreach ( $utility_files as $utility_file => $class_name ) {
