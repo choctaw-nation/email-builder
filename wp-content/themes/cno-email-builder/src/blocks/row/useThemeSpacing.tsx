@@ -5,7 +5,7 @@ import { useSelect } from '@wordpress/data';
 export default function useThemeSpacing(): {
 	spacingScale: Array< { label: string; value: number } >;
 	scaleMax: number;
-} {
+	} {
 	const [ scaleMax, setScaleMax ] = useState( 0 );
 	const themeSpacingScale = useSelect( ( select ) => {
 		const settings = select( blockEditorStore ).getSettings();
@@ -14,6 +14,7 @@ export default function useThemeSpacing(): {
 			false;
 		return themeSpacingScale;
 	}, [] );
+
 	const spacingScale = [
 		{ label: 'None', value: 0 },
 		...themeSpacingScale.map( ( { name, size } ) => {
@@ -30,6 +31,7 @@ export default function useThemeSpacing(): {
 			};
 		} ),
 	];
+
 	useEffect( () => {
 		spacingScale.forEach( ( { value } ) => {
 			if ( value > scaleMax ) {

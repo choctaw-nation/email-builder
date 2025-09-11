@@ -1,140 +1,25 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { table } from '@wordpress/icons';
-import {
-	InnerBlocks,
-	useBlockProps,
-	useInnerBlocksProps,
-} from '@wordpress/block-editor';
-import { useDispatch, useSelect } from '@wordpress/data';
-import { useEffect, useState } from '@wordpress/element';
+import { InnerBlocks } from '@wordpress/block-editor';
 
 import metadata from './block.json';
 
 import '../../stores/responsive-styles/store';
 import '../../stores/colors/store';
 
-import { actions as ColorStoreActions } from '../../stores/colors/actions';
-import { State as ColorStoreState } from '../../stores/colors/types';
-
-import BlockControls from './BlockControls';
-
-import { STORES } from '../../stores/consts';
-
-import type { FontsData } from '../_lib/types';
+import Edit from './Edit';
+import emailStyles from './emailStyles';
 
 registerBlockType( metadata.name, {
 	icon: table,
-	edit: ( props ) => {
-		const {
-			attributes: {
-				previewText,
-				fontUrl,
-				headingsFont,
-				bodyFont,
-				customColorPalette,
-			},
-			setAttributes,
-		} = props;
-
-		const responsiveBlocks = useSelect(
-			( select: any ) =>
-				select( STORES.RESPONSIVE_STYLES ).getResponsiveBlockTypes(),
-			[]
-		);
-		const {
-			setColor,
-			removeColor,
-			allowCustomColors,
-		}: typeof ColorStoreActions = useDispatch( STORES.COLORS );
-		const [ hasCustomColors, setHasCustomColors ] = useState(
-			!! customColorPalette &&
-				Object.values( customColorPalette ).length > 0
-		);
-
-		useEffect( () => {
-			allowCustomColors( hasCustomColors );
-		}, [ hasCustomColors ] );
-
-		useEffect( () => {
-			if ( ! hasCustomColors ) {
-				return;
-			}
-			Object.entries( customColorPalette ).forEach(
-				( [ key, value ] ) => {
-					if ( value ) {
-						setColor( {
-							color: key as keyof ColorStoreState,
-							value: value as string,
-						} );
-					} else {
-						removeColor( { color: key as keyof ColorStoreState } );
-					}
-				}
-			);
-		}, [ customColorPalette, hasCustomColors ] );
-
-		useEffect( () => {
-			setAttributes( { responsiveBlocks } );
-		}, [ responsiveBlocks ] );
-
-		const blockProps = useBlockProps( { className: 'email-wrapper' } );
-		const innerBlocksProps = useInnerBlocksProps(
-			{ className: 'email-wrapper__body' },
-			{
-				template: [
-					[
-						'cno-email-blocks/container',
-						{
-							attributes: { lock: { move: true, remove: true } },
-						},
-						[ [ 'cno-email-blocks/text' ] ],
-					],
-				],
-				templateLock: false,
-				renderAppender: false,
-			}
-		);
-		return (
-			<>
-				<BlockControls
-					{ ...props }
-					hasCustomColors={ hasCustomColors }
-					setHasCustomColors={ setHasCustomColors }
-				/>
-				<div { ...blockProps }>
-					<div className="email-wrapper__header">
-						<div className="email-preview">
-							<strong>Preview Text:</strong>{ ' ' }
-							{ previewText && previewText }
-							{ ! previewText && (
-								<span className="email-preview__missing">
-									No preview text!
-								</span>
-							) }
-						</div>
-					</div>
-					<style
-						type="text/css"
-						dangerouslySetInnerHTML={ {
-							__html: `
-					@import url("${ fontUrl }");
-					:where(.email-wrapper__body) {
-						${ emailStyles( headingsFont, bodyFont ) }
-					}`,
-						} }
-					/>
-					<div { ...innerBlocksProps } />
-				</div>
-			</>
-		);
-	},
+	edit: Edit,
 	save: ( { attributes } ) => (
 		<html lang="en" dir="ltr">
 			<head>
 				<meta charSet="UTF-8" />
 				<meta
 					content="text/html; charset=UTF-8"
-					http-equiv="Content-Type"
+					httpEquiv="Content-Type"
 				/>
 				<meta name="x-apple-disable-message-reformatting" />
 				<meta
@@ -170,7 +55,10 @@ registerBlockType( metadata.name, {
 						padding: 0,
 						backgroundColor: attributes.backgroundColor,
 					} }
+					/* eslint-disable react/no-unknown-property */
+					// @ts-ignore react/no-unknown-property
 					bgColor={ attributes.backgroundColor }
+					/* eslint-enable react/no-unknown-property */
 				>
 					<div
 						style={ {
@@ -191,17 +79,3 @@ registerBlockType( metadata.name, {
 		</html>
 	),
 } );
-
-function emailStyles( headingsFont: FontsData, bodyFont: FontsData ): string {
-	return `
-		body,p,a,td {
-			text-wrap:balance;
-			font-family: ${ bodyFont.name }, ${ bodyFont.fallbackStack.value }
-		}
-		
-		h1,h2,h3,h4,h5,h6 {
-			text-wrap:balance;
-			font-family: ${ headingsFont.name }, ${ headingsFont.fallbackStack.value };
-		}
-	`;
-}

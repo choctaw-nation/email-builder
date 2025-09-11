@@ -73,7 +73,7 @@ export default function SpacingControls( {
 			margin: newValues.margin,
 			padding: newValues.padding,
 		} );
-	}, [ margin, padding ] );
+	}, [ margin, padding, setAttributes, spacingLookup ] );
 
 	const controls = {
 		margin: (
@@ -119,8 +119,8 @@ export default function SpacingControls( {
 				{ undefined !== only
 					? controls[ only ]
 					: Object.entries( controls ).map( ( [ attr, el ] ) => (
-							<Fragment key={ attr }>{ el }</Fragment>
-					  ) ) }
+						<Fragment key={ attr }>{ el }</Fragment>
+					) ) }
 			</Flex>
 		</PanelBody>
 	);
