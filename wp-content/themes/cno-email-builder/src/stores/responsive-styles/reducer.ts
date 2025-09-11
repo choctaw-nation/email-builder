@@ -22,9 +22,8 @@ export default function reducer(
 						[ parentId ]: [ ...existingIds, clientId ],
 					},
 				};
-			} else {
-				return state;
 			}
+			return state;
 		}
 		case 'REMOVE_BLOCK_TYPE': {
 			const { blockType, parentId, clientId } = action.payload;
@@ -39,9 +38,8 @@ export default function reducer(
 						),
 					},
 				};
-			} else {
-				return state;
 			}
+			return state;
 		}
 		default:
 			return state;

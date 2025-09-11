@@ -1,7 +1,7 @@
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 import { useEffect, useMemo, useState } from '@wordpress/element';
-import { FontsData } from '../font/lib/types';
+import { FontsData } from '../_lib/types';
 
 export default function useFontData( props ): {
 	fontFamilies: Array< {
@@ -47,7 +47,7 @@ export default function useFontData( props ): {
 
 	const inheritedFontFamilyString = useMemo(
 		() => generateFontFamilyString( isHeadings ? headingsFont : bodyFont ),
-		[ headingsFont, bodyFont ]
+		[ headingsFont, bodyFont, isHeadings ]
 	);
 	const [ fontFamilyString, setFontFamilyString ] = useState(
 		attributes.fontFamilyOverride || inheritedFontFamilyString
@@ -55,7 +55,7 @@ export default function useFontData( props ): {
 
 	useEffect( () => {
 		setAttributes( { fontFamily: inheritedFontFamilyString } );
-	}, [ inheritedFontFamilyString ] );
+	}, [ inheritedFontFamilyString, setAttributes ] );
 
 	function handleFontFamilyChange( val ) {
 		if ( ! val ) {

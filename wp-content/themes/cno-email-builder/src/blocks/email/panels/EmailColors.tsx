@@ -8,7 +8,6 @@ import {
 	TabPanel,
 	ToggleControl,
 } from '@wordpress/components';
-import { useEffect, useState } from '@wordpress/element';
 
 type CustomColorPalette = {
 	primary: string;
@@ -57,8 +56,8 @@ export default function EmailColors( {
 											value={
 												customColorPalette
 													? customColorPalette[
-															tab.name
-													  ]
+														tab.name
+													]
 													: ''
 											}
 											onChange={ ( val ) => {
@@ -75,39 +74,39 @@ export default function EmailColors( {
 							/>
 							{ customColorPalette &&
 								Object.values( customColorPalette ).length && (
-									<Flex gap={ 2 } justify="flex-start">
-										{ Object.entries(
-											customColorPalette
-										).map(
-											( [ key, value ] ) =>
-												value && (
-													<Flex
-														direction="column"
-														key={ key }
-														align="center"
+								<Flex gap={ 2 } justify="flex-start">
+									{ Object.entries(
+										customColorPalette
+									).map(
+										( [ key, value ] ) =>
+											value && (
+												<Flex
+													direction="column"
+													key={ key }
+													align="center"
+												>
+													<ColorIndicator
+														colorValue={
+															customColorPalette?.[
+																key
+															]
+														}
+													/>
+													<p
+														style={ {
+															margin: 0,
+														} }
 													>
-														<ColorIndicator
-															colorValue={
-																customColorPalette?.[
-																	key
-																]
-															}
-														/>
-														<p
-															style={ {
-																margin: 0,
-															} }
-														>
-															{ key
-																.charAt( 0 )
-																.toUpperCase() +
+														{ key
+															.charAt( 0 )
+															.toUpperCase() +
 																key.slice( 1 ) }
-														</p>
-													</Flex>
-												)
-										) }
-									</Flex>
-								) }
+													</p>
+												</Flex>
+											)
+									) }
+								</Flex>
+							) }
 						</>
 					) }
 				</Flex>

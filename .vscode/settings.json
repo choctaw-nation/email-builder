@@ -26,11 +26,12 @@
 	"bootstrapAutocomplete.version": "5.3.2",
 	"cSpell.words": [
 		"Appender",
-		"Customizer",
-		"mediapress",
-		"xxxxl",
 		"cnoemails",
-		"Squiz"
+		"Customizer",
+		"Deselectable",
+		"mediapress",
+		"Squiz",
+		"xxxxl"
 	],
 	"css.format.spaceAroundSelectorSeparator": true,
 	"editor.codeActionsOnSave": {

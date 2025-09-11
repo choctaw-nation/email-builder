@@ -26,13 +26,6 @@ export default function useColorPalettes() {
 		( select ) => select( STORES.COLORS ).getColors(),
 		[]
 	);
-	const baseColorsPalette = {
-		name: 'Base Colors',
-		colors: baseColors.map( ( { name, color } ) => ( {
-			name,
-			color,
-		} ) ),
-	};
 	const [ customColorPalette, setCustomColorPalette ] = useState< {
 		name: string;
 		colors: Array< { name: string; color: string | undefined } >;
@@ -56,6 +49,13 @@ export default function useColorPalettes() {
 	}, [ customColors ] );
 
 	const palette = useMemo( () => {
+		const baseColorsPalette = {
+			name: 'Base Colors',
+			colors: baseColors.map( ( { name, color } ) => ( {
+				name,
+				color,
+			} ) ),
+		};
 		const palette = {
 			baseColorsPalette,
 			choctawLanding,
@@ -65,9 +65,8 @@ export default function useColorPalettes() {
 				...palette,
 				customColorPalette,
 			};
-		} else {
-			return palette;
 		}
-	}, [ customColorPalette ] );
+		return palette;
+	}, [ customColorPalette, baseColors ] );
 	return palette;
 }

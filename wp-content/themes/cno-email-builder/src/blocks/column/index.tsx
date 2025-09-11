@@ -1,6 +1,5 @@
 import { registerBlockType } from '@wordpress/blocks';
 import {
-	useInnerBlocksProps,
 	useBlockProps,
 	InnerBlocks,
 } from '@wordpress/block-editor';
@@ -9,67 +8,11 @@ import { column } from '@wordpress/icons';
 
 import { responsiveClassNames } from '../_lib/responsiveHelpers';
 import metadata from './block.json';
-import useResponsiveAttributes from './useResponsiveAttributes';
-import ColumnControls from './ColumnControls';
-import { useEffect } from '@wordpress/element';
+import Edit from './Edit';
 
 registerBlockType( metadata.name, {
 	icon: column,
-	edit: ( props ) => {
-		const { canWrap, isFirstBlock, isLastBlock, rowGap, columnGap } =
-			useResponsiveAttributes( props );
-		const { width, height, align } = props.attributes;
-		const { setAttributes } = props;
-		const blockEditorAlignments = {
-			left: 'flex-start',
-			center: 'center',
-			right: 'flex-end',
-		};
-		useEffect( () => {
-			const padding = columnGap / 2;
-			if ( isFirstBlock ) {
-				setAttributes( {
-					padding: { paddingRight: padding },
-				} );
-			} else if ( isLastBlock ) {
-				setAttributes( {
-					padding: { paddingLeft: padding },
-				} );
-			} else {
-				setAttributes( {
-					padding: {
-						paddingLeft: padding,
-						paddingRight: padding,
-					},
-				} );
-			}
-		}, [ rowGap, columnGap ] );
-
-		const innerBlocksProps = useInnerBlocksProps(
-			useBlockProps( {
-				style: {
-					width,
-					height,
-					justifySelf: align
-						? blockEditorAlignments[ align ]
-						: undefined,
-				},
-				className: canWrap ? responsiveClassNames.col : undefined,
-			} ),
-			{
-				template: [
-					[ 'core/paragraph', { placeholder: 'Column content...' } ],
-				],
-			}
-		);
-		return (
-			<>
-				<ColumnControls { ...props } />
-				<div { ...innerBlocksProps } />
-			</>
-		);
-	},
-
+	edit: Edit,
 	save: ( {
 		attributes: {
 			isResponsive,

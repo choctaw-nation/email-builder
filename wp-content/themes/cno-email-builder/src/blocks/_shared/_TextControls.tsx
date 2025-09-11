@@ -1,3 +1,4 @@
+/* eslint-disable @wordpress/no-unsafe-wp-apis */
 import {
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOptionIcon as ToggleGroupControlOptionIcon,
@@ -41,10 +42,10 @@ const DEFAULT_OPTIONS = [ 'left', 'center', 'right' ];
 /**
  * Control to facilitate text alignment selections.
  *
- * @param {Object}   props           Component props.
- * @param {string}   props.value     Currently selected text alignment.
- * @param {Function} props.onChange  Handles change in text alignment selection.
- * @param {string[]} props.options   Array of text alignment options to display.
+ * @param {Object}   props          Component props.
+ * @param {string}   props.value    Currently selected text alignment.
+ * @param {Function} props.onChange Handles change in text alignment selection.
+ * @param {string[]} props.options  Array of text alignment options to display.
  *
  * @return {Element} Text alignment control.
  */
@@ -117,9 +118,9 @@ const TEXT_TRANSFORMS = [
 /**
  * Control to facilitate text transform selections.
  *
- * @param {Object}   props           Component props.
- * @param {string}   props.value     Currently selected text transform.
- * @param {Function} props.onChange  Handles change in text transform selection.
+ * @param {Object}   props          Component props.
+ * @param {string}   props.value    Currently selected text transform.
+ * @param {Function} props.onChange Handles change in text transform selection.
  *
  * @return {Element} Text transform control.
  */

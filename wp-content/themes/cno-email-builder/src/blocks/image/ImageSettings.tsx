@@ -1,3 +1,4 @@
+/* eslint-disable @wordpress/no-unsafe-wp-apis */
 import { HeightControl } from '@wordpress/block-editor';
 import {
 	Panel,

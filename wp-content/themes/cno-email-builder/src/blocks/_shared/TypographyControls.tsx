@@ -1,3 +1,4 @@
+/* eslint-disable @wordpress/no-unsafe-wp-apis */
 import {
 	__experimentalFontFamilyControl as FontFamilyControl,
 	LineHeightControl,
@@ -94,7 +95,7 @@ export default function TypographyControls( props ) {
  * Calculates CSS properties based on passed attributes object
  *
  * @param attributes block attributes
- * @returns CSS Style object
+ * @return CSS Style object
  */
 export function calcStyleObject( {
 	color,
