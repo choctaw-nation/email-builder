@@ -37,7 +37,7 @@ export default function useResponsiveAttributes( {
 				removeBlockType( { blockType: 'col', parentId, clientId } );
 			}
 		};
-	}, [ canWrap, parentId ] );
+	}, [ canWrap, parentId, setAttributes, addBlockType, removeBlockType, clientId, isFirstBlock, isLastBlock ] );
 
 	return { canWrap, rowGap, columnGap, isFirstBlock, isLastBlock };
 }

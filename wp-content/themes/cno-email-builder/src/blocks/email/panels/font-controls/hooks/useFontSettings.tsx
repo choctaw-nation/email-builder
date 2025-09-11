@@ -21,7 +21,7 @@ export default function useFontSettings( { attributes, setAttributes } ) {
 
 	useEffect( () => {
 		setAttributes( { ...fonts } );
-	}, [ fonts ] );
+	}, [ fonts, setAttributes ] );
 
 	const fontTabs = [
 		{

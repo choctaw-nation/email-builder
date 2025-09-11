@@ -21,9 +21,9 @@ export default function useBlockDetails( clientId ) {
 			}
 			return parentBlock
 				? {
-						name: getBlockName( parentClientId ),
-						attributes: parentBlock.attributes,
-				  }
+					name: getBlockName( parentClientId ),
+					attributes: parentBlock.attributes,
+				}
 				: null;
 		},
 		[ clientId ]

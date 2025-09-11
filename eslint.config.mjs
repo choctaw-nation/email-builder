@@ -21,7 +21,7 @@ const compat = new FlatCompat( {
 export default defineConfig( [
 	globalIgnores( [
 		'wp-content/themes/**/src/js/gutenberg/mediapress-filters/types.ts',
-		'wp-content/themes/**/src/js/**/*.d.ts',
+		'wp-content/themes/**/src/**/*.d.ts',
 	] ),
 	includeIgnoreFile( gitignorePath, 'Ignore .gitignore files' ),
 	...fixupConfigRules(
@@ -30,7 +30,7 @@ export default defineConfig( [
 		)
 	),
 	{
-		files: [ 'wp-content/themes/**/src/js/**/*.{js,ts,jsx,tsx}' ],
+		files: [ 'wp-content/themes/**/src/**/*.{js,ts,jsx,tsx}' ],
 		languageOptions: {
 			globals: globals.browser,
 		},

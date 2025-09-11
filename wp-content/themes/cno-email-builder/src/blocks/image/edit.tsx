@@ -41,6 +41,7 @@ export default function Edit( props ) {
 	}
 
 	function handleError( error ) {
+		// eslint-disable-next-line no-console
 		console.error( error );
 	}
 	const imageStyle = getImageStyle( attributes );

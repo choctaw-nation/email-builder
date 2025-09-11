@@ -1,3 +1,4 @@
+/* eslint-disable @wordpress/no-unsafe-wp-apis */
 import {
 	Flex,
 	FlexBlock,
@@ -83,13 +84,13 @@ export default function EmailFonts( props ) {
 							tabs={
 								useDefaultFonts
 									? fontTabs.filter(
-											( tab ) => 'accentFont' !== tab.name
-									  )
+										( tab ) => 'accentFont' !== tab.name
+									)
 									: fontTabs.filter( ( tab ) =>
-											hasAccent
-												? tab
-												: 'accentFont' !== tab.name
-									  )
+										hasAccent
+											? tab
+											: 'accentFont' !== tab.name
+									)
 							}
 							children={ ( tab ) =>
 								useDefaultFonts ? (
