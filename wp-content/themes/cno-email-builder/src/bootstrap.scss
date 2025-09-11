@@ -9,7 +9,7 @@
 * Typography
 */
 $font-family-monospace:
-	Monaspace Neon,
+	monaspace neon,
 	"Courier New",
 	monospace;
 
@@ -25,6 +25,7 @@ $enable-dark-mode: false;
 // ================================================
 
 @import "bootstrap/scss/variables";
+
 // @import "bootstrap/scss/variables-dark";
 
 // Map Overrides Here (Optional)
@@ -38,7 +39,6 @@ $enable-dark-mode: false;
 
 // Useful Bootstrap Utilities (Optional)
 @import "bootstrap/scss/buttons";
-
 @import "bootstrap/scss/transitions";
 @import "bootstrap/scss/close";
 @import "bootstrap/scss/containers";
@@ -51,15 +51,18 @@ $enable-dark-mode: false;
 // @import "bootstrap/scss/images";
 // @import "bootstrap/scss/tables";
 @import "bootstrap/scss/forms";
+
 // @import "bootstrap/scss/button-group";
 @import "bootstrap/scss/nav";
 @import "bootstrap/scss/navbar"; // Requires nav
 @import "bootstrap/scss/card";
+
 // @import "bootstrap/scss/breadcrumb";
 // @import "bootstrap/scss/accordion";
 // @import "bootstrap/scss/pagination";
 // @import "bootstrap/scss/badge";
 @import "bootstrap/scss/alert";
+
 // @import "bootstrap/scss/progress";
 // @import "bootstrap/scss/list-group";
 // @import "bootstrap/scss/toasts";
