@@ -9,6 +9,7 @@ import {
 import {
 	useInnerBlocksProps,
 	useBlockProps,
+	useSettings,
 	InspectorControls,
 } from '@wordpress/block-editor';
 
@@ -22,12 +23,14 @@ export default function Edit( props ) {
 		attributes: { maxWidth, backgroundColor },
 		setAttributes,
 	} = props;
+	const spacingSizes = useSettings( 'spacing.spacingSizes' );
+	const spacingObj = calcSpacingObject( props.attributes, spacingSizes[ 0 ] );
 	const blockProps = useBlockProps( {
 		style: {
 			maxWidth,
 			marginLeft: maxWidth < MAX_WIDTH ? 'auto' : undefined,
 			marginRight: maxWidth < MAX_WIDTH ? 'auto' : undefined,
-			...calcSpacingObject( props.attributes ),
+			...spacingObj,
 			backgroundColor,
 		},
 	} );

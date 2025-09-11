@@ -1,6 +1,5 @@
-import { useState, useEffect, Fragment, useMemo } from '@wordpress/element';
-import { store as blockEditorStore } from '@wordpress/block-editor';
-import { useSelect } from '@wordpress/data';
+import { Fragment } from '@wordpress/element';
+import { useSettings } from '@wordpress/block-editor';
 import { PanelBody, Flex, BoxControl, FlexBlock } from '@wordpress/components';
 
 export type AllowedSides =
@@ -24,68 +23,20 @@ export default function SpacingControls( {
 	sides?: AllowedSides[];
 	splitOnAxis?: boolean;
 } ) {
-	const [ margin, setMargin ] = useState< SpacingValues >(
-		attributes.margin || {}
-	);
-	const [ padding, setPadding ] = useState< SpacingValues >(
-		attributes.padding || {}
-	);
-	const spacingSizes = useSelect(
-		( select ) =>
-			select( blockEditorStore ).getSettings().__experimentalFeatures
-				.spacing.spacingSizes.theme,
-		[]
-	);
-	const spacingLookup: Record< number, string > | null = useMemo( () => {
-		if ( ! spacingSizes ) {
-			return null;
-		}
-		const spacersMap = {};
-		spacingSizes.forEach(
-			( obj ) => ( spacersMap[ obj.slug ] = obj.size )
-		);
-		return spacersMap;
-	}, [ spacingSizes ] );
-
-	useEffect( () => {
-		if ( ! spacingLookup ) {
-			return;
-		}
-		const newValues: { margin: SpacingValues; padding: SpacingValues } = {
-			margin: {},
-			padding: {},
-		};
-		Object.entries( margin ).forEach(
-			( [ key, value ] ) =>
-				( newValues.margin[ key ] =
-					typeof value === 'string'
-						? spacingLookup[ value.slice( -2 ) ]
-						: value )
-		);
-
-		Object.entries( padding ).forEach( ( [ key, value ] ) => {
-			newValues.padding[ key ] =
-				typeof value === 'string'
-					? spacingLookup[ value.slice( -2 ) ]
-					: value;
-		} );
-		setAttributes( {
-			margin: newValues.margin,
-			padding: newValues.padding,
-		} );
-	}, [ margin, padding, setAttributes, spacingLookup ] );
+	const { margin, padding } = attributes;
+	const spacingSizes = useSettings( 'spacing.spacingSizes' );
 
 	const controls = {
 		margin: (
 			<FlexBlock>
 				<BoxControl
 					presetKey="spacing"
-					presets={ spacingSizes }
+					presets={ spacingSizes[ 0 ] }
 					values={ margin }
 					__next40pxDefaultSize
 					label="Margin"
 					onChange={ ( values ) =>
-						setMargin( ( prev ) => ( { ...prev, ...values } ) )
+						setAttributes( { margin: { ...margin, ...values } } )
 					}
 					sides={ sides }
 					splitOnAxis={ splitOnAxis }
@@ -96,15 +47,12 @@ export default function SpacingControls( {
 			<FlexBlock>
 				<BoxControl
 					presetKey="spacing"
-					presets={ spacingSizes }
+					presets={ spacingSizes[ 0 ] }
 					__next40pxDefaultSize
 					label="Padding"
 					values={ padding }
 					onChange={ ( values ) =>
-						setPadding( ( prev ) => ( {
-							...prev,
-							...values,
-						} ) )
+						setAttributes( { padding: { ...padding, ...values } } )
 					}
 					sides={ sides }
 					splitOnAxis={ splitOnAxis }
@@ -144,14 +92,14 @@ type SpacingStyle = {
 	paddingLeft?: string;
 };
 
-export function calcSpacingObject( attributes ): SpacingStyle {
+export function calcSpacingObject( attributes, spacingSizes ): SpacingStyle {
 	const spacingObject: SpacingStyle = {};
 	if ( attributes.margin ) {
 		Object.entries( attributes.margin as SpacingValues ).forEach(
 			( [ key, value ] ) => {
 				spacingObject[
 					`margin${ key.charAt( 0 ).toUpperCase() + key.slice( 1 ) }`
-				] = value;
+				] = calcSpacingValue( value, spacingSizes );
 			}
 		);
 	}
@@ -160,9 +108,17 @@ export function calcSpacingObject( attributes ): SpacingStyle {
 			( [ key, value ] ) => {
 				spacingObject[
 					`padding${ key.charAt( 0 ).toUpperCase() + key.slice( 1 ) }`
-				] = value;
+				] = calcSpacingValue( value, spacingSizes );
 			}
 		);
 	}
 	return spacingObject;
+}
+
+function calcSpacingValue( value:string, spacingSizes:Array<{slug:string, size:string}> ):string {
+	const spacingLookup = {};
+	spacingSizes.forEach(
+		( obj ) => ( spacingLookup[ obj.slug ] = obj.size )
+	);
+	return spacingLookup[ value.slice( -2 ) ] || value;
 }

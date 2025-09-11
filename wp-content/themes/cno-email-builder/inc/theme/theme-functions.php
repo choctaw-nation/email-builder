@@ -61,10 +61,7 @@ function cno_echo_svg( string $logo_path, string|false $alt_text, string $fallba
  * @return string|null The JSON-encoded content or null if not available.
  */
 function cno_get_email_content( bool $strip_comments = true ): ?string {
-	if ( empty( get_the_content() ) ) {
-		return null;
-	}
-	if ( ! is_user_logged_in() || ! is_singular() ) {
+	if ( ! is_singular() || empty( get_the_content() ) ) {
 		return null;
 	}
 	$content = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' . get_the_content();
