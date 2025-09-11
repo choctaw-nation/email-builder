@@ -17,9 +17,9 @@
 		"jsx": "preserve",
 		"typeRoots": [
 			"./node_modules/@types",
-			"./wp-content/themes/**/src/js/**/types"
+			"./wp-content/themes/**/src/**/types"
 		]
 	},
-	"include": [ "./wp-content/themes/**/src/js/**/*" ],
+	"include": [ "./wp-content/themes/**/src/**/*" ],
 	"exclude": [ "node_modules", "./wp-content/themes/twenty*/**/*" ]
 }
