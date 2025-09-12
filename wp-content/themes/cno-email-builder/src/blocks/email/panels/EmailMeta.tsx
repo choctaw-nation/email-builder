@@ -11,7 +11,7 @@ import {
 import useColorPalettes from '../../_shared/hooks/useColorPalettes';
 
 export default function EmailMeta( {
-	attributes: { title, previewText, backgroundColor },
+	attributes: { previewText, backgroundColor },
 	setAttributes,
 } ) {
 	const { choctawLanding, baseColorsPalette } = useColorPalettes();
