@@ -20,6 +20,9 @@
 			"type": "object",
 			"default": {}
 		},
+		"parsedPadding": {
+			"type": "object"
+		},
 		"isResponsive": {
 			"type": "boolean",
 			"default": true
