@@ -8,6 +8,7 @@ A Theme that allows users to generate HTML Emails for sending.
 
 - Added: Homepage now uses featured image, if set, to hopefully add a bit more clarity on which email is being previewed
 - Fixed: Custom colors works!
+- Tweak: Cleaned up the eslint warning
 
 ### v1.1.1
 

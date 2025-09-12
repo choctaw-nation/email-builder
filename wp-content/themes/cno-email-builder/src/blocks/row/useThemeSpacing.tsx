@@ -1,12 +1,13 @@
 import { store as blockEditorStore } from '@wordpress/block-editor';
-import { useState, useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 
+/**
+ * Lock users into the theme's spacing scale.
+ */
 export default function useThemeSpacing(): {
 	spacingScale: Array< { label: string; value: number } >;
 	scaleMax: number;
 	} {
-	const [ scaleMax, setScaleMax ] = useState( 0 );
 	const themeSpacingScale = useSelect( ( select ) => {
 		const settings = select( blockEditorStore ).getSettings();
 		const themeSpacingScale =
@@ -32,12 +33,6 @@ export default function useThemeSpacing(): {
 		} ),
 	];
 
-	useEffect( () => {
-		spacingScale.forEach( ( { value } ) => {
-			if ( value > scaleMax ) {
-				setScaleMax( value );
-			}
-		} );
-	}, [ spacingScale ] );
+	const scaleMax = Math.max( ...spacingScale.map( ( { value } ) => value ) );
 	return { spacingScale, scaleMax };
 }
