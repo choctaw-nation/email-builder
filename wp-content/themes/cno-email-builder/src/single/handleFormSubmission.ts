@@ -16,7 +16,6 @@ export default function handleFormSubmission() {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					'X-WP-NONCE': window.cnoData.nonce,
 				},
 				body: JSON.stringify( {
 					recipient_email: recipient,

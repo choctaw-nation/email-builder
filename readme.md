@@ -4,7 +4,11 @@ A Theme that allows users to generate HTML Emails for sending.
 
 ## Changelog
 
-### v1.2.0 - [Sep 12, 2025]
+### v1.2.1 - [Sep 12, 2025]
+
+- Fixed: Emails can now be sent without requiring login
+
+### v1.2.0
 
 - Added: Homepage now uses featured image, if set, to hopefully add a bit more clarity on which email is being previewed
 - Fixed: Custom colors works!

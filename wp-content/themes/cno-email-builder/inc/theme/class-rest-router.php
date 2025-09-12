@@ -48,9 +48,7 @@ class Rest_Router {
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'send_email' ),
-				'permission_callback' => function () {
-					return is_user_logged_in();
-				},
+				'permission_callback' => '__return_true',
 				'args'                => array(
 					'recipient_email' => array(
 						'required'          => false,
