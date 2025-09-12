@@ -14,12 +14,12 @@
 			"gradients": [],
 			"palette": [
 				{
-					"color": "white",
+					"color": "#ffffff",
 					"name": "White",
 					"slug": "white"
 				},
 				{
-					"color": "black",
+					"color": "#000000",
 					"name": "Black",
 					"slug": "black"
 				},
