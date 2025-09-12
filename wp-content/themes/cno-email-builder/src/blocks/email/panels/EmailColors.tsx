@@ -16,17 +16,14 @@ type CustomColorPalette = {
 };
 
 export default function EmailColors( {
-	attributes: { customColorPalette },
+	attributes: { hasCustomColors, customColorPalette },
 	setAttributes,
-	hasCustomColors,
-	setHasCustomColors,
 }: {
-	attributes: { customColorPalette: CustomColorPalette };
+	attributes: { customColorPalette: CustomColorPalette, hasCustomColors:boolean };
 	setAttributes: (
-		newAttributes: Partial< { customColorPalette: CustomColorPalette } >
+		newAttributes: Partial< { customColorPalette: CustomColorPalette, hasCustomColors:boolean } >
 	) => void;
 	hasCustomColors: boolean;
-	setHasCustomColors: ( val: boolean ) => void;
 } ) {
 	return (
 		<Panel>
@@ -37,7 +34,7 @@ export default function EmailColors( {
 							__nextHasNoMarginBottom
 							label="Enable Custom Color Palette"
 							checked={ hasCustomColors }
-							onChange={ ( val ) => setHasCustomColors( val ) }
+							onChange={ ( val ) => setAttributes( { hasCustomColors: val } ) }
 						/>
 					</FlexBlock>
 

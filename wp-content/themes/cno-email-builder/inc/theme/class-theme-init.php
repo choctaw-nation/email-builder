@@ -165,6 +165,7 @@ class Theme_Init {
 	/** Registers Theme Supports */
 	public function cno_theme_support() {
 		add_theme_support( 'title-tag' );
+		add_theme_support( 'post-thumbnails' );
 		$image_sizes = array(
 			'two_col'       => array( 295, 172 ),
 			'header'        => array( 600, 150 ),

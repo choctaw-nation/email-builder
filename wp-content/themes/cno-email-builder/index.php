@@ -18,6 +18,11 @@ get_header();
 				<?php the_post(); ?>
 				<div class="col">
 					<div class="card shadow h-100">
+						<?php
+						if ( has_post_thumbnail() ) {
+							the_post_thumbnail( 'medium_large', array( 'class' => 'card-img-top' ) );
+						}
+						?>
 						<div class="card-body">
 							<?php
 							the_title( '<h2 class="card-title">', '</h2>' );
