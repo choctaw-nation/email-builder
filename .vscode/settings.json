@@ -2,7 +2,7 @@
 	"[php]": {
 		"editor.autoIndent": "advanced",
 		"editor.defaultFormatter": "wongjn.php-sniffer",
-		"editor.detectIndentation": true,
+		"editor.detectIndentation": false,
 		"editor.formatOnSave": true,
 		"editor.indentSize": "tabSize",
 		"editor.insertSpaces": false,

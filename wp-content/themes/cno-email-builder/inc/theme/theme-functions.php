@@ -72,3 +72,26 @@ function cno_get_email_content( bool $strip_comments = true ): ?string {
 
 	return $content;
 }
+
+/**
+ * Parses spacing variables from global settings.
+ *
+ * @param string $spacing_var The spacing variable to parse (e.g., `var:preset|spacing|30`).
+ * @return string The parsed spacing value.
+ */
+function cno_parse_spacing_vars( string $spacing_var ): string {
+	$settings      = wp_get_global_settings();
+	$spacing_sizes = $settings['spacing']['spacingSizes']['theme'] ?? array();
+	if ( ! is_array( $spacing_sizes ) ) {
+		return $spacing_var;
+	}
+	$lookup = array();
+	foreach ( $spacing_sizes as $item ) {
+		$lookup[ $item['slug'] ] = $item['size'];
+	}
+	$key = substr( $spacing_var, -2 );
+	if ( array_key_exists( $key, $lookup ) ) {
+		return $lookup[ $key ];
+	}
+	return $spacing_var;
+}

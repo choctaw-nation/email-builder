@@ -15,11 +15,11 @@ echo "<style type='text/css'>body {background-color:{$body_bg_color}}</style>";
 	<div class="row row-gap-3 my-3 min-vh-100 justify-content-center justify-content-md-between">
 	<section class="col-12 col-md-8 order-2 order-md-1">
 	<?php
-	$content = cno_get_email_content( 'preview' );
+	$content = cno_get_email_content( false );
 	if ( ! $content ) {
 		echo '<p>No content available for preview.</p>';
 	} else {
-		echo '<iframe srcdoc="' . esc_attr( $content ) . '" style="width:100%;height:100vh;border:none;"></iframe>';
+		echo '<iframe srcdoc="' . esc_attr( apply_filters( 'the_content', $content ) ) . '" style="width:100%;height:100vh;border:none;"></iframe>';
 	}
 	?>
 	</section>

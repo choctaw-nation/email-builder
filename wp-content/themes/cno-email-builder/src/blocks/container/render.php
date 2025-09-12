@@ -23,15 +23,17 @@ if ( isset( $attributes['margin'] ) && is_array( $attributes['margin'] ) ) {
 }
 if ( isset( $attributes['padding'] ) && is_array( $attributes['padding'] ) ) {
 	foreach ( $attributes['padding'] as $side => $value ) {
+		$value  = cno_parse_spacing_vars( $value );
 		$style .= 'padding-' . esc_attr( $side ) . ':' . esc_attr( $value ) . ';';
 	}
 }
 $table_attrs = 'style="' . esc_attr( $style ) . '" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation"';
 ?>
 <table <?php echo $table_attrs; ?>>
-    <tbody>
-        <tr style="width:100%">
-            <td><?php echo $content; ?></td>
-        </tr>
-    </tbody>
+	<tbody>
+		<tr style="width:100%">
+			<td><?php echo $content; ?></td>
+			hi there.
+		</tr>
+	</tbody>
 </table>
