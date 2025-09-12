@@ -2,7 +2,6 @@
 export default {
 	extends: [ 'stylelint-config-standard-scss' ],
 	rules: {
-		'color-named': 'always-where-possible',
 		'scss/at-function-pattern': [
 			'^_?(-?[a-z][a-z0-9]*)(-[a-z0-9]+)*$',
 			{
