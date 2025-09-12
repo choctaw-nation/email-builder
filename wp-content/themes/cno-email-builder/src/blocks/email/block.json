@@ -65,8 +65,17 @@
 			"type": "array",
 			"default": []
 		},
+		"hasCustomColors": {
+			"type": "boolean",
+			"default": false
+		},
 		"customColorPalette": {
-			"type": "object"
+			"type": "object",
+			"default":{
+				"primary":"",
+				"secondary":"",
+				"tertiary":""
+			}
 		}
 	},
 	"providesContext": {
