@@ -66,6 +66,8 @@ class Theme_Init {
 		$utility_files = array(
 			'gutenberg-handler' => 'Gutenberg_Handler',
 			'post-override'     => 'Post_Override',
+			'email-handler'     => null,
+			'rest-router'       => 'Rest_Router',
 
 		);
 		foreach ( $utility_files as $utility_file => $class_name ) {
@@ -119,12 +121,13 @@ class Theme_Init {
 			$theme_assets['version'],
 			array( 'strategy' => 'defer' )
 		);
+		$email = new Email_Handler();
 		wp_localize_script(
 			'global',
 			'cnoData',
 			array(
 				'nonce'   => wp_create_nonce( 'wp_rest' ),
-				'content' => cno_get_email_content(),
+				'content' => $email->get_the_email_content(),
 			)
 		);
 		wp_enqueue_style(
