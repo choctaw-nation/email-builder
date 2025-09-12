@@ -71,6 +71,9 @@
 		},
 		"margin": {
 			"type": "object"
+		},
+		"parsedMargin": {
+			"type": "object"
 		}
 	},
 	"usesContext": [

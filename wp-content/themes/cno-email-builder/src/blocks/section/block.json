@@ -21,6 +21,12 @@
 		},
 		"padding": {
 			"type": "object"
+		},
+		"parsedMargin": {
+			"type": "object"
+		},
+		"parsedPadding": {
+			"type": "object"
 		}
 	},
 	"ancestor": [ "cno-email-blocks/email-wrapper" ],
