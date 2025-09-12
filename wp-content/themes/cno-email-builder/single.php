@@ -28,7 +28,7 @@ echo "<style type='text/css'>body {background-color:{$email->bg_color}}</style>"
 		<?php if ( is_user_logged_in() ) : ?>
 			<button class="btn btn-primary" id="download">Download HTML File</button>
 		<?php endif; ?>
-		<form id="send-email-form" class="border border-2 border-black p-3 my-3">
+		<form id="send-email-form" class="border border-2 border-black p-3 my-3" data-post-id="<?php the_ID(); ?>">
 			<div class="mb-3">
 				<label for="recipient-email" class="form-label">Recipient Emails</label>
 				<input type="text" class="form-control" id="recipient-email" name="recipient_email" placeholder="Enter email address">

@@ -4,7 +4,13 @@ A Theme that allows users to generate HTML Emails for sending.
 
 ## Changelog
 
-### v1.2.0 - [Sep 12, 2025]
+### v1.2.1 - [Sep 12, 2025]
+
+- Fixed: Emails can now be sent without requiring login
+- Tweak: Rest Route updated to require post id for sending emails (instead of rendering post content all the time with wp_localize_script)
+- Tweak: Form now uses recaptcha
+
+### v1.2.0
 
 - Added: Homepage now uses featured image, if set, to hopefully add a bit more clarity on which email is being previewed
 - Fixed: Custom colors works!

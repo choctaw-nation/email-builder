@@ -44,20 +44,19 @@ class Rest_Router {
 	public function register_routes() {
 		register_rest_route(
 			$this->namespace . '/v' . $this->version,
-			'/post',
+			'/post/(?P<id>\d+)',
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'send_email' ),
-				'permission_callback' => function () {
-					return is_user_logged_in();
-				},
+				'permission_callback' => array( $this, 'permission_check' ),
 				'args'                => array(
 					'recipient_email' => array(
 						'required'          => false,
 						'type'              => 'string',
 						'sanitize_callback' => fn( $value ) => $this->sanitize_emails( $value ),
+						'validate_callback' => fn( $value ) => ! empty( $value ),
 					),
-					'content'         => array(
+					'token'           => array(
 						'required' => true,
 						'type'     => 'string',
 					),
@@ -79,6 +78,44 @@ class Rest_Router {
 	}
 
 	/**
+	 * Permission check for the REST route.
+	 *
+	 * @param WP_REST_Request $request REST request.
+	 * @return bool
+	 */
+	public function permission_check( WP_REST_Request $request ): bool {
+		if ( is_user_logged_in() ) {
+			return true;
+		}
+		$token = $request->get_param( 'token' );
+		if ( $token ) {
+			$body     = wp_json_encode(
+				array(
+					'event' => array(
+						'token'          => $token,
+						'siteKey'        => '6Lft8sYrAAAAAHKlzEUY35Ii37kloEeW4f5MHvoS',
+						'expectedAction' => 'SUBMIT',
+					),
+				)
+			);
+			$response = wp_remote_post(
+				'https://recaptchaenterprise.googleapis.com/v1/projects/ua-migration-386816/assessments?key=' . G_RECAPTCHA_API_KEY,
+				array(
+					'body'    => $body,
+					'headers' => array( 'Content-Type' => 'application/json' ),
+				)
+			);
+			if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
+				return false;
+			}
+			$body  = json_decode( wp_remote_retrieve_body( $response ) );
+			$score = $body->riskAnalysis->score ?? 0; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+			return $score >= 0.5;
+		}
+		return false;
+	}
+
+	/**
 	 * REST callback to send email with HTML content.
 	 *
 	 * @param WP_REST_Request $request REST request.
@@ -89,7 +126,9 @@ class Rest_Router {
 		if ( is_user_logged_in() ) {
 			$recipients[] = wp_get_current_user()->user_email;
 		}
-		$content = $request['content'];
+		$post_id = (int) $request->get_param( 'id' );
+		$email   = new Email_Handler( $post_id );
+		$content = $email->get_the_email_content();
 		$subject = 'Email Preview from CNO Email Builder';
 		$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 		add_filter(

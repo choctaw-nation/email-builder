@@ -30,10 +30,24 @@ class Email_Handler {
 	public string $bg_color;
 
 	/**
-	 * Constructor
+	 * The ID of the post to retrieve content from.
+	 *
+	 * @var int|null $post_id
 	 */
-	public function __construct() {
-		$this->wrapper_block = parse_blocks( get_the_content() )[0];
+	private ?int $post_id = null;
+
+	/**
+	 * Constructor
+	 *
+	 * @param int|null $post_id The ID of the post to retrieve content from. Defaults to the current post if null.
+	 */
+	public function __construct( ?int $post_id = null ) {
+		if ( $post_id ) {
+			$this->post_id = $post_id;
+		} elseif ( is_singular() ) {
+			$this->post_id = get_the_ID();
+		}
+		$this->wrapper_block = parse_blocks( get_the_content( null, false, $post_id ) )[0];
 		$this->bg_color      = isset( $this->wrapper_block['attrs']['backgroundColor'] ) ? $this->wrapper_block['attrs']['backgroundColor'] : 'gray';
 	}
 
@@ -44,13 +58,10 @@ class Email_Handler {
 	 * @return string|null The JSON-encoded content or null if not available.
 	 */
 	public function get_the_email_content( bool $strip_comments = true ): ?string {
-		if ( empty( get_the_content() ) ) {
+		if ( empty( get_the_content( null, false, $this->post_id ) ) ) {
 			return null;
 		}
-		if ( ! is_singular() ) {
-			return null;
-		}
-		$content = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' . get_the_content();
+		$content = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' . get_the_content( null, false, $this->post_id );
 
 		if ( $strip_comments ) {
 			$content = preg_replace( '/<!--[\s\S]*?-->/', '', $content );
