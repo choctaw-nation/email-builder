@@ -24,56 +24,37 @@ export default function SpacingControls( {
 	sides?: AllowedSides[];
 	splitOnAxis?: boolean;
 } ) {
-	const [ margin, setMargin ] = useState< SpacingValues >(
-		attributes.margin || {}
-	);
-	const [ padding, setPadding ] = useState< SpacingValues >(
-		attributes.padding || {}
-	);
 	const spacingSizes = useSelect(
 		( select ) =>
 			select( blockEditorStore ).getSettings().__experimentalFeatures
 				.spacing.spacingSizes.theme,
 		[]
 	);
-	const spacingLookup: Record< number, string > | null = useMemo( () => {
-		if ( ! spacingSizes ) {
-			return null;
-		}
-		const spacersMap = {};
-		spacingSizes.forEach(
-			( obj ) => ( spacersMap[ obj.slug ] = obj.size )
-		);
-		return spacersMap;
-	}, [ spacingSizes ] );
 
 	useEffect( () => {
-		if ( ! spacingLookup ) {
+		if ( ! spacingSizes ) {
 			return;
 		}
-		const newValues: { margin: SpacingValues; padding: SpacingValues } = {
-			margin: {},
-			padding: {},
-		};
-		Object.entries( margin ).forEach(
-			( [ key, value ] ) =>
-				( newValues.margin[ key ] =
-					typeof value === 'string'
-						? spacingLookup[ value.slice( -2 ) ]
-						: value )
+		const spacingLookup = {};
+		spacingSizes.forEach(
+			( obj ) => ( spacingLookup[ obj.slug ] = obj.size )
 		);
+		function parseSpacing( values:SpacingValues ):SpacingValues|undefined {
+			if ( ! values ) {
+				return undefined;
+			}
+			const newValues:SpacingValues = {};
+			Object.entries( values ).forEach( ( [ key, value ] ) => {
+				newValues[ key ] = typeof value === 'string' ? spacingLookup[ value.slice( -2 ) ] : value;
+			} );
+			return newValues;
+		}
 
-		Object.entries( padding ).forEach( ( [ key, value ] ) => {
-			newValues.padding[ key ] =
-				typeof value === 'string'
-					? spacingLookup[ value.slice( -2 ) ]
-					: value;
-		} );
-		setAttributes( {
-			margin: newValues.margin,
-			padding: newValues.padding,
-		} );
-	}, [ margin, padding, setAttributes, spacingLookup ] );
+		const newMargin = parseSpacing( attributes.margin );
+		setAttributes( { parsedMargin: newMargin } );
+		const newPadding = parseSpacing( attributes.padding );
+		setAttributes( { parsedPadding: newPadding } );
+	}, [ attributes.margin, attributes.padding, setAttributes, spacingSizes ] );
 
 	const controls = {
 		margin: (
@@ -81,11 +62,11 @@ export default function SpacingControls( {
 				<BoxControl
 					presetKey="spacing"
 					presets={ spacingSizes }
-					values={ margin }
+					values={ attributes.margin }
 					__next40pxDefaultSize
 					label="Margin"
-					onChange={ ( values ) =>
-						setMargin( ( prev ) => ( { ...prev, ...values } ) )
+					onChange={ ( margin ) =>
+						setAttributes( { margin } )
 					}
 					sides={ sides }
 					splitOnAxis={ splitOnAxis }
@@ -99,12 +80,9 @@ export default function SpacingControls( {
 					presets={ spacingSizes }
 					__next40pxDefaultSize
 					label="Padding"
-					values={ padding }
-					onChange={ ( values ) =>
-						setPadding( ( prev ) => ( {
-							...prev,
-							...values,
-						} ) )
+					values={ attributes.padding }
+					onChange={ ( padding ) =>
+						setAttributes( { padding } )
 					}
 					sides={ sides }
 					splitOnAxis={ splitOnAxis }
@@ -146,8 +124,8 @@ type SpacingStyle = {
 
 export function calcSpacingObject( attributes ): SpacingStyle {
 	const spacingObject: SpacingStyle = {};
-	if ( attributes.margin ) {
-		Object.entries( attributes.margin as SpacingValues ).forEach(
+	if ( attributes.parsedMargin ) {
+		Object.entries( attributes.parsedMargin as SpacingValues ).forEach(
 			( [ key, value ] ) => {
 				spacingObject[
 					`margin${ key.charAt( 0 ).toUpperCase() + key.slice( 1 ) }`
@@ -155,8 +133,8 @@ export function calcSpacingObject( attributes ): SpacingStyle {
 			}
 		);
 	}
-	if ( attributes.padding ) {
-		Object.entries( attributes.padding as SpacingValues ).forEach(
+	if ( attributes.parsedPadding ) {
+		Object.entries( attributes.parsedPadding as SpacingValues ).forEach(
 			( [ key, value ] ) => {
 				spacingObject[
 					`padding${ key.charAt( 0 ).toUpperCase() + key.slice( 1 ) }`
