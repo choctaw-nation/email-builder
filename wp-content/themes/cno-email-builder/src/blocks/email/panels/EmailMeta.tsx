@@ -22,17 +22,6 @@ export default function EmailMeta( {
 					<TextControl
 						__next40pxDefaultSize
 						__nextHasNoMarginBottom
-						label="Email Title"
-						value={ title }
-						onChange={ ( value ) =>
-							setAttributes( { title: value } )
-						}
-					/>
-				</PanelRow>
-				<PanelRow>
-					<TextControl
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
 						label="Email Preview"
 						value={ previewText }
 						onChange={ ( value ) =>
