@@ -35,6 +35,12 @@
 		},
 		"padding": {
 			"type": "object"
+		},
+		"parsedMargin": {
+			"type": "object"
+		},
+		"parsedPadding": {
+			"type": "object"
 		}
 	},
 	"providesContext": {

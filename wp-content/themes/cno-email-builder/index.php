@@ -7,6 +7,8 @@
  * @package ChoctawNation
  */
 
+use ChoctawNation\Email_Handler;
+
 get_header();
 ?>
 <main <?php post_class( 'container-xxl py-4' ); ?>>
@@ -17,18 +19,17 @@ get_header();
 				<div class="col">
 					<div class="card shadow h-100">
 						<div class="card-body">
-							<?php the_title( '<h2 class="card-title">', '</h2>' ); ?>
-							<p>
-								<?php the_date( 'F j, Y' ); ?>
-							</p>
-							<?php if ( has_excerpt() ) : ?>
-							<p>
-								<?php the_excerpt(); ?>
-							</p>
-						<?php endif; ?>
-						<div class="d-flex justify-content-end mt-auto">
-							<a href="<?php the_permalink(); ?>" class="btn btn-primary w-auto">View Email Preview</a>
-						</div>
+							<?php
+							the_title( '<h2 class="card-title">', '</h2>' );
+							printf( '<p>%s</p>', get_the_date( 'F j, Y' ) );
+							$email = new Email_Handler();
+							if ( ! empty( $email->get_the_preview_text() ) ) {
+								printf( '<p><span class="fw-bold">Preview Text:</span> %s</p>', $email->get_the_preview_text() );
+							}
+							?>
+							<div class="d-flex justify-content-end mt-auto">
+								<a href="<?php the_permalink(); ?>" class="btn btn-primary w-auto">View Email Preview</a>
+							</div>
 						</div>
 					</div>
 				</div>

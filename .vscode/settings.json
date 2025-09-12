@@ -27,10 +27,12 @@
 	"cSpell.words": [
 		"Appender",
 		"cnoemails",
+		"cnoemailsdev",
 		"Customizer",
 		"Deselectable",
 		"mediapress",
 		"Squiz",
+		"trackbacks",
 		"xxxxl"
 	],
 	"css.format.spaceAroundSelectorSeparator": true,
