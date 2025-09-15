@@ -11,24 +11,13 @@ import {
 import useColorPalettes from '../../_shared/hooks/useColorPalettes';
 
 export default function EmailMeta( {
-	attributes: { title, previewText, backgroundColor },
+	attributes: { previewText, backgroundColor },
 	setAttributes,
 } ) {
 	const { choctawLanding, baseColorsPalette } = useColorPalettes();
 	return (
 		<Panel>
 			<PanelBody>
-				<PanelRow>
-					<TextControl
-						__next40pxDefaultSize
-						__nextHasNoMarginBottom
-						label="Email Title"
-						value={ title }
-						onChange={ ( value ) =>
-							setAttributes( { title: value } )
-						}
-					/>
-				</PanelRow>
 				<PanelRow>
 					<TextControl
 						__next40pxDefaultSize

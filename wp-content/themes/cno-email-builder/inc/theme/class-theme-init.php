@@ -121,13 +121,11 @@ class Theme_Init {
 			$theme_assets['version'],
 			array( 'strategy' => 'defer' )
 		);
-		$email = new Email_Handler();
 		wp_localize_script(
 			'global',
 			'cnoData',
 			array(
-				'nonce'   => wp_create_nonce( 'wp_rest' ),
-				'content' => $email->get_the_email_content(),
+				'nonce' => wp_create_nonce( 'wp_rest' ),
 			)
 		);
 		wp_enqueue_style(
@@ -149,6 +147,15 @@ class Theme_Init {
 				'dashicons',
 			)
 		);
+
+		// recaptcha
+		wp_enqueue_script(
+			'google-recaptcha',
+			'https://www.google.com/recaptcha/enterprise.js?render=6Lft8sYrAAAAAHKlzEUY35Ii37kloEeW4f5MHvoS',
+			array(),
+			null, // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+			array( 'strategy' => 'async' )
+		);
 	}
 
 	/**
@@ -165,6 +172,7 @@ class Theme_Init {
 	/** Registers Theme Supports */
 	public function cno_theme_support() {
 		add_theme_support( 'title-tag' );
+		add_theme_support( 'post-thumbnails' );
 		$image_sizes = array(
 			'two_col'       => array( 295, 172 ),
 			'header'        => array( 600, 150 ),

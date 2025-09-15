@@ -11,8 +11,6 @@ import metadata from './block.json';
 
 export default function Edit( props ) {
 	const spacingObject = calcSpacingObject( props.attributes );
-	// eslint-disable-next-line no-console
-	console.log( spacingObject );
 	const blockProps = useBlockProps( {
 		style: spacingObject,
 	} );

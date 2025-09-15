@@ -20,6 +20,7 @@ export default function Edit( props ) {
 			fontUrl,
 			headingsFont,
 			bodyFont,
+			hasCustomColors,
 			customColorPalette,
 		},
 		setAttributes,
@@ -35,10 +36,6 @@ export default function Edit( props ) {
 		removeColor,
 		allowCustomColors,
 	}: typeof ColorStoreActions = useDispatch( STORES.COLORS );
-	const [ hasCustomColors, setHasCustomColors ] = useState(
-		!! customColorPalette &&
-				Object.values( customColorPalette ).length > 0
-	);
 
 	useEffect( () => {
 		allowCustomColors( hasCustomColors );
@@ -87,8 +84,6 @@ export default function Edit( props ) {
 		<>
 			<BlockControls
 				{ ...props }
-				hasCustomColors={ hasCustomColors }
-				setHasCustomColors={ setHasCustomColors }
 			/>
 			<div { ...blockProps }>
 				<div className="email-wrapper__header">
