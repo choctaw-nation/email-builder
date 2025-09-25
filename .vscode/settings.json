@@ -32,9 +32,12 @@
 		"Deselectable",
 		"grecaptcha",
 		"mediapress",
+		"NONBLOCKING",
 		"recaptcha",
 		"Squiz",
 		"trackbacks",
+		"Uncategorized",
+		"Workfront",
 		"xxxxl"
 	],
 	"css.format.spaceAroundSelectorSeparator": true,

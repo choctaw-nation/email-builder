@@ -4,6 +4,11 @@ A Theme that allows users to generate HTML Emails for sending.
 
 ## Changelog
 
+### v1.3.0 - [Sep 25, 2025]
+
+- Added: Mediapress support!
+- Added: New link to homepage to workfront project `/updates`
+
 ### v1.2.1 - [Sep 12, 2025]
 
 - Fixed: Emails can now be sent without requiring login
