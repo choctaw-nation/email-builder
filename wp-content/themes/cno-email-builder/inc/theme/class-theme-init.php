@@ -78,6 +78,15 @@ class Theme_Init {
 			$class = __NAMESPACE__ . '\\' . $class_name;
 			new $class();
 		}
+
+		$plugin_files = array(
+			'mediapress-handler' => 'MediaPress_Handler',
+		);
+		foreach ( $plugin_files as $plugin_file => $class_name ) {
+			require_once $base_path . "/plugins/class-{$plugin_file}.php";
+			$class = __NAMESPACE__ . '\\Plugins\\' . $class_name;
+			new $class();
+		}
 	}
 
 	/** Remove comments, pings and trackbacks support from posts types. */

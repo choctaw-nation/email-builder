@@ -1,0 +1,22 @@
+{
+	"$schema": "checklist-config-schema.json",
+	"items": [
+		{
+			"name": "has_wf_project_number",
+			"type": "blocking",
+			"postTypes": [
+				"post"
+			],
+            "check": {
+                "type": "exists",
+                "sourceKey": "meta.wf_project_number",
+                "min": 1
+            },
+            "messages": {
+                "info": "Please add a Workfront project number to the custom field 'WF Project Number'.",
+                "fail": "This post does not have a Workfront project number.",
+                "pass": "This post has a Workfront project number."
+            }
+		}
+	]
+}
