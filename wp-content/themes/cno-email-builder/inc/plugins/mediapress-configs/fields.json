@@ -1,0 +1,48 @@
+{
+  "$schema": "fields-config-schema.json",
+  "fields": [
+    {
+      "name": "wf_project_number",
+      "type": "number",
+      "label": "Workfront Project Number",
+      "description": "A number field linked to custom post meta",
+      "source": {
+        "type": "postMeta",
+        "key": "wf_project_number",
+        "registerFor": ["post"]
+      }
+    },
+    {
+      "name": "tax_radio_field",
+      "type": "radio",
+      "label": "Tax Radio Field",
+      "description": "A radio field linked to the category taxonomy",
+      "source": {
+        "type": "taxonomy",
+        "key": "category"
+      }
+    }
+  ],
+  "fieldGroups": [
+    {
+      "name": "meta",
+      "label": "Meta",
+      "fields": [
+        "wf_project_number"
+      ],
+      "context": {
+        "type": "postType",
+        "key": "post"
+      }
+    },
+    {
+      "name": "taxonomies",
+      "label": "Taxonomies",
+      "fields": ["tax_radio_field"],
+      "context": {
+        "type": "postType",
+        "key": ["post"]
+      }
+    }
+  ]
+}

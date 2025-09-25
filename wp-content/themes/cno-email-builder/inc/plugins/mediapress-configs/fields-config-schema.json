@@ -1,0 +1,236 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "The JSON schema version used to validate this schema."
+    },
+    "fields": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The unique identifier for the field.",
+            "pattern": "^[a-z_-]+$"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "text",
+              "tag",
+              "image",
+              "toggle",
+              "checkbox",
+              "select",
+              "multi_select",
+              "textarea",
+              "radio",
+              "number",
+              "combobox",
+              "combobox_user",
+              "filtered_checkbox"
+            ],
+            "description": "The type of the field, which determines how it is displayed and interacted with."
+          },
+          "label": {
+            "type": "string",
+            "description": "The display name for the field, shown in the user interface."
+          },
+          "description": {
+            "type": "string",
+            "description": "A brief explanation of the field's purpose, shown in the user interface."
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["postMeta", "taxonomy", "attribute", "setting"],
+                "description": "The type of the source, which determines how it is used."
+              }
+            },
+            "required": ["type"],
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "setting"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "key": {
+                  "type": "string",
+                  "description": "The setting/option key to link the field to",
+                  "pattern": "^[a-z_-]+$"
+                },
+                "registerFor": {
+                  "type": "string",
+                  "description": "The setting group register the setting for",
+                  "pattern": "^[a-z_-]+$"
+                }
+              },
+              "required": ["type", "key"],
+              "additionalProperties": false
+            },
+            "else": {
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "key": {
+                  "type": "string",
+                  "description": "The meta key or attribute to link the field to",
+                  "pattern": "^[a-z_-]+$"
+                },
+                "registerFor": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "The post type(s) to register the meta for",
+                    "pattern": "^[a-z_-]+$"
+                  }
+                }
+              },
+              "required": ["type", "key"],
+              "additionalProperties": false
+            }
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "disabled": {
+                  "type": "boolean",
+                  "description": "Determines if the option is disabled."
+                },
+                "label": {
+                  "type": "string",
+                  "description": "The display name for the option, shown in the user interface."
+                },
+                "value": {
+                  "type": "string",
+                  "description": "The value of the option."
+                }
+              },
+              "required": ["label", "value"],
+              "additionalProperties": false
+            },
+            "description": "An array of option objects, each representing an option for the field."
+          }
+        },
+        "required": ["name", "type", "label", "description", "source"],
+        "additionalProperties": false
+      },
+      "description": "An array of field objects, each representing a field in the WordPress post editor."
+    },
+    "fieldGroups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The unique identifier for the field group.",
+            "pattern": "^[a-z_-]+$"
+          },
+          "label": {
+            "type": "string",
+            "description": "The display name for the field group, shown in the user interface."
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "The names of the fields that belong to this field group."
+            },
+            "description": "An array of field names, each representing a field in this field group."
+          },
+          "context": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["postType", "settingsPage"],
+                "description": "The type of the context, which determines how it is used."
+              },
+              "key": {
+                "description": "The key of the context, e.g: the post type slug or settings page name.",
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "required": ["name", "label", "fields", "context"],
+        "additionalProperties": false
+      },
+      "description": "An array of field group objects, each representing a group of fields in the WordPress post editor."
+    },
+    "settingsPages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The unique identifier for the settings page.",
+            "pattern": "^[a-z_-]+$"
+          },
+          "label": {
+            "type": "string",
+            "description": "The display name for the settings page, shown in the user interface."
+          },
+          "parent": {
+            "type": "string",
+            "description": "The name of the parent settings page, if any."
+          }
+        },
+        "required": ["name", "label"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "anyOf": [
+    {
+      "required": ["fields"]
+    },
+    {
+      "required": ["fieldGroups"]
+    },
+    {
+      "required": ["settingsPages"]
+    },
+    {
+      "required": ["fields", "fieldGroups"]
+    },
+    {
+      "required": ["fields", "settingsPages"]
+    },
+    {
+      "required": ["fieldGroups", "settingsPages"]
+    },
+    {
+      "required": ["fields", "fieldGroups", "settingsPages"]
+    }
+  ],
+  "additionalProperties": false,
+  "description": "The configuration for custom fields and field groups in the WordPress post editor."
+}

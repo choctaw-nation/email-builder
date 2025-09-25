@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "The JSON schema version used to validate this schema."
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The unique identifier for the check."
+          },
+          "type": {
+            "type": "string",
+            "enum": ["blocking", "non_blocking", "info", "custom"],
+            "description": "Checklist item type."
+          },
+          "check": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["exists", "min", "max", "range"],
+                "description": "The type of the check, chosen from a set of predefined checks."
+              },
+              "min": {
+                "type": "number",
+                "description": "Min number for check for min/range check types."
+              },
+              "max": {
+                "type": "number",
+                "description": "Max number for check for max/range check types"
+              },
+              "sourceKey": {
+                "type": "string"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "type": { "const": "min" }
+                  }
+                },
+                "then": {
+                  "required": ["min"]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "type": { "const": "max" }
+                  }
+                },
+                "then": {
+                  "required": ["max"]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "type": { "const": "range" }
+                  }
+                },
+                "then": {
+                  "required": ["min", "max"]
+                }
+              }
+            ],
+            "required": ["type", "sourceKey"]
+          },
+          "messages": {
+            "type": "object",
+            "properties": {
+              "pass": {
+                "type": "string"
+              },
+              "fail": {
+                "type": "string"
+              },
+              "info": {
+                "type": "string"
+              }
+            }
+          },
+          "postTypes": {
+            "type": "array",
+            "properties": {
+              "postType": {
+                "type": "string"
+              }
+            },
+            "description": "The post types to run the check on."
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "type": { "const": "blocking" }
+              }
+            },
+            "then": {
+              "required": ["check"]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": { "const": "non_blocking" }
+              }
+            },
+            "then": {
+              "required": ["check"]
+            }
+          }
+        ],
+        "dependentRequired": {
+          "check": ["messages"]
+        },
+        "required": ["name", "type", "postTypes"],
+        "additionalProperties": false
+      },
+      "description": "An array of field objects, each representing a field in the WordPress post editor."
+    }
+  },
+  "required": ["items"],
+  "additionalProperties": false,
+  "description": "The configuration for publication checks in the WordPress post editor."
+}

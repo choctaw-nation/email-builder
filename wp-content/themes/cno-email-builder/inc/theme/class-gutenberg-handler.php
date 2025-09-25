@@ -89,7 +89,7 @@ class Gutenberg_Handler {
 	 * Enqueue the block editor assets that control the layout of the Block Editor.
 	 */
 	public function enqueue_block_assets() {
-		$files = array( 'editDefaultBlocks' );
+		$files = array( 'editDefaultBlocks','mediapressCustomFilters' );
 		foreach ( $files as $file ) {
 			$assets = require_once get_template_directory() . "/dist/admin/{$file}.asset.php";
 			wp_enqueue_script(
@@ -149,9 +149,6 @@ class Gutenberg_Handler {
 		if ( ! is_array( $allowed_block_types ) || empty( $allowed_block_types ) ) {
 			$registered_blocks   = \WP_Block_Type_Registry::get_instance()->get_all_registered();
 			$allowed_block_types = array_keys( $registered_blocks );
-		}
-		if ( $is_administrator ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedIf
-			// return true; phpcs:ignore Squiz.PHP.CommentedOutCode.Found
 		}
 		$allowed_block_types = array(
 			'core/list',
