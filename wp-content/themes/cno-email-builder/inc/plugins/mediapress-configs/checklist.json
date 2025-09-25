@@ -14,9 +14,16 @@
             },
             "messages": {
                 "info": "Please add a Workfront project number to the custom field 'WF Project Number'.",
-                "fail": "This post does not have a Workfront project number.",
-                "pass": "This post has a Workfront project number."
+                "fail": "This email does not have a Workfront project number.",
+                "pass": "This email has a Workfront project number."
             }
-		}
+		},
+        {
+            "name": "category_is_set",
+			"type": "custom",
+			"postTypes": [
+				"post"
+			]
+        }
 	]
 }
