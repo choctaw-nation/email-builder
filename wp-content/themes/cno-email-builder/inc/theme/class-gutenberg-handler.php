@@ -89,7 +89,7 @@ class Gutenberg_Handler {
 	 * Enqueue the block editor assets that control the layout of the Block Editor.
 	 */
 	public function enqueue_block_assets() {
-		$files = array( 'editDefaultBlocks','mediapressCustomFilters' );
+		$files = array( 'editDefaultBlocks', 'mediapressCustomFilters' );
 		foreach ( $files as $file ) {
 			$assets = require_once get_template_directory() . "/dist/admin/{$file}.asset.php";
 			wp_enqueue_script(

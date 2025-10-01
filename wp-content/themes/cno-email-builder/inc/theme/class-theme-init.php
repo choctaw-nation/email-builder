@@ -7,6 +7,8 @@
 
 namespace ChoctawNation;
 
+use WP_Query;
+
 /** Builds the Theme */
 class Theme_Init {
 	/** The type of site
@@ -27,6 +29,10 @@ class Theme_Init {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_assets' ) );
 		add_action( 'after_setup_theme', array( $this, 'cno_theme_support' ) );
 		add_action( 'init', array( $this, 'alter_post_types' ) );
+		add_action(
+			'pre_get_posts',
+			array( $this, 'include_pending_posts_in_main_loop' )
+		);
 	}
 
 	/**
@@ -228,6 +234,17 @@ class Theme_Init {
 			if ( post_type_supports( $post_type, $support ) ) {
 				remove_post_type_support( $post_type, $support );
 			}
+		}
+	}
+
+	/**
+	 * Include pending posts in the main query loop
+	 *
+	 * @param WP_Query &$query the WP_Query instance (passed by reference).
+	 */
+	public function include_pending_posts_in_main_loop( WP_Query &$query ) {
+		if ( $query->is_main_query() && ! is_admin() ) {
+			$query->set( 'post_status', array( 'publish', 'pending' ) );
 		}
 	}
 }

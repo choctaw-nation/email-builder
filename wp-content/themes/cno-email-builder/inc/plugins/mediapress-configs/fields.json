@@ -3,9 +3,9 @@
   "fields": [
     {
       "name": "wf_project_number",
-      "type": "number",
+      "type": "text",
       "label": "Workfront Project Number",
-      "description": "A number field linked to custom post meta",
+      "description": "A text field linked to custom post meta",
       "source": {
         "type": "postMeta",
         "key": "wf_project_number",

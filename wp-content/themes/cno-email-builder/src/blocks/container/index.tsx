@@ -32,9 +32,11 @@ registerBlockType( metadata.name, {
 			<table { ...blockProps }>
 				<tbody>
 					<tr style={ { width: '100%' } }>
-						<td>
+						{ /* eslint-disable react/no-unknown-property */ }
+						<td style={ { backgroundColor: attributes.backgroundColor || 'gray' } } bgcolor={ attributes.backgroundColor || 'gray' }>
 							<InnerBlocks.Content />
 						</td>
+						{ /* eslint-enable react/no-unknown-property */ }
 					</tr>
 				</tbody>
 			</table>
