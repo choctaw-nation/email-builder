@@ -51,8 +51,7 @@ $enable-dark-mode: false;
 // @import "bootstrap/scss/images";
 // @import "bootstrap/scss/tables";
 @import "bootstrap/scss/forms";
-
-// @import "bootstrap/scss/button-group";
+@import "bootstrap/scss/button-group";
 @import "bootstrap/scss/nav";
 @import "bootstrap/scss/navbar"; // Requires nav
 @import "bootstrap/scss/card";
@@ -60,7 +59,7 @@ $enable-dark-mode: false;
 // @import "bootstrap/scss/breadcrumb";
 // @import "bootstrap/scss/accordion";
 // @import "bootstrap/scss/pagination";
-// @import "bootstrap/scss/badge";
+@import "bootstrap/scss/badge";
 @import "bootstrap/scss/alert";
 
 // @import "bootstrap/scss/progress";
