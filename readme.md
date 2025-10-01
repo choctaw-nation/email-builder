@@ -4,6 +4,10 @@ A Theme that allows users to generate HTML Emails for sending.
 
 ## Changelog
 
+### v1.3.1 - [Oct 1, 2025]
+
+- Tweak: Swap font style from `balance` to `pretty` to make type look less dumb.
+
 ### v1.3.0 - [Sep 25, 2025]
 
 - Added: Mediapress support!
