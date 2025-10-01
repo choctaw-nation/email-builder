@@ -4,7 +4,14 @@ A Theme that allows users to generate HTML Emails for sending.
 
 ## Changelog
 
-### v1.3.1 - [Oct 1, 2025]
+### v1.4.0 - [Oct 1, 2025]
+
+- Tweak: Added "Pending" posts to home page
+- Tweak: Home page email previews now have badges for "work in progress" and category, as well as "last modified" times
+- Added: Single.php makes use of Workfront number for new anchor button
+- Added: Button block
+
+### v1.3.1
 
 - Tweak: Swap font style from `balance` to `pretty` to make type look less dumb.
 
