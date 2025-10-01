@@ -11,6 +11,99 @@
 	"supports": {
 		"html": false
 	},
+	"attributes": {
+		"backgroundColor": {
+			"type": "string",
+			"attribute": "style.backgroundColor",
+			"default": "white"
+		},
+		"content": {
+			"type": "string",
+			"source": "html",
+			"selector": "a"
+		},
+		"textTransform": {
+			"type": "string",
+			"enum": [ "lowercase", "uppercase", "none", "capitalize" ],
+			"default": "none"
+		},
+		"fontFamily": {
+			"type": "string"
+		},
+		"fontFamilyOverride": {
+			"type": "string"
+		},
+		"fontSize": {
+			"type": "string",
+			"default": "16px"
+		},
+		"textAlign": {
+			"type": "string",
+			"enum": [ "left", "center", "right" ]
+		},
+		"color": {
+			"type": "string",
+			"default": "black"
+		},
+		"href": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "href",
+			"role": "content"
+		},
+		"linkDestination": {
+			"type": "string"
+		},
+		"linkTarget": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "target"
+		},
+		"rel": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "a",
+			"attribute": "rel"
+		},
+		"margin": {
+			"type": "object"
+		},
+		"parsedMargin": {
+			"type": "object"
+		},
+		"padding": {
+			"type": "object",
+			"default": {
+				"top": "var:preset|spacing|50",
+				"right": "var:preset|spacing|50",
+				"bottom": "var:preset|spacing|50",
+				"left": "var:preset|spacing|50"
+			}
+		},
+		"parsedPadding": {
+			"type": "object"
+		},
+		"borderWidth": {
+			"type": "number",
+			"default": 2
+		},
+		"borderRadius": {
+			"type": "number",
+			"default": 0
+		},
+		"borderColor": {
+			"type": "string",
+			"attribute": "style.borderColor",
+			"default": ""
+		}
+	},
+	"usesContext": [
+		"cno-email-blocks/headingsFont",
+		"cno-email-blocks/bodyFont",
+		"cno-email-blocks/accentFont"
+	],
 	"ancestor": [ "cno-email-blocks/email-wrapper" ],
 	"editorScript": "file:./index.tsx"
 }
