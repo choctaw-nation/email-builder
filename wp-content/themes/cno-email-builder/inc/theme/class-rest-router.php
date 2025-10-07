@@ -42,8 +42,9 @@ class Rest_Router {
 
 	/** Register the custom REST routes */
 	public function register_routes() {
+		$route_namespace = $this->namespace . '/v' . $this->version;
 		register_rest_route(
-			$this->namespace . '/v' . $this->version,
+			$route_namespace,
 			'/post/(?P<id>\d+)',
 			array(
 				'methods'             => WP_REST_Server::CREATABLE,
@@ -61,6 +62,26 @@ class Rest_Router {
 						'type'     => 'string',
 					),
 				),
+			)
+		);
+		register_rest_route(
+			$route_namespace,
+			'/html/(?P<id>\d+)',
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => function ( WP_REST_Request $request ) {
+					$post_id = (int) $request->get_param( 'id' );
+					$email   = new Email_Handler( $post_id );
+					$content = $email->get_the_email_content();
+					return new WP_REST_Response(
+						array(
+							'success' => true,
+							'message' => 'Retrieved email successfully',
+							'html'    => $content,
+						)
+					);
+				},
+				'permission_callback' => '__return_true',
 			)
 		);
 	}

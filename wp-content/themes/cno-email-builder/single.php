@@ -29,7 +29,7 @@ echo "<style type='text/css'>body {background-color:{$email->bg_color}}</style>"
 			</div>
 			<?php
 			if ( is_user_logged_in() ) {
-				echo '<button class="btn btn-primary" id="download">Download HTML File</button>';
+				echo '<button class="btn btn-primary" id="download" data-post-id="' . get_the_ID() . '">Download HTML File</button>';
 			}
 			$mp = new ChoctawNation\Plugins\MediaPress_Fields( get_the_ID() );
 			?>
