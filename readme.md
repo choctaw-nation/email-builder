@@ -4,33 +4,38 @@ A Theme that allows users to generate HTML Emails for sending.
 
 ## Changelog
 
+### v1.4.1 - [Oct 1, 2025]
+
+-   Fixed: `Download HTML` Button works again
+    -   Added second rest route to retrieve html content on click (instead of rendering all the time), fixes a regression introduced in `1.2.1`
+
 ### v1.4.0 - [Oct 1, 2025]
 
-- Tweak: Added "Pending" posts to home page
-- Tweak: Home page email previews now have badges for "work in progress" and category, as well as "last modified" times
-- Added: Single.php makes use of Workfront number for new anchor button
-- Added: Button block
+-   Tweak: Added "Pending" posts to home page
+-   Tweak: Home page email previews now have badges for "work in progress" and category, as well as "last modified" times
+-   Added: Single.php makes use of Workfront number for new anchor button
+-   Added: Button block
 
 ### v1.3.1
 
-- Tweak: Swap font style from `balance` to `pretty` to make type look less dumb.
+-   Tweak: Swap font style from `balance` to `pretty` to make type look less dumb.
 
 ### v1.3.0 - [Sep 25, 2025]
 
-- Added: Mediapress support!
-- Added: New link to homepage to workfront project `/updates`
+-   Added: Mediapress support!
+-   Added: New link to homepage to workfront project `/updates`
 
 ### v1.2.1 - [Sep 12, 2025]
 
-- Fixed: Emails can now be sent without requiring login
-- Tweak: Rest Route updated to require post id for sending emails (instead of rendering post content all the time with wp_localize_script)
-- Tweak: Form now uses recaptcha
+-   Fixed: Emails can now be sent without requiring login
+-   Tweak: Rest Route updated to require post id for sending emails (instead of rendering post content all the time with wp_localize_script)
+-   Tweak: Form now uses recaptcha
 
 ### v1.2.0
 
-- Added: Homepage now uses featured image, if set, to hopefully add a bit more clarity on which email is being previewed
-- Fixed: Custom colors works!
-- Tweak: Cleaned up the eslint warning
+-   Added: Homepage now uses featured image, if set, to hopefully add a bit more clarity on which email is being previewed
+-   Fixed: Custom colors works!
+-   Tweak: Cleaned up the eslint warning
 
 ### v1.1.1
 
@@ -38,7 +43,6 @@ A Theme that allows users to generate HTML Emails for sending.
 -   Tweak: Email field now allows for multiple emails (comma-separated)
 -   Fix: Users don't have to be logged in to view this email
 -   Tweak: Update colors from names to hex values in `theme.json`
-
 
 ### v1.0.2 - [Sep 11, 2025]
 
