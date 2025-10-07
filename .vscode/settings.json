@@ -46,7 +46,6 @@
 		"source.fixAll.stylelint": "always"
 	},
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"editor.formatOnSave": false,
 	"eslint.enable": true,
 	"eslint.useESLintClass": true,
 	"eslint.validate": [
