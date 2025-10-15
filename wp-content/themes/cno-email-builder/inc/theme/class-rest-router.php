@@ -143,9 +143,10 @@ class Rest_Router {
 	 * @return WP_REST_Response|WP_Error
 	 */
 	public function send_email( WP_REST_Request $request ): WP_REST_Response|WP_Error {
-		$recipients = array_map( 'trim', explode( ',', $request->get_json_params()['recipient_email'] ) );
-		if ( is_user_logged_in() ) {
-			$recipients[] = wp_get_current_user()->user_email;
+		$recipients        = array_map( 'trim', explode( ',', $request->get_json_params()['recipient_email'] ) );
+		$unique_recipients = array_unique( $recipients );
+		if ( count( $unique_recipients ) > 5 ) {
+			return new WP_Error( 'too_many_recipients', 'You can only send emails to up to 5 persons. You sent ' . count( $unique_recipients ) . '.', array( 'status' => 400 ) );
 		}
 		$post_id = (int) $request->get_param( 'id' );
 		$email   = new Email_Handler( $post_id );
@@ -158,7 +159,7 @@ class Rest_Router {
 				return 'text/html';
 			}
 		);
-		$sent = wp_mail( $recipients, $subject, $content, $headers );
+		$sent = wp_mail( $unique_recipients, $subject, $content, $headers );
 		remove_filter(
 			'wp_mail_content_type',
 			'__return_html'

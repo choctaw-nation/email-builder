@@ -22,7 +22,7 @@
 		"backgroundColor": {
 			"type": "string",
 			"attribute": "style.backgroundColor",
-			"default": "gray"
+			"default": "#C8C8C8"
 		},
 		"useDefaultFonts": {
 			"type": "boolean",
@@ -71,10 +71,10 @@
 		},
 		"customColorPalette": {
 			"type": "object",
-			"default":{
-				"primary":"",
-				"secondary":"",
-				"tertiary":""
+			"default": {
+				"primary": "",
+				"secondary": "",
+				"tertiary": ""
 			}
 		}
 	},

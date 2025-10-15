@@ -40,7 +40,7 @@ echo "<style type='text/css'>body {background-color:{$email->bg_color}}</style>"
 				<div class="mb-3">
 					<label for="recipient-email" class="form-label">Recipient Emails</label>
 					<input type="text" class="form-control" id="recipient-email" name="recipient_email" placeholder="Enter email address">
-					<div class="form-text">Enter one or more email addresses separated by commas.</div>
+					<div class="form-text">Enter one or more email addresses separated by commas. <strong>Up to 5 allowed.</strong></div>
 				</div>
 				<button type="submit" class="btn btn-outline-primary" id="send">Send Test Email</button>
 			</form>

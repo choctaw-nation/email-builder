@@ -1,9 +1,6 @@
-import {
-	useBlockProps,
-	useInnerBlocksProps,
-} from '@wordpress/block-editor';
+import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 import { useDispatch, useSelect } from '@wordpress/data';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
 import { actions as ColorStoreActions } from '../../stores/colors/actions';
 import { State as ColorStoreState } from '../../stores/colors/types';
@@ -45,18 +42,16 @@ export default function Edit( props ) {
 		if ( ! hasCustomColors ) {
 			return;
 		}
-		Object.entries( customColorPalette ).forEach(
-			( [ key, value ] ) => {
-				if ( value ) {
-					setColor( {
-						color: key as keyof ColorStoreState,
-						value: value as string,
-					} );
-				} else {
-					removeColor( { color: key as keyof ColorStoreState } );
-				}
+		Object.entries( customColorPalette ).forEach( ( [ key, value ] ) => {
+			if ( value ) {
+				setColor( {
+					color: key as keyof ColorStoreState,
+					value: value as string,
+				} );
+			} else {
+				removeColor( { color: key as keyof ColorStoreState } );
 			}
-		);
+		} );
 	}, [ customColorPalette, hasCustomColors, removeColor, setColor ] );
 
 	useEffect( () => {
@@ -82,9 +77,7 @@ export default function Edit( props ) {
 	);
 	return (
 		<>
-			<BlockControls
-				{ ...props }
-			/>
+			<BlockControls { ...props } />
 			<div { ...blockProps }>
 				<div className="email-wrapper__header">
 					<div className="email-preview">
