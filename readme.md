@@ -4,6 +4,12 @@ A Theme that allows users to generate HTML Emails for sending.
 
 ## Changelog
 
+### v1.4.2 - [Oct 15, 2025]
+
+-   Fixed: Better loading state when sending emails
+-   Fixed: Lighter gray color as defaults on emails
+-   Fixed: Limit sending emails to 5
+
 ### v1.4.1 - [Oct 1, 2025]
 
 -   Fixed: `Download HTML` Button works again
