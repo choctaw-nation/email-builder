@@ -3,28 +3,8 @@ import { image } from '@wordpress/icons';
 
 import metadata from './block.json';
 import Edit from './edit';
-import { getImageStyle } from './utils';
 
 registerBlockType( metadata.name, {
 	icon: image,
 	edit: Edit,
-	save: ( { attributes } ) => {
-		const { url, alt, title, linkDestination, rel, linkTarget } =
-			attributes;
-		const isLink = '' !== linkDestination;
-		const imageStyle = getImageStyle( attributes );
-
-		return isLink ? (
-			<a href={ linkDestination } target={ linkTarget } rel={ rel }>
-				<img
-					src={ url }
-					alt={ alt }
-					title={ title }
-					style={ imageStyle }
-				/>
-			</a>
-		) : (
-			<img src={ url } alt={ alt } title={ title } style={ imageStyle } />
-		);
-	},
 } );
