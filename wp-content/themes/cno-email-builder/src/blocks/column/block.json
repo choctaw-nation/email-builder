@@ -51,5 +51,6 @@
 	],
 	"ancestor": [ "cno-email-blocks/email-wrapper" ],
 	"parent": [ "cno-email-blocks/row" ],
-	"editorScript": "file:./index.tsx"
+	"editorScript": "file:./index.tsx",
+	"render": "file:./render.php"
 }

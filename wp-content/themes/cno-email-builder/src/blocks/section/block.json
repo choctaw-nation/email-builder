@@ -30,5 +30,6 @@
 		}
 	},
 	"ancestor": [ "cno-email-blocks/email-wrapper" ],
-	"editorScript": "file:./index.tsx"
+	"editorScript": "file:./index.tsx",
+	"render": "file:./render.php"
 }
