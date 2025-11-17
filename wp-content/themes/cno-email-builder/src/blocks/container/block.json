@@ -16,9 +16,7 @@
 	},
 	"attributes": {
 		"backgroundColor": {
-			"type": "string",
-			"attribute": "style.backgroundColor",
-			"default": "white"
+			"type": "string"
 		},
 		"maxWidth": {
 			"type": "number",

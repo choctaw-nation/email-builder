@@ -21,7 +21,6 @@
 		},
 		"backgroundColor": {
 			"type": "string",
-			"attribute": "style.backgroundColor",
 			"default": "#C8C8C8"
 		},
 		"useDefaultFonts": {

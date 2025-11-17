@@ -20,9 +20,7 @@
 				"color": "#000000",
 				"style": "solid",
 				"width": 1
-			},
-			"attribute": "border",
-			"selector": "hr"
+			}
 		},
 		"width": {
 			"type": "string",

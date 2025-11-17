@@ -14,13 +14,10 @@
 	"attributes": {
 		"backgroundColor": {
 			"type": "string",
-			"attribute": "style.backgroundColor",
 			"default": "white"
 		},
 		"content": {
-			"type": "string",
-			"source": "html",
-			"selector": "a"
+			"type": "string"
 		},
 		"textTransform": {
 			"type": "string",

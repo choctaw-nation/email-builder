@@ -14,26 +14,13 @@
 			"role": "local"
 		},
 		"url": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "img",
-			"attribute": "src",
-			"role": "content"
+			"type": "string"
 		},
 		"alt": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "img",
-			"attribute": "alt",
-			"default": "",
-			"role": "content"
+			"type": "string"
 		},
 		"title": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "img",
-			"attribute": "title",
-			"role": "content"
+			"type": "string"
 		},
 		"id": {
 			"type": "number"

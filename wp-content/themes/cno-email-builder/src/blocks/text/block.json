@@ -16,9 +16,7 @@
 	},
 	"attributes": {
 		"content": {
-			"type": "string",
-			"source": "html",
-			"selector": "p,a"
+			"type": "string"
 		},
 		"lineHeight": {
 			"type": "string",

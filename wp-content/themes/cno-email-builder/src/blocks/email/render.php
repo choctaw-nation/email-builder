@@ -18,37 +18,45 @@ $email_title       = $attributes['title'] ?? get_the_title();
 
 $has_responsive_blocks = ! empty( $responsive_blocks );
 ?>
-<html lang="en" dir="ltr">
-	<head>
-		<meta charset="UTF-8" />
-		<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-		<meta name="x-apple-disable-message-reformatting" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title><?php echo esc_html( $email_title ); ?></title>
-		<?php if ( $has_responsive_blocks ) : ?>
-			<style>
-				@import url("<?php echo esc_url( $font_url ); ?>");
-				:where(.email-wrapper__body) {
-					<?php echo cno_email_font_styles( $headings_font, $body_font ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				}
 
-				@media screen and (max-width:450px) {
-					.responsive-col {
-						width: 100% !important;
-						display:block!important;
-						padding:0!important;
-					}
-					.responsive-col.not-last {
-						margin-bottom:10px;
-					}
-				}
-			</style>
-		<?php endif; ?>
-	</head>
-	<body style="margin: 0; padding: 0; background-color: <?php echo esc_attr( $background_color ); ?>" bgcolor="<?php echo esc_attr( $background_color ); ?>">
-		<div style="display: none; overflow: hidden; line-height: 1px; opacity: 0; max-height: 0; max-width: 0" data-skip-in-text="true">
-			<?php echo esc_html( $preview_text ); ?>
-		</div>
-		<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-	</body>
+<html lang="en" dir="ltr">
+
+<head>
+	<title><?php echo esc_html( $email_title ); ?></title>
+</head>
+
+<body alink="#000000" link="#000000" vlink="#000000"
+	style="margin: 0; padding: 0; width: 100% !important; -webkit-text-size-adjust: none;-webkit-font-smoothing: antialiased; background: <?php echo esc_attr( $background_color ); ?> left top"
+	bgcolor="<?php echo esc_attr( $background_color ); ?>">
+	<meta charset="UTF-8" />
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	<meta name="x-apple-disable-message-reformatting" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<?php if ( $has_responsive_blocks ) : ?>
+	<style>
+	@import url("<?php echo esc_url( $font_url ); ?>");
+
+	:where(.email-wrapper__body) {
+		<?php echo cno_email_font_styles( $headings_font, $body_font ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+	}
+
+	@media screen and (max-width:450px) {
+		.responsive-col {
+			width: 100% !important;
+			display: block !important;
+			padding: 0 !important;
+		}
+
+		.responsive-col.not-last {
+			margin-bottom: 10px;
+		}
+	}
+	</style>
+	<?php endif; ?>
+	<div style="display: none; overflow: hidden; line-height: 1px; opacity: 0; max-height: 0; max-width: 0" data-skip-in-text="true">
+		<?php echo esc_html( $preview_text ); ?>
+	</div>
+	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+</body>
+
 </html>
