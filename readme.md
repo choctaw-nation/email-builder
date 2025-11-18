@@ -11,6 +11,7 @@ A Theme that allows users to generate HTML Emails for sending.
 -   Fixed: `email-handler` now correctly handles posts with no content.
 -   Fixed: Moved attributes out the email `<head>` and into the `<body>`. Also, the email no longer renders `<head><body /></head>`.
 -   Tweak: Admins can fix block conflicts.
+-   Chore: Update packages
 
 ### v1.4.2 - [Oct 15, 2025]
 
