@@ -18,9 +18,9 @@ class Email_Handler {
 	/**
 	 * The wrapper block of the email content.
 	 *
-	 * @var array $wrapper_block
+	 * @var ?array $wrapper_block
 	 */
-	public array $wrapper_block;
+	public ?array $wrapper_block;
 
 	/**
 	 * Background color of the email body.
@@ -47,7 +47,8 @@ class Email_Handler {
 		} elseif ( is_singular() ) {
 			$this->post_id = get_the_ID();
 		}
-		$this->wrapper_block = parse_blocks( get_the_content( null, false, $post_id ) )[0];
+		$blocks_content      = parse_blocks( get_the_content( null, false, $post_id ) );
+		$this->wrapper_block = ! empty( $blocks_content ) ? $blocks_content[0] : null;
 		$this->bg_color      = isset( $this->wrapper_block['attrs']['backgroundColor'] ) ? $this->wrapper_block['attrs']['backgroundColor'] : 'gray';
 	}
 

@@ -4,6 +4,14 @@ A Theme that allows users to generate HTML Emails for sending.
 
 ## Changelog
 
+### v1.4.3 - [Nov 18, 2025]
+
+-   Fixed: Buttons render inside of tables to force alignment.
+-   Fixed: Images auto-calculate 0.5x width and height for retina compatibility.
+-   Fixed: `email-handler` now correctly handles posts with no content.
+-   Fixed: Moved attributes out the email `<head>` and into the `<body>`. Also, the email no longer renders `<head><body /></head>`.
+-   Tweak: Admins can fix block conflicts.
+
 ### v1.4.2 - [Oct 15, 2025]
 
 -   Fixed: Better loading state when sending emails

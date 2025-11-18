@@ -1,7 +1,4 @@
-import {
-	useInnerBlocksProps,
-	useBlockProps,
-} from '@wordpress/block-editor';
+import { useInnerBlocksProps, useBlockProps } from '@wordpress/block-editor';
 import { useEffect } from '@wordpress/element';
 
 import { responsiveClassNames } from '../_lib/responsiveHelpers';
@@ -10,7 +7,7 @@ import ColumnControls from './ColumnControls';
 
 export default function Edit( props ) {
 	const { canWrap, isFirstBlock, isLastBlock, rowGap, columnGap } =
-			useResponsiveAttributes( props );
+		useResponsiveAttributes( props );
 	const { width, height, align } = props.attributes;
 	const { setAttributes } = props;
 	const blockEditorAlignments = {
@@ -43,9 +40,11 @@ export default function Edit( props ) {
 			style: {
 				width,
 				height,
-				justifySelf: align
-					? blockEditorAlignments[ align ]
-					: undefined,
+				justifySelf: align ? blockEditorAlignments[ align ] : undefined,
+				display: 'flex',
+				flexDirection: 'column',
+				rowGap: rowGap ? `${ rowGap }px` : undefined,
+				columnGap: columnGap ? `${ columnGap }px` : undefined,
 			},
 			className: canWrap ? responsiveClassNames.col : undefined,
 		} ),
