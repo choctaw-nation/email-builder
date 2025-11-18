@@ -58,7 +58,7 @@ class Post_Override {
 	private function define_custom_template() {
 		$post_type_object = get_post_type_object( 'post' );
 		if ( $post_type_object ) {
-			$post_type_object->template      = array(
+			$post_type_object->template = array(
 				array(
 					'cno-email-blocks/email-wrapper',
 					array(
@@ -69,7 +69,9 @@ class Post_Override {
 					),
 				),
 			);
-			$post_type_object->template_lock = 'insert';
+			if ( ! current_user_can( 'manage_options' ) ) {
+				$post_type_object->template_lock = 'insert';
+			}
 		}
 	}
 }
