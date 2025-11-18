@@ -9,8 +9,16 @@ registerBlockType( metadata.name, {
 	icon: image,
 	edit: Edit,
 	save: ( { attributes } ) => {
-		const { url, alt, title, linkDestination, rel, linkTarget } =
-			attributes;
+		const {
+			url,
+			alt,
+			title,
+			linkDestination,
+			rel,
+			linkTarget,
+			width,
+			height,
+		} = attributes;
 		const isLink = '' !== linkDestination;
 		const imageStyle = getImageStyle( attributes );
 
@@ -21,10 +29,19 @@ registerBlockType( metadata.name, {
 					alt={ alt }
 					title={ title }
 					style={ imageStyle }
+					width={ width }
+					height={ height || 'auto' }
 				/>
 			</a>
 		) : (
-			<img src={ url } alt={ alt } title={ title } style={ imageStyle } />
+			<img
+				src={ url }
+				width={ width }
+				height={ height || 'auto' }
+				alt={ alt }
+				title={ title }
+				style={ imageStyle }
+			/>
 		);
 	},
 } );

@@ -16,6 +16,25 @@ registerBlockType( metadata.name, {
 	save: ( { attributes } ) => (
 		<html lang="en" dir="ltr">
 			<head>
+				<title>{ attributes.title }</title>
+			</head>
+			<body
+				style={ {
+					margin: 0,
+					padding: 0,
+					width: '100% !important',
+					background: `${ attributes.backgroundColor } left top`,
+					'-webkit-text-size-adjust': 'none',
+					'-webkit-font-smoothing': 'antialiased',
+				} }
+				/* eslint-disable react/no-unknown-property */
+				// @ts-ignore react/no-unknown-property
+				bgcolor={ attributes.backgroundColor }
+				alink="#000000"
+				link="#000000"
+				vlink="#000000"
+				/* eslint-enable react/no-unknown-property */
+			>
 				<meta charSet="UTF-8" />
 				<meta
 					content="text/html; charset=UTF-8"
@@ -26,7 +45,7 @@ registerBlockType( metadata.name, {
 					name="viewport"
 					content="width=device-width, initial-scale=1"
 				/>
-				<title>{ attributes.title }</title>
+
 				{ attributes.responsiveBlocks.length && (
 					<style
 						dangerouslySetInnerHTML={ {
@@ -49,33 +68,21 @@ registerBlockType( metadata.name, {
 						} }
 					/>
 				) }
-				<body
+				<div
 					style={ {
-						margin: 0,
-						padding: 0,
-						backgroundColor: attributes.backgroundColor,
+						display: 'none',
+						overflow: 'hidden',
+						lineHeight: '1px',
+						opacity: 0,
+						maxHeight: 0,
+						maxWidth: 0,
 					} }
-					/* eslint-disable react/no-unknown-property */
-					// @ts-ignore react/no-unknown-property
-					bgColor={ attributes.backgroundColor }
-					/* eslint-enable react/no-unknown-property */
+					data-skip-in-text="true"
 				>
-					<div
-						style={ {
-							display: 'none',
-							overflow: 'hidden',
-							lineHeight: '1px',
-							opacity: 0,
-							maxHeight: 0,
-							maxWidth: 0,
-						} }
-						data-skip-in-text="true"
-					>
-						{ attributes.previewText }
-					</div>
-					<InnerBlocks.Content />
-				</body>
-			</head>
+					{ attributes.previewText }
+				</div>
+				<InnerBlocks.Content />
+			</body>
 		</html>
 	),
 } );

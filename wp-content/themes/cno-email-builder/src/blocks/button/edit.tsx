@@ -11,14 +11,36 @@ import TypographyControls, {
 import LinkSettings from '../_shared/LinkSettings';
 import SpacingControls, { calcSpacingObject } from '../_shared/SpacingControl';
 import useFontData from '../_shared/_useFontData';
-import { ColorPalette, Panel, PanelBody, RangeControl } from '@wordpress/components';
+import {
+	ColorPalette,
+	Panel,
+	PanelBody,
+	RangeControl,
+} from '@wordpress/components';
 import useColorPalettes from '../_shared/hooks/useColorPalettes';
-import { border } from '@wordpress/icons';
+
+function calcAlignSelf( align: 'left' | 'center' | 'right' ): string {
+	const alignment = {
+		left: 'flex-start',
+		center: 'center',
+		right: 'flex-end',
+	};
+	return Object.hasOwn( alignment, align )
+		? alignment[ align ]
+		: alignment.left;
+}
 
 export default function Edit( props ) {
 	const { attributes, setAttributes } = props;
 	const fontData = useFontData( { ...props, textType: 'body' } );
-	const { content, linkDestination, backgroundColor, borderColor, borderWidth, borderRadius } = attributes;
+	const {
+		content,
+		linkDestination,
+		backgroundColor,
+		borderColor,
+		borderWidth,
+		borderRadius,
+	} = attributes;
 	const blockProps = useBlockProps( {
 		style: {
 			...calcStyleObject( attributes ),
@@ -26,6 +48,8 @@ export default function Edit( props ) {
 			backgroundColor,
 			textAlign: attributes.textAlign || 'left',
 			display: 'inline-block',
+			alignSelf: calcAlignSelf( attributes.textAlign || 'left' ),
+			width: 'auto',
 			textDecoration: 'none',
 			borderColor,
 			borderRadius,
@@ -37,10 +61,13 @@ export default function Edit( props ) {
 	const { choctawLanding, baseColorsPalette } = useColorPalettes();
 	return (
 		<>
-			<InspectorControls>
+			<InspectorControls group="styles">
 				<div style={ { marginBottom: '1.5rem' } }>
 					<Panel header="Button Settings">
-						<PanelBody title="Background Color" initialOpen={ true }>
+						<PanelBody
+							title="Background Color"
+							initialOpen={ true }
+						>
 							<ColorPalette
 								value={ backgroundColor }
 								onChange={ ( backgroundColor ) =>
@@ -52,7 +79,9 @@ export default function Edit( props ) {
 						<PanelBody title="Border Settings" initialOpen={ true }>
 							<ColorPalette
 								value={ borderColor }
-								onChange={ ( borderColor ) => setAttributes( { borderColor } ) }
+								onChange={ ( borderColor ) =>
+									setAttributes( { borderColor } )
+								}
 								colors={ [ baseColorsPalette, choctawLanding ] }
 							/>
 							<RangeControl
@@ -62,7 +91,9 @@ export default function Edit( props ) {
 								label="Border Width (px)"
 								min={ 0 }
 								value={ borderWidth }
-								onChange={ ( borderWidth ) => setAttributes( { borderWidth } ) }
+								onChange={ ( borderWidth ) =>
+									setAttributes( { borderWidth } )
+								}
 							/>
 							<RangeControl
 								__next40pxDefaultSize
@@ -71,23 +102,20 @@ export default function Edit( props ) {
 								label="Border Radius (px)"
 								min={ 0 }
 								value={ borderRadius }
-								onChange={ ( borderRadius ) => setAttributes( { borderRadius } ) }
+								onChange={ ( borderRadius ) =>
+									setAttributes( { borderRadius } )
+								}
 							/>
 						</PanelBody>
 					</Panel>
 				</div>
 				<TypographyControls { ...props } { ...fontData } />
-				<SpacingControls
-					{ ...props }
-					splitOnAxis={ true }
-				/>
+				<SpacingControls { ...props } splitOnAxis={ true } />
 			</InspectorControls>
 			<BlockControls>
 				<AlignmentToolbar
 					value={ attributes.textAlign }
-					onChange={ ( textAlign ) =>
-						setAttributes( { textAlign } )
-					}
+					onChange={ ( textAlign ) => setAttributes( { textAlign } ) }
 				/>
 				<LinkSettings { ...props } />
 			</BlockControls>
