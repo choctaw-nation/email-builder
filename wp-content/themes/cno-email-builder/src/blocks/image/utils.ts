@@ -7,6 +7,7 @@ export function getImageStyle( attributes ): React.CSSProperties {
 
 	return {
 		width: width || '100%',
+		maxWidth: '100%',
 		height: height || 'auto',
 		objectFit: scale || 'cover',
 		display: 'block',

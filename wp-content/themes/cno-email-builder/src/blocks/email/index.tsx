@@ -50,21 +50,12 @@ registerBlockType( metadata.name, {
 					<style
 						dangerouslySetInnerHTML={ {
 							__html: `
-							@import url("${ attributes.fontUrl }");
-					:where(.email-wrapper__body) {
-						${ emailStyles( attributes.headingsFont, attributes.bodyFont ) }
-					}
-
-				@media screen and (max-width:450px) {
-				.responsive-col {
-					width: 100% !important;
-					display:block!important;
-					padding:0!important;
-				}
-				.responsive-col.not-last {
-					margin-bottom:10px;
-				}
-			}`,
+							@import url("${
+					attributes.fontUrl
+					}");:where(.email-wrapper__body) {${ emailStyles(
+						attributes.headingsFont,
+						attributes.bodyFont
+					) }}@media screen and (max-width:450px) {.responsive-col {width: 100% !important;display:block!important;padding:0!important;}.responsive-col.not-last {margin-bottom:10px;}}.responsive-col img {max-width:450px!important;width:100%!important;}`,
 						} }
 					/>
 				) }
