@@ -20,7 +20,6 @@ export default function Edit( props ) {
 	const { attributes, setAttributes } = props;
 	const { id, url, alt, title } = attributes;
 	const [ imgPreview, setImgPreview ] = useState( url );
-	const [ maxWidth, setMaxWidth ] = useState( 600 );
 	const [ maxHeight, setMaxHeight ] = useState< number | null >( null );
 	function handleImageSelect( img ) {
 		let newImgURL = null;
@@ -37,7 +36,6 @@ export default function Edit( props ) {
 				title: img.title,
 				width: img.width / 2,
 			} );
-			setMaxWidth( img.width / 2 );
 			setMaxHeight( img.height / 2 );
 			revokeBlobURL( imgPreview );
 		}
@@ -48,7 +46,7 @@ export default function Edit( props ) {
 		// eslint-disable-next-line no-console
 		console.error( error );
 	}
-	const imageStyle = getImageStyle( { attributes, maxWidth, maxHeight } );
+	const imageStyle = getImageStyle( { attributes, maxHeight } );
 	const blockProps = useBlockProps();
 
 	return (

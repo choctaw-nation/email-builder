@@ -1,8 +1,8 @@
 /* eslint-disable @wordpress/no-unsafe-wp-apis */
-import { HeightControl } from '@wordpress/block-editor';
 import {
 	Panel,
 	PanelBody,
+	RangeControl,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from '@wordpress/components';
@@ -19,18 +19,28 @@ export default function ImageSettings( { attributes, setAttributes } ) {
 						alignItems: 'stretch',
 					} }
 				>
-					<HeightControl
-						label="Height"
-						value={ attributes.height }
-						onChange={ ( value: string ) =>
-							setAttributes( { height: value } )
-						}
-					/>
-					<HeightControl
+					<RangeControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
 						label="Width"
+						allowReset={ true }
+						max={ 600 }
+						min={ 10 }
 						value={ attributes.width }
-						onChange={ ( value: string ) =>
-							setAttributes( { width: value } )
+						onChange={ ( value ) => {
+							setAttributes( { width: value } );
+						} }
+					/>
+					<RangeControl
+						__next40pxDefaultSize
+						__nextHasNoMarginBottom
+						label="Height"
+						min={ 10 }
+						max={ 350 }
+						allowReset={ true }
+						value={ attributes.height }
+						onChange={ ( value ) =>
+							setAttributes( { height: value } )
 						}
 					/>
 					<ToggleGroupControl
