@@ -39,10 +39,10 @@
 			"type": "number"
 		},
 		"width": {
-			"type": "string"
+			"type": "number"
 		},
 		"height": {
-			"type": "string"
+			"type": "number"
 		},
 		"scale": {
 			"type": "string"

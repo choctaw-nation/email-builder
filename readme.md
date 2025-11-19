@@ -4,6 +4,10 @@ A Theme that allows users to generate HTML Emails for sending.
 
 ## Changelog
 
+### v1.4.4 - [Nov 19, 2025]
+
+-   Fixed: Image rendering issues
+
 ### v1.4.3 - [Nov 18, 2025]
 
 -   Fixed: Buttons render inside of tables to force alignment.
