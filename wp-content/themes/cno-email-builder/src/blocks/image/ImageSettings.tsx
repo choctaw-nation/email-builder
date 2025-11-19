@@ -35,6 +35,8 @@ export default function ImageSettings( { attributes, setAttributes } ) {
 						__next40pxDefaultSize
 						__nextHasNoMarginBottom
 						label="Height"
+						min={ 10 }
+						max={ 350 }
 						allowReset={ true }
 						value={ attributes.height }
 						onChange={ ( value ) =>
