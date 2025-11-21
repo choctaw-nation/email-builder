@@ -1,12 +1,12 @@
 name: Deploy to WP Engine
 on:
     push:
-        branches: [dev, stg, main]
+        branches: [dev, stg, main, bypass]
 
 jobs:
     deploy-prod:
         name: Deploy to Production
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/bypass'
         uses: choctaw-nation/shared-github-actions/.github/workflows/deploy.yml@main
         with:
             WPE_ENV: cnoemails

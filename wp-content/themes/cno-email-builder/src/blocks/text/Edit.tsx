@@ -5,6 +5,12 @@ import {
 	BlockControls,
 	AlignmentToolbar,
 } from '@wordpress/block-editor';
+import {
+	alignLeft,
+	alignCenter,
+	alignRight,
+	alignJustify,
+} from '@wordpress/icons';
 import TypographyControls, {
 	calcStyleObject,
 } from '../_shared/TypographyControls';
@@ -40,9 +46,29 @@ export default function Edit( props ) {
 			<BlockControls>
 				<AlignmentToolbar
 					value={ attributes.textAlign }
-					onChange={ ( textAlign ) =>
-						setAttributes( { textAlign } )
-					}
+					onChange={ ( textAlign ) => setAttributes( { textAlign } ) }
+					alignmentControls={ [
+						{
+							icon: alignLeft,
+							title: 'Align left',
+							align: 'left',
+						},
+						{
+							icon: alignCenter,
+							title: 'Align center',
+							align: 'center',
+						},
+						{
+							icon: alignRight,
+							title: 'Align right',
+							align: 'right',
+						},
+						{
+							icon: alignJustify,
+							title: 'Align Justify',
+							align: 'justify',
+						},
+					] }
 				/>
 				<LinkSettings { ...props } />
 			</BlockControls>
