@@ -3,7 +3,6 @@ import {
 	RichText,
 	InspectorControls,
 	BlockControls,
-	AlignmentToolbar,
 } from '@wordpress/block-editor';
 import TypographyControls, {
 	calcStyleObject,
@@ -11,6 +10,8 @@ import TypographyControls, {
 import LinkSettings from '../_shared/LinkSettings';
 import SpacingControls, { calcSpacingObject } from '../_shared/SpacingControl';
 import useFontData from '../_shared/_useFontData';
+import { TextAlignmentControl } from '../_shared/_TextControls';
+import { ToolbarGroup } from '@wordpress/components';
 
 export default function Edit( props ) {
 	const { attributes, setAttributes } = props;
@@ -38,12 +39,15 @@ export default function Edit( props ) {
 				/>
 			</InspectorControls>
 			<BlockControls>
-				<AlignmentToolbar
-					value={ attributes.textAlign }
-					onChange={ ( textAlign ) =>
-						setAttributes( { textAlign } )
-					}
-				/>
+				<ToolbarGroup>
+					<TextAlignmentControl
+						value={ attributes.textAlign }
+						onChange={ ( textAlign ) =>
+							setAttributes( { textAlign } )
+						}
+						options={ [ 'left', 'center', 'right', 'justify' ] }
+					/>
+				</ToolbarGroup>
 				<LinkSettings { ...props } />
 			</BlockControls>
 			{ isLink ? (

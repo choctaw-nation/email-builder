@@ -2,7 +2,6 @@ import {
 	useBlockProps,
 	RichText,
 	InspectorControls,
-	AlignmentToolbar,
 	BlockControls,
 	HeadingLevelDropdown,
 } from '@wordpress/block-editor';
@@ -13,6 +12,7 @@ import TypographyControls, {
 } from '../_shared/TypographyControls';
 import SpacingControls, { calcSpacingObject } from '../_shared/SpacingControl';
 import useFontData from '../_shared/_useFontData';
+import { TextAlignmentControl } from '../_shared/_TextControls';
 
 export default function Edit( props ) {
 	const { attributes, setAttributes } = props;
@@ -41,12 +41,15 @@ export default function Edit( props ) {
 						onChange={ ( level ) => setAttributes( { level } ) }
 					/>
 				</ToolbarGroup>
-				<AlignmentToolbar
-					value={ attributes.textAlign }
-					onChange={ ( textAlign ) =>
-						setAttributes( { textAlign } )
-					}
-				/>
+				<ToolbarGroup>
+					<TextAlignmentControl
+						value={ attributes.textAlign }
+						onChange={ ( textAlign ) =>
+							setAttributes( { textAlign } )
+						}
+						options={ [ 'left', 'center', 'right', 'justify' ] }
+					/>
+				</ToolbarGroup>
 			</BlockControls>
 			<RichText
 				allowedFormats={ [ 'core/bold', 'core/italic' ] }

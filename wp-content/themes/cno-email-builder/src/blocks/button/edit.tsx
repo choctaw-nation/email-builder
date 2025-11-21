@@ -3,7 +3,6 @@ import {
 	RichText,
 	InspectorControls,
 	BlockControls,
-	AlignmentToolbar,
 } from '@wordpress/block-editor';
 import TypographyControls, {
 	calcStyleObject,
@@ -16,14 +15,17 @@ import {
 	Panel,
 	PanelBody,
 	RangeControl,
+	ToolbarGroup,
 } from '@wordpress/components';
 import useColorPalettes from '../_shared/hooks/useColorPalettes';
+import { TextAlignmentControl } from '../_shared/_TextControls';
 
-function calcAlignSelf( align: 'left' | 'center' | 'right' ): string {
+function calcAlignSelf( align: 'left' | 'center' | 'right' | 'justify' ): string {
 	const alignment = {
 		left: 'flex-start',
 		center: 'center',
 		right: 'flex-end',
+		justify: 'stretch',
 	};
 	return Object.hasOwn( alignment, align )
 		? alignment[ align ]
@@ -113,10 +115,13 @@ export default function Edit( props ) {
 				<SpacingControls { ...props } splitOnAxis={ true } />
 			</InspectorControls>
 			<BlockControls>
-				<AlignmentToolbar
-					value={ attributes.textAlign }
-					onChange={ ( textAlign ) => setAttributes( { textAlign } ) }
-				/>
+				<ToolbarGroup>
+					<TextAlignmentControl
+						value={ attributes.textAlign }
+						onChange={ ( textAlign ) => setAttributes( { textAlign } ) }
+						options={ [ 'left', 'center', 'right', 'justify' ] }
+					/>
+				</ToolbarGroup>
 				<LinkSettings { ...props } />
 			</BlockControls>
 			<RichText
