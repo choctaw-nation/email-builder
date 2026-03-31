@@ -4,6 +4,12 @@ A Theme that allows users to generate HTML Emails for sending.
 
 ## Changelog
 
+### v1.5.0 - [Mar 31, 2026]
+
+-   Added: Text can now be justified
+-   Chore: Update Packages
+-   Chore: Added missing devDependencies
+
 ### v1.4.4 - [Nov 19, 2025]
 
 -   Fixed: Image rendering issues

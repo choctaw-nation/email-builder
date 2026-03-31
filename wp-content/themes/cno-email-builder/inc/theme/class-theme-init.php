@@ -53,8 +53,8 @@ class Theme_Init {
 					default:
 				}
 				echo "<link rel='apple-touch-icon' sizes='180x180' href='{$href}/apple-touch-icon.png'>
-				<link rel='icon' type'='image/png' sizes='192x192' href='{$href}/android-chrome-192x192.png'>
-				<link rel='icon' type'='image/png' sizes='512x512' href='{$href}/android-chrome-512x512.png'>
+				<link rel='icon' type='image/png' sizes='192x192' href='{$href}/android-chrome-192x192.png'>
+				<link rel='icon' type='image/png' sizes='512x512' href='{$href}/android-chrome-512x512.png'>
 				<link rel='icon' type='image/png' sizes='32x32' href='{$href}/favicon-32x32.png'>
 				<link rel='icon' type='image/png' sizes='16x16' href='{$href}/favicon-16x16.png'>
 				<link rel='mask-icon' href='{$href}/safari-pinned-tab.svg' color='#000000'>";
